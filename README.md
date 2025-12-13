@@ -156,3 +156,6 @@
 
 ## 画面遷移図
 [Figma画面遷移図](https://www.figma.com/design/IRTIZTPi9pttTTv7OYQQTm/Pro-log?m=auto&t=RaBekRE7OfteCUYD-1)
+
+## ER図
+[![Image from Gyazo](https://i.gyazo.com/8a7dbd28c073c09dc77d7c45467daee8.png)](https://gyazo.com/8a7dbd28c073c09dc77d7c45467daee8)
