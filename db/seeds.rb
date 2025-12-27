@@ -37,3 +37,66 @@ products.each_with_index do |attrs, index|
     content_type: "image/png"
   )
 end
+
+User.find_or_create_by!(email: "demo@example.com") do |user|
+  user.username = "demo"
+  user.password = "password"
+  user.password_confirmation = "password"
+end
+
+user = User.find_by!(email: "demo@example.com")
+
+review_templates = [
+  {
+    title: "溶けやすくて飲みやすい",
+    comment: "朝の忙しい時間でもサッと溶けて助かります。甘さ控えめで続けやすい。",
+    overall_score: 4,
+    sweetness: 3,
+    richness: 3,
+    aftertaste: 4,
+    flavor_score: 4,
+    solubility: 5,
+    foam: 4
+  },
+  {
+    title: "コスパ重視ならこれ",
+    comment: "価格に対してタンパク質量がしっかり。リピートしたい味です。",
+    overall_score: 5,
+    sweetness: 4,
+    richness: 4,
+    aftertaste: 4,
+    flavor_score: 5,
+    solubility: 4,
+    foam: 3
+  },
+  {
+    title: "甘さは控えめ",
+    comment: "甘すぎないので食事と合わせやすい。後味が軽いのも良い。",
+    overall_score: 4,
+    sweetness: 2,
+    richness: 3,
+    aftertaste: 4,
+    flavor_score: 3,
+    solubility: 4,
+    foam: 4
+  }
+]
+
+Product.find_each do |product|
+  review_templates.each do |template|
+    Review.find_or_create_by!(
+      user: user,
+      product: product,
+      title: template[:title]
+    ) do |review|
+      review.comment = template[:comment]
+      review.overall_score = template[:overall_score]
+      review.sweetness = template[:sweetness]
+      review.richness = template[:richness]
+      review.aftertaste = template[:aftertaste]
+      review.flavor_score = template[:flavor_score]
+      review.solubility = template[:solubility]
+      review.foam = template[:foam]
+    end
+  end
+end

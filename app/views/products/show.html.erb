@@ -47,8 +47,13 @@
 
         <div class="flex items-center gap-4 rounded-2xl border border-stone-200 bg-white px-5 py-4">
           <span class="text-sm font-semibold text-stone-600">総合満足度</span>
-          <span class="text-lg font-semibold text-stone-900">評価準備中</span>
-          <span class="text-amber-400">★★★★★</span>
+          <% average_score = @product.overall_average_score %>
+          <% if average_score.present? %>
+            <span class="text-lg font-semibold text-stone-900"><%= format("%.1f", average_score) %>/5.0</span>
+            <span class="text-amber-400"><%= "★" * average_score.round %><%= "☆" * (5 - average_score.round) %></span>
+          <% else %>
+            <span class="text-lg font-semibold text-stone-900">評価準備中</span>
+          <% end %>
         </div>
       </div>
 
@@ -73,19 +78,22 @@
 
       <div class="mt-10 space-y-6">
         <% [
-          ["甘め", "甘くない"],
-          ["濃いめ", "薄め"],
-          ["後味重め", "後味スッキリ"],
-          ["香り豊か", "香りなし"],
-          ["溶けやすい", "溶けにくい"],
-          ["泡立ちやすい", "泡立ちにくい"]
-        ].each do |left, right| %>
+          [:sweetness, "甘め", "甘くない"],
+          [:richness, "濃いめ", "薄め"],
+          [:aftertaste, "後味重め", "後味スッキリ"],
+          [:flavor_score, "風味豊か", "風味控えめ"],
+          [:solubility, "溶けやすい", "溶けにくい"],
+          [:foam, "泡立ちやすい", "泡立ちにくい"]
+        ].each do |key, left, right| %>
+          <% avg = @product.review_averages[key] %>
+          <% position = avg ? ((avg - 1) / 4.0 * 100).round(1) : 50 %>
           <div class="grid gap-4 md:grid-cols-[120px_1fr_120px] md:items-center">
             <span class="text-sm font-semibold text-emerald-600"><%= left %></span>
             <div class="relative h-2 rounded-full bg-stone-200">
-              <div class="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-500"></div>
-              <div class="absolute left-1/2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-500"></div>
-              <div class="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-500"></div>
+              <div class="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
+              <div class="absolute left-1/2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
+              <div class="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
+              <div class="absolute top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-500" style="left: <%= position %>%"></div>
             </div>
             <span class="text-right text-sm font-semibold text-emerald-600"><%= right %></span>
           </div>
@@ -103,30 +111,44 @@
     </div>
 
     <div class="mt-8 space-y-6">
-      <% 2.times do %>
-        <article class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
-          <div class="grid gap-6 md:grid-cols-[140px_1fr]">
-            <div class="text-center">
-              <div class="mx-auto h-24 w-24 rounded-full bg-stone-200"></div>
-              <p class="mt-3 text-sm font-semibold text-stone-700">ユーザー名</p>
+      <% if @reviews.any? %>
+        <% @reviews.each do |review| %>
+          <article class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+            <div class="grid gap-6 md:grid-cols-[140px_1fr]">
+              <div class="text-center">
+                <% if review.user.avatar.attached? %>
+                  <%= image_tag review.user.avatar.variant(resize_to_fill: [96, 96]), class: "mx-auto h-24 w-24 rounded-full object-cover", alt: review.user.username %>
+                <% else %>
+                  <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-stone-200 text-sm font-semibold text-stone-600">
+                    <%= review.user.username.to_s.first&.upcase || "U" %>
+                  </div>
+                <% end %>
+                <p class="mt-3 text-sm font-semibold text-stone-700"><%= review.user.username %></p>
+              </div>
+              <div class="space-y-3">
+                <div class="flex flex-wrap items-center gap-3 text-sm">
+                  <span class="font-semibold text-stone-700">総合満足度</span>
+                  <span class="text-amber-400"><%= "★" * review.overall_score %><%= "☆" * (5 - review.overall_score) %></span>
+                  <span class="text-sm font-semibold text-stone-900"><%= review.overall_score %>.0/5.0</span>
+                </div>
+                <div class="text-sm text-stone-600">
+                  <span class="font-semibold text-stone-700">内訳：</span>
+                  甘さ：<%= review.sweetness %> / 濃さ：<%= review.richness %> / 後味：<%= review.aftertaste %> / 風味：<%= review.flavor_score %> / 溶けやすさ：<%= review.solubility %> / 泡立ち：<%= review.foam %>
+                </div>
+                <% if review.comment.present? %>
+                  <div class="text-sm text-stone-600">
+                    <span class="font-semibold text-stone-700">コメント：</span>
+                    <%= review.comment %>
+                  </div>
+                <% end %>
+              </div>
             </div>
-            <div class="space-y-3">
-              <div class="flex flex-wrap items-center gap-3 text-sm">
-                <span class="font-semibold text-stone-700">総合満足度</span>
-                <span class="text-amber-400">★★★★★</span>
-                <span class="text-sm font-semibold text-stone-900">5.0/5.0</span>
-              </div>
-              <div class="text-sm text-stone-600">
-                <span class="font-semibold text-stone-700">内訳：</span>
-                甘さ：ちょい甘め / 濃さ：濃いめ / 後味：ちょい重め / 香り：豊か / 溶けやすさ：溶けやすい / 泡立ち：泡立ちにくい
-              </div>
-              <div class="text-sm text-stone-600">
-                <span class="font-semibold text-stone-700">コメント：</span>
-                溶けやすくて美味しかったです！
-              </div>
-            </div>
-          </div>
-        </article>
+          </article>
+        <% end %>
+      <% else %>
+        <div class="rounded-3xl border border-dashed border-stone-200 bg-white p-8 text-center text-sm text-stone-500">
+          まだレビューがありません。
+        </div>
       <% end %>
     </div>
   </section>
