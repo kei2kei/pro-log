@@ -6,5 +6,6 @@ class CreateReviewLikes < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
+    add_index :review_likes, [ :user_id, :review_id ], unique: true
   end
 end
