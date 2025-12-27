@@ -1,0 +1,5 @@
+<% if current_user&.like?(review) %>
+  <%= render 'shared/unlike_button', { review: review } %>
+<% else %>
+  <%= render 'shared/like_button', { review: review } %>
+<% end %>
