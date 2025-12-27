@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   root "pages#home"
 
   resources :products, only: [ :index, :show ] do
-    resources :reviews, only: [ :new ]
+    resources :reviews, only: [ :new, :create ]
   end
   resources :reviews, only: [ :show ]
 end
