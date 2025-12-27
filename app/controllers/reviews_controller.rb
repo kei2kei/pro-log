@@ -1,7 +1,8 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_product, only: [ :new, :create ]
-  before_action :set_review, only: [ :show, :edit, :update ]
+  before_action :set_review, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_review!, only: [ :edit, :update, :destroy ]
 
   def new
     @review = @product.reviews.build
@@ -36,6 +37,12 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def destroy
+    product = @review.product
+    @review.destroy
+    redirect_to product_path(product), notice: "レビューを削除しました。"
+  end
+
   private
 
   def set_product
@@ -47,6 +54,12 @@ class ReviewsController < ApplicationController
       user: { avatar_attachment: :blob },
       product: { image_attachment: :blob }
     ).find(params[:id])
+  end
+
+  def authorize_review!
+    return if @review.user == current_user
+
+    redirect_to review_path(@review), alert: "この操作は許可されていません。"
   end
 
   def review_params

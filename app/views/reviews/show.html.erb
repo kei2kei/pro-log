@@ -67,10 +67,15 @@
 
   <section class="border-t border-stone-200 bg-white">
     <div class="mx-auto max-w-6xl px-6 py-12">
-      <div class="flex items-center justify-between">
-        <h2 class="text-3xl font-semibold font-['Fraunces']"><%= @review.user.username %>さんの評価</h2>
-        <%= link_to "編集", edit_review_path(@review), class: "rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-white" %>
-      </div>
+    <div class="flex items-center justify-between">
+      <h2 class="text-3xl font-semibold font-['Fraunces']"><%= @review.user.username %>さんの評価</h2>
+      <% if @review.user == current_user %>
+        <div class="flex items-center gap-3">
+          <%= link_to "編集", edit_review_path(@review), class: "rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-white" %>
+          <%= button_to "削除", review_path(@review), method: :delete, data: { confirm: "このレビューを削除しますか？" }, class: "rounded-full border border-stone-200 px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+        </div>
+      <% end %>
+    </div>
 
       <div class="mt-10 space-y-6">
         <% [
