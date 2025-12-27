@@ -1,0 +1,132 @@
+<main class="min-h-screen bg-stone-50 text-stone-900">
+  <section class="border-b border-stone-200 bg-white">
+    <div class="mx-auto max-w-6xl px-6 py-12">
+      <p class="text-xs uppercase tracking-[0.4em] text-emerald-600">Review Detail</p>
+      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">
+        <%= @review.user.username %>さんのレビュー
+      </h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <div class="grid gap-10 lg:grid-cols-[1fr_0.9fr]">
+      <div class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-6 md:grid-cols-[140px_1fr]">
+          <div class="text-center">
+            <% if @review.user.avatar.attached? %>
+              <%= image_tag @review.user.avatar.variant(resize_to_fill: [120, 120]), class: "mx-auto h-28 w-28 rounded-full object-cover", alt: @review.user.username %>
+            <% else %>
+              <div class="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-stone-200 text-sm font-semibold text-stone-600">
+                <%= @review.user.username.to_s.first&.upcase || "U" %>
+              </div>
+            <% end %>
+            <p class="mt-3 text-sm font-semibold text-stone-700"><%= @review.user.username %></p>
+          </div>
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="text-sm font-semibold text-stone-600">総合満足度</span>
+              <span class="text-amber-400"><%= "★" * @review.overall_score %><%= "☆" * (5 - @review.overall_score) %></span>
+              <span class="text-lg font-semibold text-stone-900"><%= @review.overall_score %>.0/5.0</span>
+            </div>
+            <div>
+              <p class="text-xl font-semibold text-stone-900"><%= @review.title %></p>
+              <% if @review.comment.present? %>
+                <p class="mt-2 text-sm text-stone-600"><%= @review.comment %></p>
+              <% end %>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <span class="rounded-full border border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-600">#タグ</span>
+              <span class="rounded-full border border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-600">#タグ</span>
+              <span class="rounded-full border border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-600">#タグ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-semibold text-stone-600">レビューした商品</p>
+            <h2 class="mt-2 text-2xl font-semibold"><%= @review.product.name %></h2>
+            <p class="mt-1 text-sm text-stone-500"><%= @review.product.brand %></p>
+          </div>
+          <%= link_to "商品詳細へ", product_path(@review.product), class: "rounded-full border border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-600" %>
+        </div>
+        <div class="mt-6 aspect-square overflow-hidden rounded-2xl bg-stone-100">
+          <% if @review.product.image.attached? %>
+            <%= image_tag @review.product.image.variant(resize_to_fill: [480, 480]), class: "h-full w-full object-cover", alt: @review.product.name %>
+          <% else %>
+            <div class="flex h-full w-full items-center justify-center text-sm text-stone-400">
+              No Image
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-stone-200 bg-white">
+    <div class="mx-auto max-w-6xl px-6 py-12">
+      <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-semibold font-['Fraunces']"><%= @review.user.username %>さんの評価</h2>
+        <button class="rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-white">
+          編集
+        </button>
+      </div>
+
+      <div class="mt-10 space-y-6">
+        <% [
+          [:sweetness, "甘め", "甘くない"],
+          [:richness, "濃いめ", "薄め"],
+          [:aftertaste, "後味重め", "後味スッキリ"],
+          [:flavor_score, "風味豊か", "風味控えめ"],
+          [:solubility, "溶けやすい", "溶けにくい"],
+          [:foam, "泡立ちやすい", "泡立ちにくい"]
+        ].each do |key, left, right| %>
+          <% score = @review.public_send(key) %>
+          <% position = ((score - 1) / 4.0 * 100).round(1) %>
+          <div class="grid gap-4 md:grid-cols-[120px_1fr_120px] md:items-center">
+            <span class="text-sm font-semibold text-emerald-600"><%= left %></span>
+            <div class="relative h-2 rounded-full bg-stone-200">
+              <div class="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
+              <div class="absolute left-1/2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
+              <div class="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
+              <div class="absolute top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-500" style="left: <%= position %>%"></div>
+            </div>
+            <span class="text-right text-sm font-semibold text-emerald-600"><%= right %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <h2 class="text-3xl font-semibold font-['Fraunces']"><%= @review.user.username %>さんがレビューした商品</h2>
+    <% if @other_reviews.any? %>
+      <div class="mt-8 grid gap-6 md:grid-cols-2">
+        <% @other_reviews.each do |review| %>
+          <%= link_to review_path(review), class: "rounded-3xl border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg" do %>
+            <div class="flex items-center gap-4">
+              <div class="h-20 w-20 overflow-hidden rounded-2xl bg-stone-100">
+                <% if review.product.image.attached? %>
+                  <%= image_tag review.product.image.variant(resize_to_fill: [160, 160]), class: "h-full w-full object-cover", alt: review.product.name %>
+                <% else %>
+                  <div class="flex h-full w-full items-center justify-center text-xs text-stone-400">No Image</div>
+                <% end %>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-stone-500">総合満足度 <%= review.overall_score %>.0/5.0</p>
+                <p class="mt-1 text-sm font-semibold text-stone-900"><%= review.product.name %></p>
+                <p class="text-xs text-stone-500"><%= review.product.brand %></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mt-6 rounded-3xl border border-dashed border-stone-200 bg-white p-8 text-center text-sm text-stone-500">
+        このユーザーの他のレビューはありません。
+      </div>
+    <% end %>
+  </section>
+</main>
