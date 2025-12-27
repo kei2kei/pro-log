@@ -1,0 +1,17 @@
+<%= turbo_frame_tag dom_id(product, :bookmark) do %>
+  <% if bookmark.present? %>
+    <%= button_to bookmark_path(bookmark), method: :delete,
+      class: "flex items-center gap-2 rounded-full border border-emerald-500 px-4 py-2 text-sm font-semibold text-emerald-600 hover:border-emerald-600",
+      aria: { label: "ブックマーク解除" } do %>
+      <span class="text-amber-400">★</span>
+      ブックマーク済み
+    <% end %>
+  <% else %>
+    <%= button_to bookmarks_path(product_id: product.id), method: :post,
+      class: "flex items-center gap-2 rounded-full border border-stone-200 px-4 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300",
+      aria: { label: "ブックマーク" } do %>
+      <span class="text-stone-400">☆</span>
+      ブックマーク
+    <% end %>
+  <% end %>
+<% end %>
