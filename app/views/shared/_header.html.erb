@@ -14,12 +14,12 @@
     </nav>
 
     <div class="flex items-center gap-3">
-      <a class="rounded-full border border-white/30 px-4 py-2 text-sm font-semibold transition hover:border-white hover:bg-white/10" href="#">
-        ログイン
-      </a>
-      <a class="rounded-full bg-emerald-400 px-4 py-2 text-sm font-semibold text-stone-950 transition hover:bg-emerald-300" href="#">
-        会員登録
-      </a>
+      <% if user_signed_in? %>
+        <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "rounded-full border border-white/30 px-4 py-2 text-sm font-semibold transition hover:border-white hover:bg-white/10" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path, class: "rounded-full border border-white/30 px-4 py-2 text-sm font-semibold transition hover:border-white hover:bg-white/10" %>
+        <%= link_to "会員登録", new_user_registration_path, class: "rounded-full bg-emerald-400 px-4 py-2 text-sm font-semibold text-stone-950 transition hover:bg-emerald-300" %>
+      <% end %>
     </div>
   </div>
 </header>
