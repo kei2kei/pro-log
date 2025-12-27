@@ -25,7 +25,7 @@
   <section class="mx-auto max-w-6xl px-6 py-12">
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       <% @products.each do |product| %>
-        <article class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+        <%= link_to product_path(product), class: "rounded-3xl border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg" do %>
           <div class="aspect-square w-full overflow-hidden rounded-2xl bg-stone-100">
             <% if product.image.attached? %>
               <%= image_tag product.image.variant(resize_to_fill: [480, 480]), class: "h-full w-full object-cover", alt: product.name %>
@@ -47,7 +47,7 @@
               <span class="text-base font-semibold text-stone-900">¥<%= product.price %></span>
             </div>
           </div>
-        </article>
+        <% end %>
       <% end %>
     </div>
 
