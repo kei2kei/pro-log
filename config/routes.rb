@@ -17,5 +17,5 @@ Rails.application.routes.draw do
   resources :products, only: [ :index, :show ] do
     resources :reviews, only: [ :new, :create ]
   end
-  resources :reviews, only: [ :show ]
+  resources :reviews, only: [ :show, :edit, :update ]
 end
