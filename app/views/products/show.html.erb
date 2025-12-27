@@ -105,9 +105,7 @@
   <section class="mx-auto max-w-6xl px-6 py-12">
     <div class="flex items-center justify-between">
       <h2 class="text-3xl font-semibold font-['Fraunces']">レビュー一覧</h2>
-      <button class="rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-white">
-        レビューをする
-      </button>
+      <%= link_to "レビューをする", new_product_review_path(@product), class: "rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-white" %>
     </div>
 
     <div class="mt-8 space-y-6">
