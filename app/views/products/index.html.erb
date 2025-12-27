@@ -1,0 +1,75 @@
+<main class="min-h-screen bg-stone-50 text-stone-900">
+  <section class="border-b border-stone-200 bg-white">
+    <div class="mx-auto max-w-6xl px-6 py-12">
+      <h1 class="text-4xl font-semibold font-['Fraunces']">プロテイン一覧</h1>
+      <p class="mt-3 text-sm text-stone-500">
+        甘さ・濃さ・溶けやすさなどのレビューをもとに比較できます。
+      </p>
+
+      <div class="mt-8 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+        <div class="rounded-full border border-stone-200 bg-white px-5 py-3 text-sm text-stone-400">
+          商品名、ブランド名、フレーバー など
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <div class="rounded-full border border-emerald-500 bg-emerald-500 px-5 py-2 text-sm font-semibold text-white">
+            ¥0 ~ 指定なし
+          </div>
+          <button class="rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold text-white">
+            検索
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <% @products.each do |product| %>
+        <article class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+          <div class="aspect-square w-full overflow-hidden rounded-2xl bg-stone-100">
+            <% if product.image.attached? %>
+              <%= image_tag product.image.variant(resize_to_fill: [480, 480]), class: "h-full w-full object-cover", alt: product.name %>
+            <% else %>
+              <div class="flex h-full w-full items-center justify-center text-sm text-stone-400">
+                No Image
+              </div>
+            <% end %>
+          </div>
+
+          <div class="mt-5 space-y-2">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
+              <%= product.protein_type %> / <%= product.flavor %>
+            </p>
+            <h2 class="text-lg font-semibold"><%= product.name %></h2>
+            <p class="text-sm text-stone-500"><%= product.brand %></p>
+            <div class="flex items-center justify-between pt-2 text-sm text-stone-600">
+              <span>100gあたり</span>
+              <span class="text-base font-semibold text-stone-900">¥<%= product.price %></span>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
+
+    <div class="mt-12 flex justify-center gap-3">
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+        1
+      </button>
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+        2
+      </button>
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+        3
+      </button>
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+        4
+      </button>
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+        5
+      </button>
+      <button class="flex h-12 w-16 items-center justify-center rounded-2xl bg-emerald-500 text-sm font-semibold text-white">
+        次
+      </button>
+    </div>
+  </section>
+</main>
