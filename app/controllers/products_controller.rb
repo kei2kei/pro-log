@@ -7,5 +7,6 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.with_attached_image.find(params[:id])
+    @reviews = @product.reviews.includes(user: { avatar_attachment: :blob }).order(created_at: :desc)
   end
 end
