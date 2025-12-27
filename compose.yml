@@ -15,6 +15,7 @@ services:
       timeout: 5s
       retries: 5
   web:
+    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile.dev
