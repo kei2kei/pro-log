@@ -16,9 +16,6 @@ Rails.application.routes.draw do
 
   resources :products, only: [ :index, :show ] do
     resources :reviews, only: [ :new, :create ]
-    collection do
-      get :bookmarks
-    end
   end
   resources :reviews, only: [ :show, :edit, :update, :destroy ]
   resources :bookmarks, only: [ :create, :destroy ], controller: "product_bookmarks"
