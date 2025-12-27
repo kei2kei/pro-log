@@ -8,9 +8,12 @@
     </div>
 
     <nav class="hidden items-center gap-8 text-sm font-medium text-white/80 md:flex">
-      <a class="transition hover:text-white" href="#how">使い方</a>
-      <a class="transition hover:text-white" href="#about">Pro-logとは</a>
-      <a class="transition hover:text-white" href="#features">特徴</a>
+      <%= link_to "使い方", root_path(anchor: "how"), class: "transition hover:text-white" %>
+      <%= link_to "Pro-logとは", root_path(anchor: "about"), class: "transition hover:text-white" %>
+      <%= link_to "特徴", root_path(anchor: "features"), class: "transition hover:text-white" %>
+      <% if user_signed_in? %>
+        <%= link_to "プロテイン一覧", products_path, class: "transition hover:text-white" %>
+      <% end %>
     </nav>
 
     <div class="flex items-center gap-3">
