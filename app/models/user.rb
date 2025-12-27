@@ -23,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def like?(review)
-    like_reviews.exists?(review)
+    like_reviews.exists?(review.id)
   end
 
 end
