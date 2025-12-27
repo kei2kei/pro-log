@@ -1,0 +1,40 @@
+<main class="min-h-screen bg-stone-50 text-stone-900">
+  <div class="mx-auto max-w-md px-6 py-16">
+    <h1 class="text-3xl font-semibold font-['Fraunces']">ログイン</h1>
+    <p class="mt-2 text-sm text-stone-500">おかえりなさい。</p>
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-6 space-y-4" }) do |f| %>
+      <div>
+        <%= f.label :email, "メールアドレス", class: "text-sm font-medium text-stone-700" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-2 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200" %>
+      </div>
+
+      <div>
+        <%= f.label :password, "パスワード", class: "text-sm font-medium text-stone-700" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "mt-2 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="flex items-center gap-2 text-sm text-stone-600">
+          <%= f.check_box :remember_me, class: "h-4 w-4 rounded border-stone-300 text-emerald-500 focus:ring-emerald-300" %>
+          <%= f.label :remember_me, "ログイン状態を保持", class: "select-none" %>
+        </div>
+      <% end %>
+
+      <%= f.submit "ログインする", class: "mt-2 w-full rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-stone-950 transition hover:bg-emerald-300" %>
+    <% end %>
+
+    <div class="mt-6 text-center text-sm text-stone-500">
+      まだアカウントがありませんか？
+      <%= link_to "会員登録", new_registration_path(resource_name), class: "font-semibold text-emerald-600 hover:text-emerald-500" %>
+    </div>
+
+    <% if devise_mapping.recoverable? %>
+      <div class="mt-4 text-center text-xs text-stone-500">
+        <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "font-semibold text-emerald-600 hover:text-emerald-500" %>
+      </div>
+    <% end %>
+  </div>
+</main>
