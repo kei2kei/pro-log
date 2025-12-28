@@ -12,8 +12,8 @@
         <%= image_tag "hero.jpg", class: "h-full w-full object-cover opacity-80", alt: "プロテインとトレーニングのイメージ" %>
         <div class="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-950/40 to-stone-950/80"></div>
       </div>
-      <div class="mx-auto grid max-w-6xl items-center gap-12 px-6 pb-20 pt-12 md:grid-cols-[1.2fr_0.8fr] md:pt-20">
-        <div>
+      <div class="mx-auto flex max-w-4xl flex-col items-center gap-8 px-6 pb-20 pt-12 text-center md:pt-20">
+        <div class="max-w-2xl">
           <p class="text-xs uppercase tracking-[0.4em] text-emerald-300/90 font-['Space_Grotesk']">
             Protein review platform
           </p>
@@ -25,12 +25,12 @@
             自分に合う一杯を、迷わず選べるレビューサイトです。
           </p>
           <% unless user_signed_in? %>
-            <div class="mt-8 flex flex-wrap gap-4">
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
               <%= link_to "会員登録する", new_user_registration_path, class: "rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-950 transition hover:bg-white/90" %>
-              <%= link_to "ログイン", new_user_session_path, class: "rounded-full border border-white/40 px-6 py-3 text-sm font-semibold transition hover:border-white hover:bg-white/10" %>
+              <%= link_to "ログイン", new_user_session_path, class: "rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-400" %>
             </div>
           <% end %>
-          <div class="mt-8">
+          <div class="mt-8 flex justify-center">
             <% if user_signed_in? %>
               <%= search_form_for @q, url: products_path, method: :get, class: "flex items-center gap-3" do |f| %>
                 <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
@@ -38,42 +38,8 @@
                   class: "h-14 w-96 rounded-full border border-stone-200 bg-white px-5 text-center text-base font-thin text-stone-600 placeholder:text-stone-400" %>
                 <%= f.submit "検索", class: "h-14 rounded-full bg-emerald-500 px-6 text-base font-semibold text-white" %>
               <% end %>
-            <% else %>
-              <div class="flex items-center gap-4 text-sm text-white/60">
-                <div class="flex -space-x-2">
-                  <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
-                  <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
-                  <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
-                </div>
-                <p>レビュー投稿者が好みを共有しています</p>
-              </div>
             <% end %>
           </div>
-        </div>
-
-        <div class="relative">
-          <div class="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm text-white/60">最新レビュー</p>
-                <p class="mt-1 text-lg font-semibold font-['Space_Grotesk']">Impact Whey さっぱり系</p>
-              </div>
-              <span class="rounded-full bg-emerald-400/20 px-3 py-1 text-xs text-emerald-100">甘さ控えめ</span>
-            </div>
-            <div class="mt-6 grid gap-4">
-              <div class="rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-500/10 via-transparent to-amber-400/10 p-5">
-                <div class="flex h-52 items-center justify-center rounded-xl border border-dashed border-white/30 text-sm text-white/60">
-                  レーダーチャート表示エリア
-                </div>
-              </div>
-              <div class="grid grid-cols-3 gap-3 text-xs text-white/60">
-                <div class="rounded-xl bg-white/5 p-3 text-center">甘さ 2</div>
-                <div class="rounded-xl bg-white/5 p-3 text-center">濃さ 3</div>
-                <div class="rounded-xl bg-white/5 p-3 text-center">溶けやすさ 4</div>
-              </div>
-            </div>
-          </div>
-          <p class="mt-4 text-right text-xs text-white/50">Designed by Freepik</p>
         </div>
       </div>
     </section>
