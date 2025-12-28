@@ -1,6 +1,6 @@
-<main class="min-h-screen bg-stone-50 text-stone-900">
-  <section class="border-b border-stone-200 bg-white">
-    <div class="mx-auto max-w-6xl px-6 py-12">
+<main class="min-h-screen bg-white text-main">
+  <section class="border-b border-base bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-12">
       <h1 class="text-4xl font-semibold font-['Fraunces']">プロテイン一覧</h1>
       <p class="mt-3 text-sm text-stone-500">
         甘さ・濃さ・溶けやすさなどのレビューをもとに比較できます。
@@ -11,12 +11,12 @@
           <div class="flex flex-wrap items-center gap-3">
             <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
               placeholder: "商品名、ブランド名、フレーバー、タグ など",
-              class: "w-full max-w-2xl rounded-full border border-stone-200 bg-white px-5 py-3 text-sm text-stone-600 placeholder:text-stone-400" %>
+              class: "w-full max-w-2xl rounded-full border border-base bg-white px-5 py-3 text-sm text-stone-600 placeholder:text-stone-400" %>
           </div>
           <div class="flex flex-wrap items-end gap-4">
             <div class="flex flex-col gap-1 text-xs text-stone-500">
               <span>価格帯</span>
-              <div class="flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm text-stone-600">
+              <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
                 <%= f.label :price_gteq, "最低価格", class: "sr-only" %>
                 <%= f.number_field :price_gteq, placeholder: "¥0", class: "w-20 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
                 <span class="text-stone-400">~</span>
@@ -26,7 +26,7 @@
             </div>
             <div class="flex flex-col gap-1 text-xs text-stone-500">
               <span>満足度（以上）</span>
-              <div class="flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm text-stone-600">
+              <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
                 <%= f.label :reviews_overall_score_avg_gteq, "満足度（以上）", class: "sr-only" %>
                 <%= f.hidden_field :reviews_overall_score_avg_gteq, value: params.dig(:q, :reviews_overall_score_avg_gteq) %>
                 <div class="flex items-center gap-1" data-star-filter>
@@ -43,20 +43,20 @@
               <%= f.select :protein_type_eq,
                 Product.protein_types.map { |k, v| [k, v] },
                 { include_blank: "プロテインの種類" },
-                class: "rounded-full border border-stone-200 bg-white px-5 py-2 text-sm text-stone-600" %>
+                class: "rounded-full border border-base bg-white px-5 py-2 text-sm text-stone-600" %>
             </div>
-            <%= f.submit "検索", class: "rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold text-white" %>
-            <%= link_to "リセット", products_path, class: "rounded-full border border-stone-200 px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+            <%= f.submit "検索", class: "btn-primary rounded-full px-6 py-2" %>
+            <%= link_to "リセット", products_path, class: "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
           </div>
         <% end %>
       </div>
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-6 py-12">
+  <section class="mx-auto max-w-7xl px-6 py-12">
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       <% @products.each do |product| %>
-        <div class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+        <div class="rounded-3xl border border-base bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
           <%= link_to product_path(product), class: "block" do %>
             <div class="aspect-square w-full overflow-hidden rounded-2xl bg-stone-100">
               <% if product.image.attached? %>
@@ -69,7 +69,7 @@
             </div>
 
             <div class="mt-5 space-y-2">
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
                 <%= product.protein_type %> / <%= product.flavor %>
               </p>
               <h2 class="text-lg font-semibold"><%= product.name %></h2>
@@ -90,22 +90,22 @@
     </div>
 
     <div class="mt-12 flex justify-center gap-3">
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
         1
       </button>
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
         2
       </button>
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
         3
       </button>
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
         4
       </button>
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-stone-200 text-sm font-semibold text-stone-700">
+      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
         5
       </button>
-      <button class="flex h-12 w-16 items-center justify-center rounded-2xl bg-emerald-500 text-sm font-semibold text-white">
+      <button class="flex h-12 w-16 items-center justify-center rounded-2xl bg-brand text-sm font-semibold text-white">
         次
       </button>
     </div>
@@ -123,7 +123,7 @@
     const setActive = (value) => {
       buttons.forEach((button) => {
         const score = Number(button.dataset.score);
-        button.classList.toggle("text-amber-400", score <= value);
+        button.classList.toggle("text-accent", score <= value);
         button.classList.toggle("text-stone-300", score > value);
       });
     };
