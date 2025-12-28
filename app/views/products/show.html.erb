@@ -105,5 +105,10 @@
         </div>
       <% end %>
     </div>
+    <% if @reviews.any? %>
+      <div class="mt-10 flex justify-center">
+        <%= paginate @reviews %>
+      </div>
+    <% end %>
   </section>
 </main>

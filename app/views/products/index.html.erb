@@ -61,25 +61,8 @@
         locals: { bookmarks_by_product_id: @bookmarks_by_product_id } %>
     </div>
 
-    <div class="mt-12 flex justify-center gap-3">
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
-        1
-      </button>
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
-        2
-      </button>
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
-        3
-      </button>
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
-        4
-      </button>
-      <button class="flex h-12 w-12 items-center justify-center rounded-2xl border border-base text-sm font-semibold text-stone-700">
-        5
-      </button>
-      <button class="flex h-12 w-16 items-center justify-center rounded-2xl bg-brand text-sm font-semibold text-white">
-        次
-      </button>
+    <div class="mt-12 flex justify-center">
+      <%= paginate @products %>
     </div>
   </section>
 </main>
