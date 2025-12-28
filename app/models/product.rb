@@ -40,4 +40,19 @@ class Product < ApplicationRecord
   def overall_average_score
     reviews.average(:overall_score)&.to_f
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      name
+      brand
+      flavor
+      protein_type
+      created_at
+      updated_at
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[reviews tags]
+  end
 end

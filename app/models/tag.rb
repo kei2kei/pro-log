@@ -12,6 +12,10 @@ class Tag < ApplicationRecord
     value.to_s.split(/[,\s]+/).map { |name| name.strip.downcase }.reject(&:blank?).uniq
   end
 
+  def self.ransackable_attributes(_ = nil)
+    %w[name created_at updated_at]
+  end
+
   private
 
   # 単体保存用
