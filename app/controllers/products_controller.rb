@@ -2,8 +2,8 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @q = Product.ransack(params[:q])
-    @products = @q.result(distinct: true).includes(image_attachment: :blob).order(created_at: :desc)
+    @q = Product.left_joins(:reviews).group(:id).ransack(params[:q])
+    @products = @q.result.includes(image_attachment: :blob).order(created_at: :desc)
     @bookmarks_by_product_id = current_user.product_bookmarks.index_by(&:product_id)
   end
 
