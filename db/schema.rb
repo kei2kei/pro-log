@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_28_010957) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_28_011340) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,6 +76,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_28_010957) do
     t.index ["user_id"], name: "index_review_likes_on_user_id"
   end
 
+  create_table "review_taggings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "review_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id", "tag_id"], name: "index_review_taggings_on_review_id_and_tag_id", unique: true
+    t.index ["review_id"], name: "index_review_taggings_on_review_id"
+    t.index ["tag_id"], name: "index_review_taggings_on_tag_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "aftertaste", null: false
     t.text "comment"
@@ -122,6 +132,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_28_010957) do
   add_foreign_key "product_bookmarks", "users"
   add_foreign_key "review_likes", "reviews"
   add_foreign_key "review_likes", "users"
+  add_foreign_key "review_taggings", "reviews"
+  add_foreign_key "review_taggings", "tags"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
 end
