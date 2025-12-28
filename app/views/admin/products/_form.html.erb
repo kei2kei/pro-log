@@ -1,0 +1,39 @@
+<%= form_with model: [:admin, @product], class: "space-y-8 rounded-2xl border border-base bg-white p-8 shadow-sm" do |f| %>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="space-y-2">
+      <%= f.label :name, "商品名", class: "text-sm font-semibold text-stone-700" %>
+      <%= f.text_field :name, class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+    </div>
+
+    <div class="space-y-2">
+      <%= f.label :brand, "ブランド", class: "text-sm font-semibold text-stone-700" %>
+      <%= f.text_field :brand, class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+    </div>
+
+    <div class="space-y-2">
+      <%= f.label :flavor, "フレーバー", class: "text-sm font-semibold text-stone-700" %>
+      <%= f.text_field :flavor, class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+    </div>
+
+    <div class="space-y-2">
+      <%= f.label :protein_type, "種類", class: "text-sm font-semibold text-stone-700" %>
+      <%= f.select :protein_type, Product.protein_types.keys, {}, class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+    </div>
+
+    <div class="space-y-2">
+      <%= f.label :price, "価格帯", class: "text-sm font-semibold text-stone-700" %>
+      <%= f.number_field :price, class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+    </div>
+
+    <div class="space-y-2 md:col-span-2">
+      <%= f.label :image, "商品画像", class: "text-sm font-semibold text-stone-700" %>
+      <%= f.file_field :image, class: "block w-full text-sm text-stone-700 file:mr-4 file:rounded-lg file:border-0 file:bg-stone-100 file:px-4 file:py-2 file:font-semibold file:text-stone-700 hover:file:bg-stone-200" %>
+    </div>
+  </div>
+
+  <div class="flex justify-end">
+    <%= f.submit "保存する", class: "btn-primary px-6" %>
+  </div>
+
+<% end %>
