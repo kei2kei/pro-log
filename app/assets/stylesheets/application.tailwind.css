@@ -65,7 +65,7 @@
     height: 1rem;
     width: 1rem;
     border-radius: 9999px;
-    background: oklch(69.6% .17 162.48);
+    background: #2F855A;
     border: 2px solid #ffffff;
   }
 
@@ -73,7 +73,7 @@
     height: 1rem;
     width: 1rem;
     border-radius: 9999px;
-    background: oklch(69.6% .17 162.48);
+    background: #2F855A;
     border: 2px solid #ffffff;
   }
 }

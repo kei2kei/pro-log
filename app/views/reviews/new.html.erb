@@ -1,13 +1,13 @@
-<main class="min-h-screen bg-stone-50 text-stone-900">
-  <section class="border-b border-stone-200 bg-white">
-    <div class="mx-auto max-w-6xl px-6 py-12">
-      <p class="text-xs uppercase tracking-[0.4em] text-emerald-600">Review</p>
+<main class="min-h-screen bg-white text-main">
+  <section class="border-b border-base bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-12">
+      <p class="text-xs uppercase tracking-[0.35em] text-brand">Review</p>
       <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">プロテインのレビュー作成</h1>
     </div>
   </section>
 
-  <section class="mx-auto max-w-4xl px-6 py-12">
-    <div class="rounded-3xl border border-stone-200 bg-white p-8 shadow-sm">
+  <section class="mx-auto max-w-7xl px-6 py-12">
+    <div class="rounded-3xl border border-base bg-white p-8 shadow-sm">
       <%= render "devise/shared/error_messages", resource: @review %>
 
       <div class="grid gap-8 md:grid-cols-[1fr_220px] md:items-center">
@@ -28,30 +28,30 @@
       </div>
 
       <%= form_with model: [@product, @review], class: "mt-10 space-y-8" do |f| %>
-        <div class="rounded-2xl border border-stone-200 bg-stone-50 px-6 py-5">
-          <div class="flex flex-wrap items-center gap-4">
-            <span class="text-sm font-semibold text-stone-700">総合満足度</span>
-            <div class="flex flex-row-reverse items-center gap-1">
-              <% 5.downto(1) do |score| %>
-                <%= radio_button_tag "review[overall_score]", score, @review.overall_score.to_i == score,
-                  id: "review_overall_score_#{score}", class: "peer sr-only" %>
+      <div class="rounded-2xl border border-base bg-stone-50 px-6 py-5">
+        <div class="flex flex-wrap items-center gap-4">
+          <span class="text-sm font-semibold text-stone-700">総合満足度</span>
+          <div class="flex flex-row-reverse items-center gap-1">
+            <% 5.downto(1) do |score| %>
+              <%= radio_button_tag "review[overall_score]", score, @review.overall_score.to_i == score,
+                id: "review_overall_score_#{score}", class: "peer sr-only" %>
                 <label for="review_overall_score_<%= score %>" class="cursor-pointer text-2xl text-stone-300 peer-checked:text-amber-400 peer-checked~label:text-amber-400">
                   ★
                 </label>
-              <% end %>
-            </div>
+            <% end %>
+          </div>
             <span id="overall-score-value" class="ml-auto text-sm font-semibold text-stone-700"></span>
           </div>
         </div>
 
         <div class="grid gap-6 md:grid-cols-[160px_1fr]">
           <p class="text-sm font-semibold text-stone-700">レビュータイトル</p>
-          <%= f.text_field :title, class: "w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200" %>
+          <%= f.text_field :title, class: "w-full rounded-2xl border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
         </div>
 
         <div class="grid gap-6 md:grid-cols-[160px_1fr]">
           <p class="text-sm font-semibold text-stone-700">レビュー内容</p>
-          <%= f.text_area :comment, rows: 5, class: "w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200" %>
+          <%= f.text_area :comment, rows: 5, class: "w-full rounded-2xl border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
         </div>
 
         <div class="grid gap-6 md:grid-cols-[160px_1fr]">
@@ -59,7 +59,7 @@
             <p class="text-sm font-semibold text-stone-700">タグ</p>
             <p class="mt-1 text-xs text-stone-400">カンマ・スペース区切りで入力</p>
           </div>
-          <%= f.text_field :tag_names, value: @review.tag_names, placeholder: "例: チョコ, 甘め など", class: "w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200" %>
+          <%= f.text_field :tag_names, value: @review.tag_names, placeholder: "例: チョコ, 甘め など", class: "w-full rounded-2xl border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
         </div>
 
         <div class="space-y-6">
@@ -89,8 +89,8 @@
         </div>
 
         <div class="flex justify-center gap-3 pt-4">
-          <%= link_to "キャンセル", product_path(@product), class: "rounded-full border border-stone-200 px-6 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
-          <%= f.submit "送信", class: "rounded-full bg-emerald-500 px-8 py-2 text-sm font-semibold text-white hover:bg-emerald-400" %>
+          <%= link_to "キャンセル", product_path(@product), class: "rounded-full border border-base px-6 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+          <%= f.submit "送信", class: "btn-primary rounded-full px-8 py-2" %>
         </div>
       <% end %>
     </div>
