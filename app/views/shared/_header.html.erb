@@ -13,6 +13,7 @@
       <%= link_to "特徴", root_path(anchor: "features"), class: "transition hover:text-white" %>
       <% if user_signed_in? %>
         <%= link_to "プロテイン一覧", products_path, class: "transition hover:text-white" %>
+        <%= link_to "マイページ", profile_path, class: "transition hover:text-white" %>
       <% end %>
     </nav>
 
