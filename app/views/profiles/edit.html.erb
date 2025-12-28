@@ -1,2 +1,43 @@
-<h1>Profiles#edit</h1>
-<p>Find me in app/views/profiles/edit.html.erb</p>
+<main class="min-h-screen bg-stone-50 text-stone-900">
+  <section class="border-b border-stone-200 bg-white">
+    <div class="mx-auto max-w-6xl px-6 py-12">
+      <p class="text-xs uppercase tracking-[0.4em] text-emerald-600">Profile</p>
+      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">プロフィール編集</h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 py-12">
+    <div class="rounded-3xl border border-stone-200 bg-white p-8 shadow-sm">
+      <%= render "devise/shared/error_messages", resource: @user %>
+
+      <%= form_with model: @user, url: profile_path, method: :patch, class: "space-y-8" do |f| %>
+        <div class="grid gap-6 md:grid-cols-[140px_1fr] md:items-center">
+          <div class="text-center">
+            <% if @user.avatar.attached? %>
+              <%= image_tag @user.avatar.variant(resize_to_fill: [120, 120]), class: "mx-auto h-28 w-28 rounded-full object-cover", alt: @user.username %>
+            <% else %>
+              <div class="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-stone-200 text-sm font-semibold text-stone-600">
+                <%= @user.username.to_s.first&.upcase || "U" %>
+              </div>
+            <% end %>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <%= f.label :username, "ユーザー名", class: "text-sm font-semibold text-stone-700" %>
+              <%= f.text_field :username, class: "mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200" %>
+            </div>
+            <div>
+              <%= f.label :avatar, "アバター", class: "text-sm font-semibold text-stone-700" %>
+              <%= f.file_field :avatar, class: "mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-2 text-sm text-stone-600 file:mr-4 file:rounded-full file:border-0 file:bg-emerald-50 file:px-4 file:py-2 file:text-xs file:font-semibold file:text-emerald-600" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-3">
+          <%= link_to "戻る", profile_path, class: "rounded-full border border-stone-200 px-6 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+          <%= f.submit "更新する", class: "rounded-full bg-emerald-500 px-8 py-2 text-sm font-semibold text-white hover:bg-emerald-400" %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</main>
