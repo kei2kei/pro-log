@@ -54,6 +54,14 @@
           <%= f.text_area :comment, rows: 5, class: "w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200" %>
         </div>
 
+        <div class="grid gap-6 md:grid-cols-[160px_1fr]">
+          <div>
+            <p class="text-sm font-semibold text-stone-700">タグ</p>
+            <p class="mt-1 text-xs text-stone-400">カンマ・スペース区切りで入力</p>
+          </div>
+          <%= f.text_field :tag_names, value: @review.tag_names, placeholder: "例: チョコ, 甘め など", class: "w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200" %>
+        </div>
+
         <div class="space-y-6">
           <h3 class="text-lg font-semibold text-stone-900">各項目の評価</h3>
           <% [

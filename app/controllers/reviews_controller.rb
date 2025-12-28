@@ -66,6 +66,7 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(
       :title,
       :comment,
+      :tag_names,
       :overall_score,
       :sweetness,
       :richness,

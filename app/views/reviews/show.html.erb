@@ -34,11 +34,13 @@
                 <p class="mt-2 text-sm text-stone-600"><%= @review.comment %></p>
               <% end %>
             </div>
-            <div class="flex flex-wrap gap-3">
-              <span class="rounded-full border border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-600">#タグ</span>
-              <span class="rounded-full border border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-600">#タグ</span>
-              <span class="rounded-full border border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-600">#タグ</span>
-            </div>
+            <% if @review.tags.any? %>
+              <div class="flex flex-wrap gap-3">
+                <% @review.tags.each do |tag| %>
+                  <span class="rounded-full border border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-600">#<%= tag.name %></span>
+                <% end %>
+              </div>
+            <% end %>
           </div>
           <div class="shrink-0 pt-1">
             <%= render "shared/like_buttons", review: @review %>

@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   has_one_attached :image
   has_many :reviews, dependent: :destroy
   has_many :product_bookmarks, dependent: :destroy
+  has_many :product_taggings, dependent: :destroy
+  has_many :tags, through: :product_taggings
 
   enum :protein_type, {
     whey: 0,
@@ -11,6 +13,18 @@ class Product < ApplicationRecord
   }
 
   validates :name, :brand, :price, :protein_type, presence: true
+
+  def tag_names
+    # フォーム表示用にキャッシュ格納
+    @tag_names ||= tags.pluck(:name).join(" ")
+  end
+
+  def tag_names=(names)
+    # tag_namesにキャッシュ(入力ページに戻った時用)として現在のタグを保持
+    @tag_names = names
+    normalized = Tag.normalize_names(names)
+    self.tags = normalized.map { |name| Tag.find_or_create_by!(name: name) }
+  end
 
   def review_averages
     @review_averages ||= {
