@@ -1,5 +1,7 @@
-<% if current_user&.like?(review) %>
-  <%= render 'shared/unlike_button', { review: review } %>
-<% else %>
-  <%= render 'shared/like_button', { review: review } %>
+<%= turbo_frame_tag dom_id(review, :like) do %>
+  <% if current_user&.like?(review) %>
+    <%= render "shared/unlike_button", review: review %>
+  <% else %>
+    <%= render "shared/like_button", review: review %>
+  <% end %>
 <% end %>
