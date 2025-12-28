@@ -7,17 +7,19 @@
       </p>
 
       <div class="mt-8 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
-        <div class="rounded-full border border-stone-200 bg-white px-5 py-3 text-sm text-stone-400">
-          商品名、ブランド名、フレーバー など
-        </div>
-        <div class="flex flex-wrap gap-3">
-          <div class="rounded-full border border-emerald-500 bg-emerald-500 px-5 py-2 text-sm font-semibold text-white">
-            ¥0 ~ 指定なし
+        <%= search_form_for @q, url: products_path, method: :get, class: "flex flex-wrap items-center gap-3" do |f| %>
+          <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
+            placeholder: "商品名、ブランド名、フレーバー、タグ など",
+            class: "w-full max-w-2xl rounded-full border border-stone-200 bg-white px-5 py-3 text-sm text-stone-600 placeholder:text-stone-400" %>
+          <div>
+            <%= f.label :protein_type_eq, "プロテインタイプ", class: "sr-only" %>
+            <%= f.select :protein_type_eq,
+              Product.protein_types.map { |k, v| [k, v] },
+              { include_blank: "プロテインの種類" },
+              class: "rounded-full border border-stone-200 bg-white px-5 py-3 text-sm text-stone-600" %>
           </div>
-          <button class="rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold text-white">
-            検索
-          </button>
-        </div>
+          <%= f.submit "検索", class: "rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold text-white" %>
+        <% end %>
       </div>
     </div>
   </section>
