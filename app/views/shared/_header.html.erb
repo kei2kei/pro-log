@@ -9,7 +9,7 @@
       <% end %>
 
       <nav class="hidden items-center gap-8 text-sm font-medium text-stone-600 md:flex">
-        <%= link_to "使い方", root_path(anchor: "how"), class: "transition hover:text-main" %>
+        <%= link_to "使い方", about_path, class: "transition hover:text-main" %>
         <% if user_signed_in? %>
           <%= link_to "プロテイン一覧", products_path, class: "transition hover:text-main" %>
           <%= link_to "マイページ", profile_path, class: "transition hover:text-main" %>
