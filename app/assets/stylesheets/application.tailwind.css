@@ -1,6 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @layer components {
+  .bg-brand {
+    background-color: #2F855A;
+  }
+
+  .bg-brand-light {
+    background-color: #48BB78;
+  }
+
+  .bg-brand-dark {
+    background-color: #276749;
+  }
+
+  .text-brand {
+    color: #2F855A;
+  }
+
+  .text-brand-dark {
+    color: #276749;
+  }
+
+  .text-accent {
+    color: #F6AD55;
+  }
+
+  .text-main {
+    color: #1A202C;
+  }
+
+  .border-brand {
+    border-color: #2F855A;
+  }
+
+  .border-base {
+    border-color: #E2E8F0;
+  }
+
+  .btn-primary {
+    @apply rounded-lg px-6 py-3 text-sm font-semibold text-white shadow-sm transition;
+    background-color: #2F855A;
+  }
+
+  .btn-primary:hover {
+    background-color: #48BB78;
+  }
+
+  .btn-outline {
+    @apply rounded-lg px-6 py-3 text-sm font-semibold transition;
+    border: 1px solid #2F855A;
+    color: #2F855A;
+    background-color: transparent;
+  }
+
+  .btn-outline:hover {
+    border-color: #276749;
+    color: #276749;
+  }
+
   .rating-range::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
