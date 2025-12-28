@@ -13,7 +13,7 @@ class ReviewsController < ApplicationController
     @review.user = current_user
 
     if @review.save
-      redirect_to review_path(@review), notice: "レビューを投稿しました。"
+      redirect_to review_path(@review), notice: "レビューを投稿しました。", flash: { share_prompt: true }
     else
       render :new, status: :unprocessable_entity
     end
