@@ -84,6 +84,11 @@
           </div>
         <% end %>
       </div>
+      <% if @liked_reviews.any? %>
+        <div class="mt-10 flex justify-center">
+          <%= paginate @liked_reviews %>
+        </div>
+      <% end %>
     <% elsif @tab == "reviews" %>
       <div class="mt-10 space-y-6">
         <% if @reviews.any? %>
@@ -94,6 +99,11 @@
           </div>
         <% end %>
       </div>
+      <% if @reviews.any? %>
+        <div class="mt-10 flex justify-center">
+          <%= paginate @reviews %>
+        </div>
+      <% end %>
     <% else %>
       <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <% if @bookmarked_products.any? %>
@@ -107,6 +117,11 @@
           </div>
         <% end %>
       </div>
+      <% if @bookmarked_products.any? %>
+        <div class="mt-10 flex justify-center">
+          <%= paginate @bookmarked_products %>
+        </div>
+      <% end %>
     <% end %>
   </section>
 </main>
