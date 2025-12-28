@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  
+
   def show
     @user = current_user
     @tab = params[:tab].presence_in(%w[bookmarks likes reviews]) || "bookmarks"
