@@ -1,2 +1,22 @@
-<h1>Admin::Products#new</h1>
-<p>Find me in app/views/admin/products/new.html.erb</p>
+<h1 class="text-2xl font-semibold mb-6">商品登録</h1>
+
+<%= form_with model: [:admin, @product], local: true do |f| %>
+  <div class="space-y-4">
+    <%= f.label :name, "商品名" %>
+    <%= f.text_field :name %>
+
+    <%= f.label :brand, "ブランド" %>
+    <%= f.text_field :brand %>
+
+    <%= f.label :protein_type, "種類" %>
+    <%= f.select :protein_type, Product.protein_types.keys %>
+
+    <%= f.label :price, "価格" %>
+    <%= f.number_field :price %>
+
+    <%= f.label :image, "画像" %>
+    <%= f.file_field :image %>
+
+    <%= f.submit "登録する", class: "btn-primary mt-4" %>
+  </div>
+<% end %>
