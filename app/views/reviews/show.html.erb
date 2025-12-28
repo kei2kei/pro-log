@@ -69,6 +69,24 @@
                 <% end %>
               </div>
             <% end %>
+            <% if @review.user == current_user %>
+              <div class="flex flex-wrap gap-3 pt-2">
+                <% share_text = ERB::Util.url_encode("Pro-logで#{@review.product.name}をレビューしたよ!!\n#{@review.title}") %>
+                <% share_url = ERB::Util.url_encode(request.original_url) %>
+                <%= link_to "https://twitter.com/intent/tweet?text=#{share_text}&url=#{share_url}",
+                  target: "_blank",
+                  rel: "noopener",
+                  class: "inline-flex items-center gap-2 rounded-full bg-black px-4 py-2 text-xs font-semibold text-white hover:bg-stone-800",
+                  aria: { label: "Xでシェア" } do %>
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                    <path d="M13.682 10.621 20.24 3h-1.554l-5.7 6.621L8.53 3H3.285l6.879 10.008L3.285 21h1.554l6.014-6.979L15.454 21h5.245l-7.017-10.379Zm-2.04 2.368-.698-.999-5.57-7.97h2.387l4.495 6.429.698.999 5.846 8.366h-2.387l-4.73-6.826Z"></path>
+                  </svg>
+                  Xでシェア
+                <% end %>
+                <%= link_to "編集", edit_review_path(@review), class: "btn-primary rounded-full px-4 py-2 text-xs" %>
+                <%= button_to "削除", review_path(@review), method: :delete, data: { confirm: "このレビューを削除しますか？" }, class: "rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
+              </div>
+            <% end %>
           </div>
           <div class="shrink-0 pt-1">
             <%= render "shared/like_buttons", review: @review %>
