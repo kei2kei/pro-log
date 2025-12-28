@@ -19,4 +19,5 @@ Rails.application.routes.draw do
   end
   resources :reviews, only: [ :show, :edit, :update, :destroy ]
   resources :bookmarks, only: [ :create, :destroy ], controller: "product_bookmarks"
+  resources :likes, only: [ :create, :destroy ], controller: "review_likes"
 end

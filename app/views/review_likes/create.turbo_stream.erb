@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@review, :like) do %>
+  <%= render "shared/like_buttons", review: @review %>
+<% end %>
