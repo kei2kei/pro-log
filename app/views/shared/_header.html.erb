@@ -1,21 +1,21 @@
 <header class="relative z-10 bg-stone-950 text-white">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-    <div class="flex items-center">
-      <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-400 text-stone-950 font-semibold">
-        PL
-      </div>
-      <span class="text-lg font-semibold tracking-wide font-['Space_Grotesk'] mx-2">Pro-log</span>
-    </div>
-
-    <nav class="hidden items-center gap-8 text-sm font-medium text-white/80 md:flex">
-      <%= link_to "使い方", root_path(anchor: "how"), class: "transition hover:text-white" %>
-      <%= link_to "Pro-logとは", root_path(anchor: "about"), class: "transition hover:text-white" %>
-      <%= link_to "特徴", root_path(anchor: "features"), class: "transition hover:text-white" %>
-      <% if user_signed_in? %>
-        <%= link_to "プロテイン一覧", products_path, class: "transition hover:text-white" %>
-        <%= link_to "マイページ", profile_path, class: "transition hover:text-white" %>
+    <div class="flex items-center gap-8">
+      <%= link_to root_path, class: "flex items-center gap-2" do %>
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-400 text-stone-950 font-semibold">
+          PL
+        </div>
+        <span class="text-lg font-semibold tracking-wide font-['Space_Grotesk']">Pro-log</span>
       <% end %>
-    </nav>
+
+      <nav class="hidden items-center gap-8 text-sm font-medium text-white/80 md:flex">
+        <%= link_to "使い方", root_path(anchor: "how"), class: "transition hover:text-white" %>
+        <% if user_signed_in? %>
+          <%= link_to "プロテイン一覧", products_path, class: "transition hover:text-white" %>
+          <%= link_to "マイページ", profile_path, class: "transition hover:text-white" %>
+        <% end %>
+      </nav>
+    </div>
 
     <div class="flex items-center gap-3">
       <% if user_signed_in? %>
