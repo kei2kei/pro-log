@@ -22,4 +22,12 @@ class Review < ApplicationRecord
     normalized = Tag.normalize_names(names)
     self.tags = normalized.map { |name| Tag.find_or_create_by!(name: name) }
   end
+
+  def self.ransackable_attributes(_ = nil)
+    %w[overall_score product_id]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[product]
+  end
 end

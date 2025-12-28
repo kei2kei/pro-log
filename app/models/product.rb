@@ -40,4 +40,29 @@ class Product < ApplicationRecord
   def overall_average_score
     reviews.average(:overall_score)&.to_f
   end
+
+  ransacker :reviews_overall_score_avg do
+    Arel.sql(<<~SQL)
+      (
+        SELECT AVG(reviews.overall_score)
+        FROM reviews
+        WHERE reviews.product_id = products.id
+      )
+    SQL
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      name
+      brand
+      flavor
+      price
+      protein_type
+      reviews_overall_score_avg
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[reviews tags]
+  end
 end
