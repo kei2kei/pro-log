@@ -122,28 +122,15 @@
       <% end %>
     </div>
 
-      <div class="mt-10 space-y-6">
-        <% [
-          [:sweetness, "甘め", "甘くない"],
-          [:richness, "濃いめ", "薄め"],
-          [:aftertaste, "後味重め", "後味スッキリ"],
-          [:flavor_score, "風味豊か", "風味控えめ"],
-          [:solubility, "溶けやすい", "溶けにくい"],
-          [:foam, "泡立ちやすい", "泡立ちにくい"]
-        ].each do |key, left, right| %>
-          <% score = @review.public_send(key) %>
-          <% position = ((score - 1) / 4.0 * 100).round(1) %>
-          <div class="grid gap-4 md:grid-cols-[120px_1fr_120px] md:items-center">
-            <span class="text-sm font-semibold text-emerald-600"><%= left %></span>
-            <div class="relative h-2 rounded-full bg-stone-200">
-              <div class="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
-              <div class="absolute left-1/2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
-              <div class="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-200"></div>
-              <div class="absolute top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-emerald-500" style="left: <%= position %>%"></div>
-            </div>
-            <span class="text-right text-sm font-semibold text-emerald-600"><%= right %></span>
-          </div>
-        <% end %>
+      <div class="mt-10">
+        <%= render "shared/axis_scores", values: {
+          sweetness: @review.sweetness,
+          richness: @review.richness,
+          aftertaste: @review.aftertaste,
+          flavor_score: @review.flavor_score,
+          solubility: @review.solubility,
+          foam: @review.foam
+        } %>
       </div>
     </div>
   </section>
