@@ -6,6 +6,6 @@ class CreateProductTaggings < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    add_index :product_taggings, [:product_id, :tag_id], unique: true
+    add_index :product_taggings, [ :product_id, :tag_id ], unique: true
   end
 end
