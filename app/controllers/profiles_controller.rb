@@ -25,4 +25,10 @@ class ProfilesController < ApplicationController
 
   def update
   end
+
+  private
+
+  def profile_params
+    params.require(:user).permit(:username, :avatar)
+  end
 end
