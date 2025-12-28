@@ -1,2 +1,125 @@
-<h1>Profiles#show</h1>
-<p>Find me in app/views/profiles/show.html.erb</p>
+<main class="min-h-screen bg-stone-50 text-stone-900">
+  <section class="border-b border-stone-200 bg-white">
+    <div class="mx-auto max-w-6xl px-6 py-12">
+      <p class="text-xs uppercase tracking-[0.4em] text-emerald-600">My Page</p>
+      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">マイページ</h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <div class="rounded-3xl border border-stone-200 bg-white p-8 shadow-sm">
+      <div class="grid gap-6 md:grid-cols-[140px_1fr] md:items-center">
+        <div class="text-center">
+          <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar.variant(resize_to_fill: [120, 120]), class: "mx-auto h-28 w-28 rounded-full object-cover", alt: @user.username %>
+          <% else %>
+            <div class="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-stone-200 text-sm font-semibold text-stone-600">
+              <%= @user.username.to_s.first&.upcase || "U" %>
+            </div>
+          <% end %>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">ユーザー名</p>
+            <p class="mt-1 text-xl font-semibold text-stone-900"><%= @user.username %></p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">メール</p>
+            <p class="mt-1 text-sm text-stone-600"><%= @user.email %></p>
+          </div>
+          <div class="pt-2">
+            <%= link_to "プロフィール編集", edit_profile_path, class: "rounded-full border border-stone-200 px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <%= link_to "ブックマーク", profile_path(tab: "bookmarks"), class: @tab == "bookmarks" ? "rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-stone-200 px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+        <%= link_to "いいね", profile_path(tab: "likes"), class: @tab == "likes" ? "rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-stone-200 px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+        <%= link_to "レビュー", profile_path(tab: "reviews"), class: @tab == "reviews" ? "rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-stone-200 px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+      </div>
+    </div>
+
+    <% if @tab == "likes" %>
+      <div class="mt-10 space-y-6">
+        <% if @liked_reviews.any? %>
+          <% @liked_reviews.each do |review| %>
+            <div class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+              <%= link_to review_path(review), class: "block" do %>
+                <div class="grid gap-6 md:grid-cols-[140px_1fr]">
+                  <div class="text-center">
+                    <% if review.user.avatar.attached? %>
+                      <%= image_tag review.user.avatar.variant(resize_to_fill: [96, 96]), class: "mx-auto h-24 w-24 rounded-full object-cover", alt: review.user.username %>
+                    <% else %>
+                      <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-stone-200 text-sm font-semibold text-stone-600">
+                        <%= review.user.username.to_s.first&.upcase || "U" %>
+                      </div>
+                    <% end %>
+                    <p class="mt-3 text-sm font-semibold text-stone-700"><%= review.user.username %></p>
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex flex-wrap items-center gap-3 text-sm">
+                      <span class="font-semibold text-stone-700">総合満足度</span>
+                      <span class="text-amber-400"><%= "★" * review.overall_score %><%= "☆" * (5 - review.overall_score) %></span>
+                      <span class="text-sm font-semibold text-stone-900"><%= review.overall_score %>.0/5.0</span>
+                    </div>
+                    <div class="text-sm text-stone-600">
+                      <span class="font-semibold text-stone-700">商品：</span>
+                      <%= review.product.name %> / <%= review.product.brand %>
+                    </div>
+                    <% if review.comment.present? %>
+                      <div class="text-sm text-stone-600">
+                        <span class="font-semibold text-stone-700">コメント：</span>
+                        <%= review.comment %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="rounded-3xl border border-dashed border-stone-200 bg-white p-8 text-center text-sm text-stone-500">
+            まだいいねしたレビューがありません。
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <% products = @tab == "reviews" ? @reviewed_products : @bookmarked_products %>
+        <% if products.any? %>
+          <% products.each do |product| %>
+            <div class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <%= link_to product_path(product), class: "block" do %>
+                <div class="aspect-square w-full overflow-hidden rounded-2xl bg-stone-100">
+                  <% if product.image.attached? %>
+                    <%= image_tag product.image.variant(resize_to_fill: [480, 480]), class: "h-full w-full object-cover", alt: product.name %>
+                  <% else %>
+                    <div class="flex h-full w-full items-center justify-center text-sm text-stone-400">
+                      No Image
+                    </div>
+                  <% end %>
+                </div>
+                <div class="mt-5 space-y-2">
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
+                    <%= product.protein_type %> / <%= product.flavor %>
+                  </p>
+                  <h2 class="text-lg font-semibold"><%= product.name %></h2>
+                  <p class="text-sm text-stone-500"><%= product.brand %></p>
+                  <div class="flex items-center justify-between pt-2 text-sm text-stone-600">
+                    <span>100gあたり</span>
+                    <span class="text-base font-semibold text-stone-900">¥<%= product.price %></span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="rounded-3xl border border-dashed border-stone-200 bg-white p-8 text-center text-sm text-stone-500 md:col-span-2 lg:col-span-3">
+            まだ該当する商品がありません。
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
+</main>
