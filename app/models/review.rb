@@ -2,6 +2,8 @@ class Review < ApplicationRecord
   belongs_to :user
   belongs_to :product
   has_many :review_likes, dependent: :destroy
+  has_many :review_taggings, dependent: :destroy
+  has_many :tags, through: :review_taggings
 
   validates :title, presence: true
   validates :overall_score, :sweetness, :richness, :aftertaste, :flavor_score, :solubility, :foam, presence: true
