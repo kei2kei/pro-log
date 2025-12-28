@@ -1,2 +1,27 @@
-<h1>Admin::Products#index</h1>
-<p>Find me in app/views/admin/products/index.html.erb</p>
+<h1 class="text-2xl font-semibold mb-6">商品一覧（管理）</h1>
+
+<%= link_to "新規登録", new_admin_product_path,
+  class: "btn-primary mb-4 inline-block" %>
+
+<table class="w-full border border-base bg-white text-sm">
+  <thead>
+    <tr class="bg-stone-100">
+      <th class="p-3 border-b">ID</th>
+      <th class="p-3 border-b">商品名</th>
+      <th class="p-3 border-b">ブランド</th>
+      <th class="p-3 border-b">種類</th>
+      <th class="p-3 border-b">登録日</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr class="border-b hover:bg-stone-50">
+        <td class="p-3"><%= product.id %></td>
+        <td class="p-3 font-semibold"><%= product.name %></td>
+        <td class="p-3"><%= product.brand %></td>
+        <td class="p-3"><%= product.protein_type %></td>
+        <td class="p-3"><%= l product.created_at, format: :short %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
