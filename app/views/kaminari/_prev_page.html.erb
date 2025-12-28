@@ -6,6 +6,10 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<span class="prev">
-  <%= link_to_unless current_page.first?, t('views.pagination.previous').html_safe, url, rel: 'prev', remote: remote %>
-</span>
+<% if current_page.first? %>
+  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-base text-sm font-semibold text-stone-400">
+    ‹
+  </span>
+<% else %>
+  <%= link_to "‹", url, rel: "prev", remote: remote, class: "inline-flex h-10 w-10 items-center justify-center rounded-full border border-base text-sm font-semibold text-stone-600 hover:border-stone-300", aria: { label: "前へ" } %>
+<% end %>
