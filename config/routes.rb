@@ -24,6 +24,6 @@ Rails.application.routes.draw do
   resources :likes, only: [ :create, :destroy ], controller: "review_likes"
 
   namespace :admin do
-    resources :products, only: [:index, :new, :create]
+    resources :products
   end
 end
