@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    get "products/index"
-    get "products/new"
-    get "products/create"
-  end
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -27,4 +22,8 @@ Rails.application.routes.draw do
   resources :reviews, only: [ :show, :edit, :update, :destroy ]
   resources :bookmarks, only: [ :create, :destroy ], controller: "product_bookmarks"
   resources :likes, only: [ :create, :destroy ], controller: "review_likes"
+
+  namespace :admin do
+    resources :products, only: [:index, :new, :create]
+  end
 end
