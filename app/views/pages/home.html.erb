@@ -30,13 +30,24 @@
               <%= link_to "ログイン", new_user_session_path, class: "rounded-full border border-white/40 px-6 py-3 text-sm font-semibold transition hover:border-white hover:bg-white/10" %>
             </div>
           <% end %>
-          <div class="mt-8 flex items-center gap-4 text-sm text-white/60">
-            <div class="flex -space-x-2">
-              <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
-              <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
-              <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
-            </div>
-            <p>レビュー投稿者が好みを共有しています</p>
+          <div class="mt-8">
+            <% if user_signed_in? %>
+              <%= search_form_for @q, url: products_path, method: :get, class: "flex items-center gap-3" do |f| %>
+                <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
+                  placeholder: "商品名、ブランド名、フレーバー など",
+                  class: "h-14 w-96 rounded-full border border-stone-200 bg-white px-5 text-center text-base font-thin text-stone-600 placeholder:text-stone-400" %>
+                <%= f.submit "検索", class: "h-14 rounded-full bg-emerald-500 px-6 text-base font-semibold text-white" %>
+              <% end %>
+            <% else %>
+              <div class="flex items-center gap-4 text-sm text-white/60">
+                <div class="flex -space-x-2">
+                  <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
+                  <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
+                  <div class="h-8 w-8 rounded-full border border-white/20 bg-white/10"></div>
+                </div>
+                <p>レビュー投稿者が好みを共有しています</p>
+              </div>
+            <% end %>
           </div>
         </div>
 
