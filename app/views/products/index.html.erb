@@ -6,19 +6,48 @@
         甘さ・濃さ・溶けやすさなどのレビューをもとに比較できます。
       </p>
 
-      <div class="mt-8 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
-        <%= search_form_for @q, url: products_path, method: :get, class: "flex flex-wrap items-center gap-3" do |f| %>
-          <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
-            placeholder: "商品名、ブランド名、フレーバー、タグ など",
-            class: "w-full max-w-2xl rounded-full border border-stone-200 bg-white px-5 py-3 text-sm text-stone-600 placeholder:text-stone-400" %>
-          <div>
-            <%= f.label :protein_type_eq, "プロテインタイプ", class: "sr-only" %>
-            <%= f.select :protein_type_eq,
-              Product.protein_types.map { |k, v| [k, v] },
-              { include_blank: "プロテインの種類" },
-              class: "rounded-full border border-stone-200 bg-white px-5 py-3 text-sm text-stone-600" %>
+      <div class="mt-8">
+        <%= search_form_for @q, url: products_path, method: :get, class: "space-y-4" do |f| %>
+          <div class="flex flex-wrap items-center gap-3">
+            <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
+              placeholder: "商品名、ブランド名、フレーバー、タグ など",
+              class: "w-full max-w-2xl rounded-full border border-stone-200 bg-white px-5 py-3 text-sm text-stone-600 placeholder:text-stone-400" %>
           </div>
-          <%= f.submit "検索", class: "rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold text-white" %>
+          <div class="flex flex-wrap items-end gap-4">
+            <div class="flex flex-col gap-1 text-xs text-stone-500">
+              <span>価格帯</span>
+              <div class="flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm text-stone-600">
+                <%= f.label :price_gteq, "最低価格", class: "sr-only" %>
+                <%= f.number_field :price_gteq, placeholder: "¥0", class: "w-20 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                <span class="text-stone-400">~</span>
+                <%= f.label :price_lteq, "最高価格", class: "sr-only" %>
+                <%= f.number_field :price_lteq, placeholder: "指定なし", class: "w-24 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+              </div>
+            </div>
+            <div class="flex flex-col gap-1 text-xs text-stone-500">
+              <span>満足度（以上）</span>
+              <div class="flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm text-stone-600">
+                <%= f.label :reviews_overall_score_avg_gteq, "満足度（以上）", class: "sr-only" %>
+                <%= f.hidden_field :reviews_overall_score_avg_gteq, value: params.dig(:q, :reviews_overall_score_avg_gteq) %>
+                <div class="flex items-center gap-1" data-star-filter>
+                  <% 1.upto(5) do |score| %>
+                    <button type="button" data-score="<%= score %>" class="text-lg text-stone-300">★</button>
+                  <% end %>
+                  <span class="ml-2 text-xs text-stone-400">以上</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-1 text-xs text-stone-500">
+              <span>プロテインタイプ</span>
+              <%= f.label :protein_type_eq, "プロテインタイプ", class: "sr-only" %>
+              <%= f.select :protein_type_eq,
+                Product.protein_types.map { |k, v| [k, v] },
+                { include_blank: "プロテインの種類" },
+                class: "rounded-full border border-stone-200 bg-white px-5 py-2 text-sm text-stone-600" %>
+            </div>
+            <%= f.submit "検索", class: "rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold text-white" %>
+            <%= link_to "リセット", products_path, class: "rounded-full border border-stone-200 px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+          </div>
         <% end %>
       </div>
     </div>
@@ -82,3 +111,36 @@
     </div>
   </section>
 </main>
+
+<script>
+  const initStarFilter = () => {
+    const container = document.querySelector("[data-star-filter]");
+    if (!container) return;
+
+    const input = container.closest("form").querySelector('input[name="q[reviews_overall_score_avg_gteq]"]');
+    const buttons = container.querySelectorAll("button[data-score]");
+
+    const setActive = (value) => {
+      buttons.forEach((button) => {
+        const score = Number(button.dataset.score);
+        button.classList.toggle("text-amber-400", score <= value);
+        button.classList.toggle("text-stone-300", score > value);
+      });
+    };
+
+    setActive(Number(input.value || 0));
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const score = Number(button.dataset.score);
+        const current = Number(input.value || 0);
+        const next = current === score ? 0 : score;
+        input.value = next;
+        setActive(next);
+      });
+    });
+  };
+
+  document.addEventListener("turbo:load", initStarFilter);
+  document.addEventListener("turbo:render", initStarFilter);
+</script>
