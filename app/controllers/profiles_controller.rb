@@ -10,12 +10,13 @@ class ProfilesController < ApplicationController
         product: { image_attachment: :blob }
       ).joins(:review_likes).where(review_likes: { user_id: @user.id }).distinct
     elsif @tab == "reviews"
-      @reviewed_products = Product.joins(:reviews)
-                                  .where(reviews: { user_id: @user.id })
-                                  .distinct
-                                  .includes(image_attachment: :blob)
+      @reviews = @user.reviews.includes(
+        user: { avatar_attachment: :blob },
+        product: { image_attachment: :blob }
+      ).order(created_at: :desc)
     else
       @bookmarked_products = @user.bookmark_products.includes(image_attachment: :blob)
+      @bookmarks_by_product_id = @user.product_bookmarks.index_by(&:product_id)
     end
   end
 

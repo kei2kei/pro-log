@@ -1,0 +1,39 @@
+<% scores = values || {} %>
+<div class="space-y-6">
+  <% [
+    [:sweetness, "甘め", "やや甘め", "普通", "やや甘さ控えめ", "甘くない"],
+    [:richness, "濃いめ", "やや濃いめ", "普通", "やや薄め", "薄め"],
+    [:aftertaste, "後味重め", "やや重め", "普通", "ややスッキリめ", "後味スッキリ"],
+    [:flavor_score, "風味豊か", "やや風味あり", "普通", "やや風味控えめ", "風味控えめ"],
+    [:solubility, "溶けやすい", "やや溶けやすい", "普通", "やや溶けにくい", "溶けにくい"],
+    [:foam, "泡立ちやすい", "やや泡立ちやすい", "普通", "やや泡立ちにくい", "泡立ちにくい"]
+  ].each do |key, strong, semi_strong, normal_label, semi_weak, weak| %>
+    <% value = scores[key] || scores[key.to_s] %>
+    <% position = value ? ((value - 1) / 4.0 * 100).round(1) : 50 %>
+    <div class="space-y-1">
+      <div class="relative h-5">
+        <span class="absolute -translate-x-1/2 whitespace-nowrap text-[10px] text-stone-500" style="left: 0%">
+          <%= weak %>
+        </span>
+        <span class="absolute -translate-x-1/2 whitespace-nowrap text-[10px] text-stone-500" style="left: 25%">
+          <%= semi_weak %>
+        </span>
+        <span class="absolute -translate-x-1/2 whitespace-nowrap text-[10px] text-stone-500" style="left: 50%">
+          <%= normal_label %>
+        </span>
+        <span class="absolute -translate-x-1/2 whitespace-nowrap text-[10px] text-stone-500" style="left: 75%">
+          <%= semi_strong %>
+        </span>
+        <span class="absolute -translate-x-1/2 whitespace-nowrap text-[10px] text-stone-500" style="left: 100%">
+          <%= strong %>
+        </span>
+      </div>
+      <div class="relative h-3 rounded-full bg-stone-200">
+        <% [0, 25, 50, 75, 100].each do |mark| %>
+          <div class="absolute top-1/2 h-4 w-[2px] -translate-y-1/2 bg-stone-400" style="left: <%= mark %>%"></div>
+        <% end %>
+        <div class="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand shadow" style="left: <%= position %>%"></div>
+      </div>
+    </div>
+  <% end %>
+</div>
