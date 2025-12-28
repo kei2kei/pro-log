@@ -21,6 +21,18 @@
         <td class="p-3"><%= product.brand %></td>
         <td class="p-3"><%= product.protein_type %></td>
         <td class="p-3"><%= l product.created_at, format: :short %></td>
+        <td class="p-3 text-right space-x-2">
+
+          <%= link_to "編集",
+              edit_admin_product_path(product),
+              class: "text-brand underline" %>
+
+          <%= link_to "削除",
+              admin_product_path(product),
+              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+              class: "text-red-500 underline" %>
+
+        </td>
       </tr>
     <% end %>
   </tbody>
