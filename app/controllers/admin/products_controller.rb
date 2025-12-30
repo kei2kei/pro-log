@@ -8,7 +8,16 @@ class Admin::ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @product = Product.new(
+      params.permit(
+        :name,
+        :brand,
+        :flavor,
+        :price,
+        :reference_url,
+        :image_url
+      )
+    )
   end
 
   def create
@@ -47,7 +56,9 @@ class Admin::ProductsController < ApplicationController
     params.require(:product).permit(
       :name, :brand, :flavor, :protein_type,
       :price, :calorie, :protein, :fat, :carbohydrate,
-      :image
+      :image,
+      :reference_url,
+      :image_url
     )
   end
 
