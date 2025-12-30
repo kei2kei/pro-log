@@ -25,5 +25,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :products
+    resources :rakuten_products do
+      collection do
+        get :search
+      end
+    end
   end
 end
