@@ -76,3 +76,5 @@ gem "aws-sdk-s3", "~> 1.209"
 gem "ransack", "~> 4.4"
 
 gem "kaminari", "~> 1.2"
+
+gem "rakuten_web_service", "~> 1.13"
