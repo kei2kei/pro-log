@@ -46,6 +46,15 @@ class Admin::ProductsController < ApplicationController
     redirect_to admin_products_path, alert: "商品を削除しました。"
   end
 
+  def duplicate
+  original = Product.find(params[:id])
+  @product = original.dup
+  @product.name = "#{original.name}（複製）"
+
+  flash.now[:notice] = "複製元の商品を読み込みました。必要な部分だけ編集してください。"
+  render :new
+end
+
   private
 
   def set_product
