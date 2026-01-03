@@ -9,7 +9,11 @@ module Rakuten
         {
           name: item["itemName"],
           url: item["itemUrl"],
-          image_url: item["mediumImageUrls"]&.first,
+          image_url: begin
+            img = item["largeImageUrls"]&.first || item["mediumImageUrls"]&.first
+            url = img.is_a?(Hash) ? img["imageUrl"] : img
+            url&.gsub(/_ex=\d+x\d+/, "_ex=600x600")
+          end,
           price: item["itemPrice"],
           shop: item["shopName"]
         }
