@@ -34,6 +34,10 @@
         </td>
 
         <td class="p-3 text-right space-x-2">
+          <%= link_to "複製",
+            duplicate_admin_product_path(product),
+            class: "inline-block rounded-lg border border-brand px-3 py-1.5 text-xs font-semibold text-brand hover:bg-brand/5 transition" %>
+
           <%= link_to "編集",
             edit_admin_product_path(product),
             class: "inline-block rounded-lg border border-base px-3 py-1.5 text-xs font-semibold text-main hover:bg-stone-50 transition" %>
