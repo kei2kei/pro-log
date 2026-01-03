@@ -31,10 +31,10 @@
             <span class="font-semibold text-stone-900">¥<%= @product.price %></span>
           </div>
           <div class="rounded-2xl border border-base bg-white p-4 shadow-sm">
-            <p class="text-sm font-semibold text-stone-700">栄養成分（100gあたり）</p>
+            <p class="text-sm font-semibold text-stone-700">栄養成分（1スクープあたり）</p>
             <p class="mt-2 text-sm text-stone-600">
-              <%= @product.calorie || "未登録" %>kcal
-              （P:<%= @product.protein || "?" %>g / F:<%= @product.fat || "?" %>g / C:<%= @product.carbohydrate || "?" %>g）
+              <%= @product.calorie || "---" %>kcal
+              （P:<%= @product.protein || "-" %>g / F:<%= @product.fat || "-" %>g / C:<%= @product.carbohydrate || "-" %>g）
             </p>
           </div>
         </div>
