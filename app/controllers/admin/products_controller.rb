@@ -8,7 +8,16 @@ class Admin::ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @product = Product.new(
+      params.permit(
+        :name,
+        :brand,
+        :flavor,
+        :price,
+        :reference_url,
+        :image_url
+      )
+    )
   end
 
   def create
@@ -37,6 +46,15 @@ class Admin::ProductsController < ApplicationController
     redirect_to admin_products_path, alert: "商品を削除しました。"
   end
 
+  def duplicate
+  original = Product.find(params[:id])
+  @product = original.dup
+  @product.name = "#{original.name}（複製）"
+
+  flash.now[:notice] = "複製元の商品を読み込みました。必要な部分だけ編集してください。"
+  render :new
+end
+
   private
 
   def set_product
@@ -47,7 +65,8 @@ class Admin::ProductsController < ApplicationController
     params.require(:product).permit(
       :name, :brand, :flavor, :protein_type,
       :price, :calorie, :protein, :fat, :carbohydrate,
-      :image
+      :reference_url,
+      :image_url
     )
   end
 

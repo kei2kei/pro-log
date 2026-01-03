@@ -1,5 +1,4 @@
 <%= form_with model: [:admin, @product], class: "space-y-8 rounded-2xl border border-base bg-white p-8 shadow-sm" do |f| %>
-
   <div class="grid gap-6 md:grid-cols-2">
     <div class="space-y-2">
       <%= f.label :name, "商品名", class: "text-sm font-semibold text-stone-700" %>
@@ -26,9 +25,70 @@
       <%= f.number_field :price, class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
     </div>
 
-    <div class="space-y-2 md:col-span-2">
-      <%= f.label :image, "商品画像", class: "text-sm font-semibold text-stone-700" %>
-      <%= f.file_field :image, class: "block w-full text-sm text-stone-700 file:mr-4 file:rounded-lg file:border-0 file:bg-stone-100 file:px-4 file:py-2 file:font-semibold file:text-stone-700 hover:file:bg-stone-200" %>
+    <div class="md:col-span-2 space-y-4">
+      <p class="text-sm font-semibold text-stone-700">栄養成分（1スクープあたり）</p>
+
+      <div class="rounded-2xl border border-base bg-stone-50 p-6">
+        <div class="grid gap-6 md:grid-cols-2">
+
+          <div class="space-y-2">
+            <%= f.label :protein, "タンパク質（g）", class: "text-sm font-semibold text-stone-700" %>
+            <%= f.number_field :protein,
+                step: 1,
+                class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+          </div>
+
+          <div class="space-y-2">
+            <%= f.label :fat, "脂質（g）", class: "text-sm font-semibold text-stone-700" %>
+            <%= f.number_field :fat,
+                step: 1,
+                class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+          </div>
+
+          <div class="space-y-2">
+            <%= f.label :carbohydrate, "炭水化物（g）", class: "text-sm font-semibold text-stone-700" %>
+            <%= f.number_field :carbohydrate,
+                step: 1,
+                class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+          </div>
+
+          <div class="space-y-2">
+            <%= f.label :calorie, "カロリー（kcal）", class: "text-sm font-semibold text-stone-700" %>
+            <%= f.number_field :calorie,
+                step: 1,
+                class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+          </div>
+
+        </div>
+
+        <p class="mt-4 text-xs text-stone-500">
+          ※ ラベル表記や公式サイトを参考に入力してください。
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-4 md:col-span-2">
+      <p class="text-sm font-semibold text-stone-700">画像・参考URL（編集可能）</p>
+
+      <div class="space-y-2">
+        <%= f.label :image_url, "外部画像URL（楽天など）", class: "text-sm font-semibold text-stone-700" %>
+        <%= f.text_field :image_url,
+              class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+
+        <% if @product.image_url.present? %>
+          <div class="mt-2">
+            <p class="text-xs text-stone-500 mb-1">プレビュー</p>
+            <img src="<%= @product.image_url %>"
+                class="h-28 rounded border bg-white object-contain p-2" />
+          </div>
+        <% end %>
+      </div>
+
+      <div class="space-y-2">
+        <%= f.label :reference_url, "参考URL（商品ページなど）", class: "text-sm font-semibold text-stone-700" %>
+        <%= f.text_field :reference_url,
+              class: "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 shadow-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" %>
+      </div>
     </div>
   </div>
 
