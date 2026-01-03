@@ -20,7 +20,7 @@ class ReviewsController < ApplicationController
   end
 
   def show
-    @other_reviews = @review.user.reviews.where.not(id: @review.id).includes(product: { image_attachment: :blob }).limit(4)
+    @other_reviews = @review.user.reviews.where.not(id: @review.id).includes(:product).limit(4)
   end
 
   def edit
@@ -51,8 +51,7 @@ class ReviewsController < ApplicationController
 
   def set_review
     @review = Review.includes(
-      user: { avatar_attachment: :blob },
-      product: { image_attachment: :blob }
+      user: { avatar_attachment: :blob }
     ).find(params[:id])
   end
 

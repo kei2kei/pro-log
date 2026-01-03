@@ -56,7 +56,6 @@ class Admin::ProductsController < ApplicationController
     params.require(:product).permit(
       :name, :brand, :flavor, :protein_type,
       :price, :calorie, :protein, :fat, :carbohydrate,
-      :image,
       :reference_url,
       :image_url
     )
