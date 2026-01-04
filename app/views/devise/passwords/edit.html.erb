@@ -1,0 +1,29 @@
+<main class="min-h-screen bg-white text-main">
+  <div class="mx-auto flex max-w-7xl justify-center px-6 py-16">
+    <div class="w-full max-w-md rounded-2xl border border-base bg-white p-8 shadow-sm">
+      <h1 class="text-3xl font-semibold font-['Fraunces']">パスワードの再設定</h1>
+      <p class="mt-2 text-sm text-stone-500">新しいパスワードを入力してください。</p>
+
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt-6 space-y-4" }) do |f| %>
+        <%= f.hidden_field :reset_password_token %>
+
+        <div>
+          <%= f.label :password, "新しいパスワード", class: "text-sm font-medium text-stone-700" %>
+          <% if @minimum_password_length %>
+            <p class="mt-1 text-xs text-stone-400">最低 <%= @minimum_password_length %> 文字</p>
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password", class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, "新しいパスワード（確認）", class: "text-sm font-medium text-stone-700" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
+        </div>
+
+        <%= f.submit "パスワードを更新", class: "btn-primary mt-2 w-full" %>
+      <% end %>
+    </div>
+  </div>
+</main>
