@@ -10,8 +10,8 @@ class Tag < ApplicationRecord
 
   def self.normalize_names(value)
     value.to_s
-      .tr("　", " ")
-      .gsub(/[、，・/|]+/, " ")
+      .tr("\u3000", " ")
+      .gsub(/[\u3001\uFF0C\u30FB\/|]+/, " ")
       .split(/[,\s]+/)
       .map { |name| name.strip.downcase }
       .reject(&:blank?)
