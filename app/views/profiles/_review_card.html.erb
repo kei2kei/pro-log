@@ -15,7 +15,13 @@
       <div>
         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand">レビューした商品</p>
         <p class="mt-1 text-base font-semibold text-stone-900"><%= review.product.name %></p>
-        <p class="text-sm text-stone-500"><%= review.product.brand %></p>
+        <div class="flex flex-wrap items-center gap-2 text-sm text-stone-500">
+          <span><%= review.product.brand %></span>
+          <% if review.product.flavor.present? %>
+            <span class="text-stone-400">/</span>
+            <span><%= review.product.flavor %></span>
+          <% end %>
+        </div>
       </div>
     </div>
 
