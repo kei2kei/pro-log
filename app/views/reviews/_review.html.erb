@@ -1,4 +1,12 @@
 <div class="rounded-3xl border border-base bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+  <% axis_labels = {
+    sweetness: ["甘くない", "やや甘くない", "普通", "やや甘め", "甘め"],
+    richness: ["薄め", "やや薄め", "普通", "やや濃いめ", "濃いめ"],
+    aftertaste: ["スッキリ", "ややスッキリ", "普通", "やや重め", "重い"],
+    flavor_score: ["香りはしない", "香り控えめ", "普通", "やや香り豊か", "香り豊か"],
+    solubility: ["溶けにくい", "やや溶けにくい", "普通", "やや溶けやすい", "溶けやすい"],
+    foam: ["泡立ちにくい", "やや泡立ちにくい", "普通", "やや泡立つ", "泡立つ"]
+  } %>
   <div class="flex items-start justify-between gap-4">
     <%= link_to review_path(review), class: "block flex-1" do %>
       <div class="grid gap-6 md:grid-cols-[140px_1fr]">
@@ -20,7 +28,12 @@
           </div>
           <div class="text-sm text-stone-600">
             <span class="font-semibold text-stone-700">内訳：</span>
-            甘さ：<%= review.sweetness %> / 濃さ：<%= review.richness %> / 後味：<%= review.aftertaste %> / 風味：<%= review.flavor_score %> / 溶けやすさ：<%= review.solubility %> / 泡立ち：<%= review.foam %>
+            甘さ：<%= axis_labels[:sweetness][review.sweetness.to_i - 1] %> /
+            濃さ：<%= axis_labels[:richness][review.richness.to_i - 1] %> /
+            後味：<%= axis_labels[:aftertaste][review.aftertaste.to_i - 1] %> /
+            風味：<%= axis_labels[:flavor_score][review.flavor_score.to_i - 1] %> /
+            溶けやすさ：<%= axis_labels[:solubility][review.solubility.to_i - 1] %> /
+            泡立ち：<%= axis_labels[:foam][review.foam.to_i - 1] %>
           </div>
           <% if review.comment.present? %>
             <div class="text-sm text-stone-600">
