@@ -1,0 +1,46 @@
+<div class="rounded-3xl border border-base bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+  <%= link_to review_path(review), class: "block" do %>
+    <div class="flex flex-wrap items-center gap-4 border-b border-base pb-4">
+      <div class="h-16 w-16 overflow-hidden rounded-2xl bg-stone-100">
+        <% if review.product.image_url.present? %>
+          <%= image_tag review.product.image_url,
+            class: "h-full w-full object-cover",
+            alt: review.product.name %>
+        <% else %>
+          <div class="flex h-full w-full items-center justify-center text-xs text-stone-400">
+            No Image
+          </div>
+        <% end %>
+      </div>
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand">レビューした商品</p>
+        <p class="mt-1 text-base font-semibold text-stone-900"><%= review.product.name %></p>
+        <p class="text-sm text-stone-500"><%= review.product.brand %></p>
+      </div>
+    </div>
+
+    <div class="mt-4 space-y-3">
+      <div class="flex flex-wrap items-center gap-3 text-sm">
+        <span class="font-semibold text-stone-700">総合満足度</span>
+        <span class="text-accent"><%= "★" * review.overall_score %><%= "☆" * (5 - review.overall_score) %></span>
+        <span class="text-sm font-semibold text-stone-900"><%= review.overall_score %>.0/5.0</span>
+      </div>
+      <% if review.title.present? %>
+        <div class="text-sm text-stone-600">
+          <span class="font-semibold text-stone-700">レビュータイトル：</span>
+          <%= review.title %>
+        </div>
+      <% end %>
+      <div class="text-sm text-stone-600">
+        <span class="font-semibold text-stone-700">内訳：</span>
+        甘さ：<%= review.sweetness %> / 濃さ：<%= review.richness %> / 後味：<%= review.aftertaste %> / 風味：<%= review.flavor_score %> / 溶けやすさ：<%= review.solubility %> / 泡立ち：<%= review.foam %>
+      </div>
+      <% if review.comment.present? %>
+        <div class="text-sm text-stone-600">
+          <span class="font-semibold text-stone-700">コメント：</span>
+          <%= review.comment %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
