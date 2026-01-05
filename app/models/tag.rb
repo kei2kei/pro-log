@@ -9,7 +9,13 @@ class Tag < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.normalize_names(value)
-    value.to_s.split(/[,\s]+/).map { |name| name.strip.downcase }.reject(&:blank?).uniq
+    value.to_s
+      .tr("\u3000", " ")
+      .gsub(/[\u3001\uFF0C\u30FB\/|]+/, " ")
+      .split(/[,\s]+/)
+      .map { |name| name.strip.downcase }
+      .reject(&:blank?)
+      .uniq
   end
 
   def self.ransackable_attributes(_ = nil)

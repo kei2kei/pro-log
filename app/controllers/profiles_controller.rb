@@ -6,10 +6,12 @@ class ProfilesController < ApplicationController
     @tab = params[:tab].presence_in(%w[bookmarks likes reviews]) || "bookmarks"
     if @tab == "likes"
       @liked_reviews = Review.includes(
+        :product,
         user: { avatar_attachment: :blob }
       ).joins(:review_likes).where(review_likes: { user_id: @user.id }).distinct.page(params[:page]).per(3)
     elsif @tab == "reviews"
       @reviews = @user.reviews.includes(
+        :product,
         user: { avatar_attachment: :blob }
       ).order(created_at: :desc).page(params[:page]).per(3)
     else

@@ -43,41 +43,7 @@
     <% if @tab == "likes" %>
       <div class="mt-10 space-y-6">
         <% if @liked_reviews.any? %>
-          <% @liked_reviews.each do |review| %>
-            <div class="rounded-3xl border border-base bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-              <%= link_to review_path(review), class: "block" do %>
-                <div class="grid gap-6 md:grid-cols-[140px_1fr]">
-                  <div class="text-center">
-                    <% if review.user.avatar.attached? %>
-                      <%= image_tag review.user.avatar.variant(resize_to_fill: [96, 96]), class: "mx-auto h-24 w-24 rounded-full object-cover", alt: review.user.username %>
-                    <% else %>
-                      <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-stone-200 text-sm font-semibold text-stone-600">
-                        <%= review.user.username.to_s.first&.upcase || "U" %>
-                      </div>
-                    <% end %>
-                    <p class="mt-3 text-sm font-semibold text-stone-700"><%= review.user.username %></p>
-                  </div>
-                  <div class="space-y-3">
-                    <div class="flex flex-wrap items-center gap-3 text-sm">
-                      <span class="font-semibold text-stone-700">総合満足度</span>
-                      <span class="text-accent"><%= "★" * review.overall_score %><%= "☆" * (5 - review.overall_score) %></span>
-                      <span class="text-sm font-semibold text-stone-900"><%= review.overall_score %>.0/5.0</span>
-                    </div>
-                    <div class="text-sm text-stone-600">
-                      <span class="font-semibold text-stone-700">商品：</span>
-                      <%= review.product.name %> / <%= review.product.brand %>
-                    </div>
-                    <% if review.comment.present? %>
-                      <div class="text-sm text-stone-600">
-                        <span class="font-semibold text-stone-700">コメント：</span>
-                        <%= review.comment %>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
+          <%= render partial: "profiles/review_card", collection: @liked_reviews, as: :review %>
         <% else %>
           <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
             まだいいねしたレビューがありません。
@@ -92,7 +58,7 @@
     <% elsif @tab == "reviews" %>
       <div class="mt-10 space-y-6">
         <% if @reviews.any? %>
-          <%= render partial: "reviews/review", collection: @reviews, as: :review %>
+          <%= render partial: "profiles/review_card", collection: @reviews, as: :review %>
         <% else %>
           <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
             まだレビューがありません。
