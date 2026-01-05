@@ -26,12 +26,18 @@
             </div>
             <div class="flex flex-col gap-1 text-xs text-stone-500">
               <span>満足度（以上）</span>
-              <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+              <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600" data-controller="star-filter">
                 <%= f.label :reviews_overall_score_avg_gteq, "満足度（以上）", class: "sr-only" %>
-                <%= f.hidden_field :reviews_overall_score_avg_gteq, value: params.dig(:q, :reviews_overall_score_avg_gteq) %>
-                <div class="flex items-center gap-1" data-star-filter>
+                <%= f.hidden_field :reviews_overall_score_avg_gteq, value: params.dig(:q, :reviews_overall_score_avg_gteq), data: { "star-filter-target": "input" } %>
+                <div class="flex items-center gap-1">
                   <% 1.upto(5) do |score| %>
-                    <button type="button" data-score="<%= score %>" class="text-lg text-stone-300">★</button>
+                    <button type="button"
+                      data-score="<%= score %>"
+                      data-action="click->star-filter#select"
+                      data-star-filter-target="button"
+                      class="text-lg text-stone-300">
+                      ★
+                    </button>
                   <% end %>
                   <span class="ml-2 text-xs text-stone-400">以上</span>
                 </div>
@@ -66,36 +72,3 @@
     </div>
   </section>
 </main>
-
-<script>
-  const initStarFilter = () => {
-    const container = document.querySelector("[data-star-filter]");
-    if (!container) return;
-
-    const input = container.closest("form").querySelector('input[name="q[reviews_overall_score_avg_gteq]"]');
-    const buttons = container.querySelectorAll("button[data-score]");
-
-    const setActive = (value) => {
-      buttons.forEach((button) => {
-        const score = Number(button.dataset.score);
-        button.classList.toggle("text-accent", score <= value);
-        button.classList.toggle("text-stone-300", score > value);
-      });
-    };
-
-    setActive(Number(input.value || 0));
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const score = Number(button.dataset.score);
-        const current = Number(input.value || 0);
-        const next = current === score ? 0 : score;
-        input.value = next;
-        setActive(next);
-      });
-    });
-  };
-
-  document.addEventListener("turbo:load", initStarFilter);
-  document.addEventListener("turbo:render", initStarFilter);
-</script>

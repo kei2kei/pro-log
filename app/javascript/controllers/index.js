@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import StarFilterController from "./star_filter_controller"
+application.register("star-filter", StarFilterController)
