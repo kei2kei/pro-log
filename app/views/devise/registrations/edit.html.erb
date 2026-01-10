@@ -3,10 +3,10 @@
     <div class="mx-auto max-w-7xl px-6 py-12">
       <p class="text-xs uppercase tracking-[0.35em] text-brand">Security</p>
       <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">
-        パスワード変更
+        アカウント情報の変更
       </h1>
       <p class="mt-2 text-sm text-stone-500">
-        現在のパスワードを入力して、新しいパスワードに変更できます。
+        メールアドレスやパスワードを変更できます。
       </p>
     </div>
   </section>
@@ -19,7 +19,27 @@
 
       <%= render "devise/shared/error_messages", resource: resource %>
 
-      <!-- 現在のパスワード -->
+      <div class="mb-10 border-b border-base pb-8">
+        <h2 class="mb-4 text-xl font-semibold">メールアドレス変更</h2>
+        <p class="mb-4 text-sm text-stone-500">変更を保存するには現在のパスワードが必要です。</p>
+
+        <div class="mb-6">
+          <%= f.label :email, "新しいメールアドレス",
+            class: "mb-2 block text-sm font-semibold text-stone-700" %>
+          <%= f.email_field :email,
+            autocomplete: "email",
+            class: "w-full rounded-lg border border-base px-4 py-3" %>
+        </div>
+
+        <% if resource.pending_reconfirmation? %>
+          <div class="mt-4 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+            確認メールを送信しました。<strong><%= resource.unconfirmed_email %></strong> を確認して変更を完了してください。
+          </div>
+        <% end %>
+      </div>
+
+      <h2 class="mb-4 text-xl font-semibold">パスワード変更</h2>
+
       <div class="mb-6">
         <%= f.label :current_password, "現在のパスワード",
           class: "mb-2 block text-sm font-semibold text-stone-700" %>
@@ -28,7 +48,6 @@
           class: "w-full rounded-lg border border-base px-4 py-3" %>
       </div>
 
-      <!-- 新しいパスワード -->
       <div class="mb-6">
         <%= f.label :password, "新しいパスワード",
           class: "mb-2 block text-sm font-semibold text-stone-700" %>
@@ -37,7 +56,6 @@
           class: "w-full rounded-lg border border-base px-4 py-3" %>
       </div>
 
-      <!-- 確認 -->
       <div class="mb-8">
         <%= f.label :password_confirmation, "新しいパスワード（確認）",
           class: "mb-2 block text-sm font-semibold text-stone-700" %>
@@ -47,7 +65,7 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <%= f.submit "パスワードを変更する",
+        <%= f.submit "変更内容を保存する",
           class: "btn-primary px-6 py-3" %>
 
         <%= link_to "プロフィールに戻る",
