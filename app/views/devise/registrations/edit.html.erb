@@ -1,0 +1,61 @@
+<main class="min-h-screen bg-white text-main">
+  <section class="border-b border-base bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-12">
+      <p class="text-xs uppercase tracking-[0.35em] text-brand">Security</p>
+      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">
+        パスワード変更
+      </h1>
+      <p class="mt-2 text-sm text-stone-500">
+        現在のパスワードを入力して、新しいパスワードに変更できます。
+      </p>
+    </div>
+  </section>
+  <section class="mx-auto max-w-3xl px-6 py-12">
+  <div class="rounded-3xl border border-base bg-white p-8 shadow-sm">
+
+    <%= form_for(resource, as: resource_name,
+      url: registration_path(resource_name),
+      html: { method: :put }) do |f| %>
+
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <!-- 現在のパスワード -->
+      <div class="mb-6">
+        <%= f.label :current_password, "現在のパスワード",
+          class: "mb-2 block text-sm font-semibold text-stone-700" %>
+        <%= f.password_field :current_password,
+          autocomplete: "current-password",
+          class: "w-full rounded-lg border border-base px-4 py-3" %>
+      </div>
+
+      <!-- 新しいパスワード -->
+      <div class="mb-6">
+        <%= f.label :password, "新しいパスワード",
+          class: "mb-2 block text-sm font-semibold text-stone-700" %>
+        <%= f.password_field :password,
+          autocomplete: "new-password",
+          class: "w-full rounded-lg border border-base px-4 py-3" %>
+      </div>
+
+      <!-- 確認 -->
+      <div class="mb-8">
+        <%= f.label :password_confirmation, "新しいパスワード（確認）",
+          class: "mb-2 block text-sm font-semibold text-stone-700" %>
+        <%= f.password_field :password_confirmation,
+          autocomplete: "new-password",
+          class: "w-full rounded-lg border border-base px-4 py-3" %>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <%= f.submit "パスワードを変更する",
+          class: "btn-primary px-6 py-3" %>
+
+        <%= link_to "プロフィールに戻る",
+          profile_path,
+          class: "text-sm text-stone-500 hover:text-brand" %>
+      </div>
+
+    <% end %>
+  </div>
+</section>
+</main>
