@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.1"
+gem "rails", "~> 8.1.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record
@@ -78,7 +78,7 @@ gem "ransack", "~> 4.4"
 
 gem "kaminari", "~> 1.2"
 
-gem "rakuten_web_service", "~> 1.13"
+gem "rakuten_web_service", "~> 1.15"
 
 gem "omniauth-google-oauth2", "~> 1.2"
 
