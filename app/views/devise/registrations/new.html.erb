@@ -38,6 +38,21 @@
         <%= f.submit "登録する", class: "btn-primary mt-2 w-full" %>
       <% end %>
 
+      <% if devise_mapping.omniauthable? %>
+        <div class="mt-6 rounded-2xl border border-base bg-stone-50 px-4 py-4 text-center text-sm text-stone-600">
+          <p class="font-semibold text-stone-700">Googleアカウントで簡単登録</p>
+          <p class="mt-1 text-xs text-stone-500">入力を最小限にしてすぐに始められます。</p>
+          <div class="mt-3">
+            <%= button_to "Googleで登録する",
+              user_google_oauth2_omniauth_authorize_path,
+              method: :post,
+              data: { turbo: false },
+              class: "btn-outline rounded-full px-5 py-2 text-sm font-semibold",
+              form: { data: { turbo: false } } %>
+          </div>
+        </div>
+      <% end %>
+
       <div class="mt-6 text-center text-sm text-stone-500">
         すでにアカウントをお持ちですか？
         <%= link_to "ログイン", new_session_path(resource_name), class: "font-semibold text-brand hover:text-brand-dark" %>
