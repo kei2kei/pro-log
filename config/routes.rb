@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "pages#home"
   get "about", to: "pages#about"
+  get "terms", to: "pages#terms"
   resource :profile, only: [ :show, :edit, :update ]
 
   resources :products, only: [ :index, :show ] do
