@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   root "pages#home"
   get "about", to: "pages#about"
   get "terms", to: "pages#terms"
+  get "privacy", to: "pages#privacy"
   resource :profile, only: [ :show, :edit, :update ]
 
   resources :products, only: [ :index, :show ] do
