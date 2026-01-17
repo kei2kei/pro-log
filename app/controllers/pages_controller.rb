@@ -24,6 +24,11 @@ class PagesController < ApplicationController
       return
     end
 
+    unless verify_recaptcha(model: @contact_form)
+      render :contact, status: :unprocessable_entity
+      return
+    end
+
     if @contact_form.valid?
       ContactMailer.contact_email(@contact_form).deliver_now
       redirect_to contact_path, notice: "お問い合わせを受け付けました。"
