@@ -127,7 +127,7 @@ extra_reviews = [
 
 top_products = Product.order(:id).limit(5)
 
-extra_reviewers = [alice_user, bob_user]
+extra_reviewers = [ alice_user, bob_user ]
 
 top_products.each do |product|
   extra_reviewers.each_with_index do |user, index|
