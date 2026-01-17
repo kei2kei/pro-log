@@ -19,32 +19,32 @@ products = [
   { name: "Night Casein", brand: "Rule1", price: 4580, flavor: "チョコ", protein_type: :casein, calorie: 384, protein: 76, fat: 2, carbohydrate: 11 }
 ]
 
-seed_image_dir = Rails.root.join("db/seed_images")
-
 products.each_with_index do |attrs, index|
   product = Product.find_or_initialize_by(name: attrs[:name], brand: attrs[:brand], flavor: attrs[:flavor])
   product.assign_attributes(attrs)
   product.save!
-
-  next if product.image.attached?
-
-  image_path = seed_image_dir.join(format("product_%02d.png", index + 1))
-  next unless File.exist?(image_path)
-
-  product.image.attach(
-    io: File.open(image_path),
-    filename: image_path.basename.to_s,
-    content_type: "image/png"
-  )
 end
 
-User.find_or_create_by!(email: "demo@example.com") do |user|
-  user.username = "demo"
-  user.password = "password"
-  user.password_confirmation = "password"
+seed_users = [
+  { email: "demo@example.com", username: "demo" },
+  { email: "alice@example.com", username: "alice" },
+  { email: "bob@example.com", username: "bob" },
+  { email: "carol@example.com", username: "carol" }
+]
+
+seed_users.each do |attrs|
+  User.find_or_create_by!(email: attrs[:email]) do |user|
+    user.username = attrs[:username]
+    user.password = "password"
+    user.password_confirmation = "password"
+    user.skip_confirmation!
+  end
 end
 
-user = User.find_by!(email: "demo@example.com")
+demo_user = User.find_by!(email: "demo@example.com")
+alice_user = User.find_by!(email: "alice@example.com")
+bob_user = User.find_by!(email: "bob@example.com")
+carol_user = User.find_by!(email: "carol@example.com")
 
 review_templates = [
   {
@@ -83,7 +83,55 @@ review_templates = [
 ]
 
 Product.find_each do |product|
-  review_templates.each do |template|
+  template = review_templates.first
+  Review.find_or_create_by!(
+    user: demo_user,
+    product: product,
+    title: template[:title]
+  ) do |review|
+    review.comment = template[:comment]
+    review.overall_score = template[:overall_score]
+    review.sweetness = template[:sweetness]
+    review.richness = template[:richness]
+    review.aftertaste = template[:aftertaste]
+    review.flavor_score = template[:flavor_score]
+    review.solubility = template[:solubility]
+    review.foam = template[:foam]
+  end
+end
+
+extra_reviews = [
+  {
+    title: "クセが少なく続けやすい",
+    comment: "後味が軽くて毎日続けやすいです。",
+    overall_score: 5,
+    sweetness: 3,
+    richness: 4,
+    aftertaste: 5,
+    flavor_score: 4,
+    solubility: 4,
+    foam: 3
+  },
+  {
+    title: "甘めで満足感あり",
+    comment: "甘い系が好きならかなり良いと思います。",
+    overall_score: 4,
+    sweetness: 4,
+    richness: 4,
+    aftertaste: 3,
+    flavor_score: 4,
+    solubility: 3,
+    foam: 3
+  }
+]
+
+top_products = Product.order(:id).limit(5)
+
+extra_reviewers = [ alice_user, bob_user ]
+
+top_products.each do |product|
+  extra_reviewers.each_with_index do |user, index|
+    template = extra_reviews[index]
     Review.find_or_create_by!(
       user: user,
       product: product,
@@ -99,4 +147,39 @@ Product.find_each do |product|
       review.foam = template[:foam]
     end
   end
+end
+
+top_products.first(3).each do |product|
+  Review.find_or_create_by!(
+    user: carol_user,
+    product: product,
+    title: "リピート候補"
+  ) do |review|
+    review.comment = "総合的にバランスが良いです。"
+    review.overall_score = 5
+    review.sweetness = 3
+    review.richness = 4
+    review.aftertaste = 4
+    review.flavor_score = 4
+    review.solubility = 5
+    review.foam = 4
+  end
+end
+
+bookmark_targets = Product.order(:id).limit(6)
+
+bookmark_targets.first(2).each do |product|
+  ProductBookmark.find_or_create_by!(user: demo_user, product: product)
+end
+
+bookmark_targets.first(4).each do |product|
+  ProductBookmark.find_or_create_by!(user: alice_user, product: product)
+end
+
+bookmark_targets.first(5).each do |product|
+  ProductBookmark.find_or_create_by!(user: bob_user, product: product)
+end
+
+bookmark_targets.first(6).each do |product|
+  ProductBookmark.find_or_create_by!(user: carol_user, product: product)
 end
