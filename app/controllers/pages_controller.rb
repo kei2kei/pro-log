@@ -15,4 +15,29 @@ class PagesController < ApplicationController
       email: current_user&.email
     )
   end
+
+  def create_contact
+    @contact_form = ContactForm.new(contact_params)
+
+    if @contact_form.spam?
+      redirect_to contact_path, notice: "お問い合わせを受け付けました。"
+      return
+    end
+
+    if @contact_form.valid?
+      ContactMailer.contact_email(@contact_form).deliver_now
+      redirect_to contact_path, notice: "お問い合わせを受け付けました。"
+    else
+      render :contact, status: :unprocessable_entity
+    end
+  rescue StandardError
+    flash.now[:alert] = "送信に失敗しました。時間をおいて再度お試しください。"
+    render :contact, status: :unprocessable_entity
+  end
+
+  private
+
+  def contact_params
+    params.require(:contact_form).permit(:name, :email, :subject, :message, :website)
+  end
 end
