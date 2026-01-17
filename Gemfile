@@ -83,3 +83,5 @@ gem "rakuten_web_service", "~> 1.13"
 gem "omniauth-google-oauth2", "~> 1.2"
 
 gem "omniauth-rails_csrf_protection", "~> 2.0"
+
+gem "recaptcha", require: "recaptcha/rails"

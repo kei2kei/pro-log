@@ -382,6 +382,7 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
+    recaptcha (5.21.1)
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -544,6 +545,7 @@ DEPENDENCIES
   rails (~> 8.1.1)
   rakuten_web_service (~> 1.13)
   ransack (~> 4.4)
+  recaptcha
   rspec-rails
   rubocop-rails-omakase
   selenium-webdriver
@@ -702,6 +704,7 @@ CHECKSUMS
   rakuten_web_service (1.13.2) sha256=cd6fd8270211d03f7209358eace1c28643f39e01b3650ffd677d701d29a16180
   ransack (4.4.1) sha256=6aeaac36fc19088570e10da1044e6cfd88c740e20f871b84566fd30e32b7a63d
   rdoc (7.0.3) sha256=dfe3d0981d19b7bba71d9dbaeb57c9f4e3a7a4103162148a559c4fc687ea81f9
+  recaptcha (5.21.1) sha256=e003e9ceba9b993a9f0c6a828c192f2d46693cd2aa0b0beae94f936649507adb
   regexp_parser (2.11.3) sha256=ca13f381a173b7a93450e53459075c9b76a10433caadcb2f1180f2c741fc55a4
   reline (0.6.3) sha256=1198b04973565b36ec0f11542ab3f5cfeeec34823f4e54cebde90968092b1835
   responders (3.2.0) sha256=89c2d6ac0ae16f6458a11524cae4a8efdceba1a3baea164d28ee9046bd3df55a

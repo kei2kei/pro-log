@@ -1,0 +1,13 @@
+<p>お問い合わせを受け付けました。</p>
+
+<dl>
+  <dt>お名前</dt>
+  <dd><%= @contact_form.name %></dd>
+  <dt>メール</dt>
+  <dd><%= @contact_form.email %></dd>
+  <dt>件名</dt>
+  <dd><%= @contact_form.subject %></dd>
+</dl>
+
+<p>本文</p>
+<p><%= simple_format(@contact_form.message) %></p>
