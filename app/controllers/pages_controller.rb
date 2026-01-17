@@ -9,5 +9,10 @@ class PagesController < ApplicationController
 
   def privacy; end
 
-  def contact; end
+  def contact
+    @contact_form = ContactForm.new(
+      name: current_user&.username,
+      email: current_user&.email
+    )
+  end
 end
