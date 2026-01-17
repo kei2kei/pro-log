@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get "privacy", to: "pages#privacy"
   get "contact", to: "pages#contact"
   post "contact", to: "pages#create_contact"
+  get "ranking", to: "rankings#index"
   resource :profile, only: [ :show, :edit, :update ]
 
   resources :products, only: [ :index, :show ] do
