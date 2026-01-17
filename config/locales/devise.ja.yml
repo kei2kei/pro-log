@@ -6,6 +6,7 @@ ja:
       send_paranoid_instructions: "メールアドレスが登録されている場合、確認手順を数分以内にメールでご連絡します。"
     failure:
       already_authenticated: "すでにログインしています。"
+      deleted_account: "このアカウントは退会済みです。"
       inactive: "アカウントが有効化されていません。"
       invalid: "%{authentication_keys}またはパスワードが違います。"
       locked: "アカウントがロックされています。"

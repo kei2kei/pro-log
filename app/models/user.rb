@@ -15,6 +15,14 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :uid, presence: true, uniqueness: { scope: :provider }, if: -> { uid.present? }
 
+  def active_for_authentication?
+    super && deleted_at.nil?
+  end
+
+  def inactive_message
+    deleted_at? ? :deleted_account : super
+  end
+
   def like(review)
     like_reviews << review
   end
