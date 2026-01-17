@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get "terms", to: "pages#terms"
   get "privacy", to: "pages#privacy"
   get "contact", to: "pages#contact"
+  post "contact", to: "pages#create_contact"
   resource :profile, only: [ :show, :edit, :update ]
 
   resources :products, only: [ :index, :show ] do
