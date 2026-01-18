@@ -9,8 +9,8 @@ class CreateProductStats < ActiveRecord::Migration[8.1]
       t.decimal :avg_flavor_score
       t.decimal :avg_solubility
       t.decimal :avg_foam
-      t.integer :reviews_count
-      t.integer :bookmarks_count
+      t.integer :reviews_count, null: false, default: 0
+      t.integer :bookmarks_count, null: false, default: 0
 
       t.timestamps
     end

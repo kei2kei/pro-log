@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_17_060000) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_18_024113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_17_060000) do
     t.index ["product_id"], name: "index_product_bookmarks_on_product_id"
     t.index ["user_id", "product_id"], name: "index_product_bookmarks_on_user_id_and_product_id", unique: true
     t.index ["user_id"], name: "index_product_bookmarks_on_user_id"
+  end
+
+  create_table "product_stats", force: :cascade do |t|
+    t.decimal "avg_aftertaste"
+    t.decimal "avg_flavor_score"
+    t.decimal "avg_foam"
+    t.decimal "avg_overall_score"
+    t.decimal "avg_richness"
+    t.decimal "avg_solubility"
+    t.decimal "avg_sweetness"
+    t.integer "bookmarks_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.bigint "product_id", null: false
+    t.integer "reviews_count", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_stats_on_product_id"
   end
 
   create_table "product_taggings", force: :cascade do |t|
@@ -152,6 +168,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_17_060000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "product_bookmarks", "products"
   add_foreign_key "product_bookmarks", "users"
+  add_foreign_key "product_stats", "products"
   add_foreign_key "product_taggings", "products"
   add_foreign_key "product_taggings", "tags"
   add_foreign_key "review_likes", "reviews"
