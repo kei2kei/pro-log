@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   has_many :product_bookmarks, dependent: :destroy
   has_many :product_taggings, dependent: :destroy
   has_many :tags, through: :product_taggings
+  has_one :product_stat, dependent: :destroy
 
   enum :protein_type, {
     whey: 0,
