@@ -14,6 +14,13 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :uid, presence: true, uniqueness: { scope: :provider }, if: -> { uid.present? }
+  validates :password,
+            length: { minimum: 8 },
+            format: {
+              with: /\A(?=.*[A-Z])(?=.*\d).+\z/,
+              message: "は大文字と数字を含めてください"
+            },
+            allow_blank: true
 
   def active_for_authentication?
     super && deleted_at.nil?
