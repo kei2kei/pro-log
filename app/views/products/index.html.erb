@@ -27,8 +27,8 @@
             <div class="flex flex-col gap-1 text-xs text-stone-500">
               <span>満足度（以上）</span>
               <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600" data-controller="star-filter">
-                <%= f.label :reviews_overall_score_avg_gteq, "満足度（以上）", class: "sr-only" %>
-                <%= f.hidden_field :reviews_overall_score_avg_gteq, value: params.dig(:q, :reviews_overall_score_avg_gteq), data: { "star-filter-target": "input" } %>
+                <%= f.label :product_stat_avg_overall_score_gteq, "満足度（以上）", class: "sr-only" %>
+                <%= f.hidden_field :product_stat_avg_overall_score_gteq, value: params.dig(:q, :product_stat_avg_overall_score_gteq), data: { "star-filter-target": "input" } %>
                 <div class="flex items-center gap-1">
                   <% 1.upto(5) do |score| %>
                     <button type="button"
@@ -53,6 +53,59 @@
             </div>
             <%= f.submit "検索", class: "btn-primary rounded-full px-6 py-2" %>
             <%= link_to "リセット", products_path, class: "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+          </div>
+          <div class="mt-6 rounded-3xl border border-base bg-white p-6 shadow-sm">
+            <p class="text-sm font-semibold text-stone-700">詳細評価（1〜5）</p>
+            <div class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>甘さ</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.number_field :product_stat_avg_sweetness_gteq, min: 1, max: 5, placeholder: "1", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.number_field :product_stat_avg_sweetness_lteq, min: 1, max: 5, placeholder: "5", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>濃さ</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.number_field :product_stat_avg_richness_gteq, min: 1, max: 5, placeholder: "1", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.number_field :product_stat_avg_richness_lteq, min: 1, max: 5, placeholder: "5", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>後味</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.number_field :product_stat_avg_aftertaste_gteq, min: 1, max: 5, placeholder: "1", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.number_field :product_stat_avg_aftertaste_lteq, min: 1, max: 5, placeholder: "5", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>風味</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.number_field :product_stat_avg_flavor_score_gteq, min: 1, max: 5, placeholder: "1", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.number_field :product_stat_avg_flavor_score_lteq, min: 1, max: 5, placeholder: "5", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>溶けやすさ</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.number_field :product_stat_avg_solubility_gteq, min: 1, max: 5, placeholder: "1", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.number_field :product_stat_avg_solubility_lteq, min: 1, max: 5, placeholder: "5", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>泡立ち</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.number_field :product_stat_avg_foam_gteq, min: 1, max: 5, placeholder: "1", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.number_field :product_stat_avg_foam_lteq, min: 1, max: 5, placeholder: "5", class: "w-14 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none" %>
+                </div>
+              </div>
+            </div>
           </div>
         <% end %>
       </div>
