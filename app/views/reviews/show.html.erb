@@ -127,7 +127,7 @@
           <div>
             <p class="text-sm font-semibold text-stone-600">レビューした商品</p>
             <h2 class="mt-2 text-2xl font-semibold"><%= @review.product.name %></h2>
-            <p class="mt-1 text-sm text-stone-500"><%= @review.product.brand %></p>
+            <p class="mt-1 text-sm text-stone-500"><%= @review.product.brand %> / <%= @review.product.protein_type %> / <%= @review.product.flavor %></p>
           </div>
           <%= link_to "商品詳細へ", product_path(@review.product), class: "rounded-full border border-brand px-4 py-2 text-xs font-semibold text-brand" %>
         </div>
