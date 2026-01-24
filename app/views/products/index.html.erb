@@ -151,10 +151,12 @@
   </section>
 
   <section class="mx-auto max-w-7xl px-6 py-12">
-    <div class="js-products-overlay fixed inset-0 z-40 items-center justify-center bg-white/70 backdrop-blur-sm">
-      <div class="flex flex-col items-center gap-3">
-        <div class="h-12 w-12 animate-spin rounded-full border-4 border-brand/30 border-t-brand"></div>
-        <p class="text-sm font-semibold text-stone-600">読み込み中...</p>
+    <div class="js-products-overlay fixed inset-0 z-40 items-center justify-center bg-white/10 backdrop-blur-sm">
+      <div class="shake-loader" role="status" aria-live="polite" aria-label="検索中">
+        <div class="flex items-center gap-3">
+          <%= image_tag "shaker.png", class: "shaker", alt: "loading" %>
+        </div>
+        <p class="shake-text">loading...</p>
       </div>
     </div>
 
