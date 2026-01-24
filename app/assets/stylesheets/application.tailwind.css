@@ -94,6 +94,26 @@
   display: none;
 }
 
+:root[data-loading="true"] .js-product-show-overlay {
+  display: flex;
+}
+
+:root:not([data-loading="true"]) .js-product-show-overlay {
+  display: none;
+}
+
+:root[data-loading="true"] .js-product-show-body {
+  display: none;
+}
+
+:root[data-loading="true"] .js-product-show-skeleton {
+  display: block;
+}
+
+:root:not([data-loading="true"]) .js-product-show-skeleton {
+  display: none;
+}
+
 :root[data-loading="true"] .js-products-skeleton {
   display: grid;
 }
