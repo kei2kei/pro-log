@@ -52,6 +52,12 @@
           <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "font-semibold text-brand hover:text-brand-dark" %>
         </div>
       <% end %>
+
+      <% if devise_mapping.confirmable? %>
+        <div class="mt-2 text-center text-xs text-stone-500">
+          <%= link_to "確認メールを再送する", new_user_confirmation_path(resource_name), class: "font-semibold text-brand hover:text-brand-dark" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </main>
