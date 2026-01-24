@@ -27,8 +27,8 @@
             <div class="flex flex-col gap-1 text-xs text-stone-500">
               <span>満足度（以上）</span>
               <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600" data-controller="star-filter">
-                <%= f.label :reviews_overall_score_avg_gteq, "満足度（以上）", class: "sr-only" %>
-                <%= f.hidden_field :reviews_overall_score_avg_gteq, value: params.dig(:q, :reviews_overall_score_avg_gteq), data: { "star-filter-target": "input" } %>
+                <%= f.label :product_stat_avg_overall_score_gteq, "満足度（以上）", class: "sr-only" %>
+                <%= f.hidden_field :product_stat_avg_overall_score_gteq, value: params.dig(:q, :product_stat_avg_overall_score_gteq), data: { "star-filter-target": "input" } %>
                 <div class="flex items-center gap-1">
                   <% 1.upto(5) do |score| %>
                     <button type="button"
@@ -54,6 +54,97 @@
             <%= f.submit "検索", class: "btn-primary rounded-full px-6 py-2" %>
             <%= link_to "リセット", products_path, class: "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
           </div>
+          <details class="mt-6 rounded-3xl border border-base bg-white p-6 shadow-sm">
+            <summary class="cursor-pointer text-sm font-semibold text-stone-700">
+              詳細検索
+            </summary>
+            <div class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>甘さ</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.select :product_stat_avg_sweetness_gteq,
+                    [["指定しない", ""], ["甘くない", 1], ["やや甘くない", 2], ["普通", 3], ["やや甘め", 4], ["甘め", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.select :product_stat_avg_sweetness_lteq,
+                    [["指定しない", ""], ["甘くない", 1], ["やや甘くない", 2], ["普通", 3], ["やや甘め", 4], ["甘め", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>濃さ</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.select :product_stat_avg_richness_gteq,
+                    [["指定しない", ""], ["薄め", 1], ["やや薄め", 2], ["普通", 3], ["やや濃いめ", 4], ["濃いめ", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.select :product_stat_avg_richness_lteq,
+                    [["指定しない", ""], ["薄め", 1], ["やや薄め", 2], ["普通", 3], ["やや濃いめ", 4], ["濃いめ", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>後味</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.select :product_stat_avg_aftertaste_gteq,
+                    [["指定しない", ""], ["スッキリ", 1], ["ややスッキリ", 2], ["普通", 3], ["やや重め", 4], ["重い", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.select :product_stat_avg_aftertaste_lteq,
+                    [["指定しない", ""], ["スッキリ", 1], ["ややスッキリ", 2], ["普通", 3], ["やや重め", 4], ["重い", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>風味</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.select :product_stat_avg_flavor_score_gteq,
+                    [["指定しない", ""], ["香りはしない", 1], ["香り控えめ", 2], ["普通", 3], ["やや香り豊か", 4], ["香り豊か", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.select :product_stat_avg_flavor_score_lteq,
+                    [["指定しない", ""], ["香りはしない", 1], ["香り控えめ", 2], ["普通", 3], ["やや香り豊か", 4], ["香り豊か", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>溶けやすさ</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.select :product_stat_avg_solubility_gteq,
+                    [["指定しない", ""], ["溶けにくい", 1], ["やや溶けにくい", 2], ["普通", 3], ["やや溶けやすい", 4], ["溶けやすい", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.select :product_stat_avg_solubility_lteq,
+                    [["指定しない", ""], ["溶けにくい", 1], ["やや溶けにくい", 2], ["普通", 3], ["やや溶けやすい", 4], ["溶けやすい", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-stone-500">
+                <span>泡立ち</span>
+                <div class="flex items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600">
+                  <%= f.select :product_stat_avg_foam_gteq,
+                    [["指定しない", ""], ["泡立ちにくい", 1], ["やや泡立ちにくい", 2], ["普通", 3], ["やや泡立つ", 4], ["泡立つ", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                  <span class="text-stone-400">~</span>
+                  <%= f.select :product_stat_avg_foam_lteq,
+                    [["指定しない", ""], ["泡立ちにくい", 1], ["やや泡立ちにくい", 2], ["普通", 3], ["やや泡立つ", 4], ["泡立つ", 5]],
+                    {},
+                    class: "bg-transparent text-sm text-stone-600 focus:outline-none" %>
+                </div>
+              </div>
+            </div>
+          </details>
         <% end %>
       </div>
     </div>

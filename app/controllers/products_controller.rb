@@ -2,8 +2,8 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @q = Product.left_joins(:reviews).group(:id).ransack(params[:q])
-    @products = @q.result.order(created_at: :desc).page(params[:page])
+    @q = Product.left_joins(:product_stat).ransack(params[:q])
+    @products = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
     @bookmarks_by_product_id = current_user.product_bookmarks.index_by(&:product_id)
   end
 
