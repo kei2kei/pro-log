@@ -79,7 +79,7 @@ gem "ransack", "~> 4.4"
 
 gem "kaminari", "~> 1.2"
 
-gem "rakuten_web_service", "~> 1.13"
+gem "rakuten_web_service", "~> 1.15"
 
 gem "omniauth-google-oauth2", "~> 1.2"
 
