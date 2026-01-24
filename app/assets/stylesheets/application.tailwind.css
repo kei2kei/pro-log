@@ -86,22 +86,6 @@
   display: none;
 }
 
-:root[data-loading="true"] .js-products-overlay {
-  display: flex;
-}
-
-:root:not([data-loading="true"]) .js-products-overlay {
-  display: none;
-}
-
-:root[data-loading="true"] .js-product-show-overlay {
-  display: flex;
-}
-
-:root:not([data-loading="true"]) .js-product-show-overlay {
-  display: none;
-}
-
 :root[data-loading="true"] .js-product-show-body {
   display: none;
 }
@@ -122,15 +106,15 @@
   display: none;
 }
 
-:root[data-loading="true"] .js-rankings-body {
-  display: none;
-}
-
-:root[data-loading="true"] .js-rankings-overlay {
+:root[data-loading="true"] .js-global-overlay {
   display: flex;
 }
 
-:root:not([data-loading="true"]) .js-rankings-overlay {
+:root:not([data-loading="true"]) .js-global-overlay {
+  display: none;
+}
+
+:root[data-loading="true"] .js-rankings-body {
   display: none;
 }
 
@@ -143,14 +127,6 @@
 }
 
 :root[data-loading="true"] .js-profile-body {
-  display: none;
-}
-
-:root[data-loading="true"] .js-profile-overlay {
-  display: flex;
-}
-
-:root:not([data-loading="true"]) .js-profile-overlay {
   display: none;
 }
 

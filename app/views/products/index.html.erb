@@ -151,14 +151,6 @@
   </section>
 
   <section class="mx-auto max-w-7xl px-6 py-12">
-    <div class="js-products-overlay fixed inset-0 z-40 items-center justify-center bg-white/10 backdrop-blur-sm">
-      <div class="shake-loader" role="status" aria-live="polite" aria-label="検索中">
-        <div class="flex items-center gap-3">
-          <%= image_tag "shaker.png", class: "shaker", alt: "loading" %>
-        </div>
-        <p class="shake-text">loading...</p>
-      </div>
-    </div>
 
     <div class="js-products-grid grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       <%= render partial: "products/product",
