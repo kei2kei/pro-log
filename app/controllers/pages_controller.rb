@@ -1,6 +1,9 @@
 class PagesController < ApplicationController
   def home
     @q = Product.ransack(params[:q])
+    return unless user_signed_in?
+
+    @recommended_products = Recommendations::ProductRecommender.new(current_user).recommend
   end
 
   def about; end

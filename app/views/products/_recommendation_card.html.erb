@@ -1,0 +1,36 @@
+<div class="rounded-3xl border border-base bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+  <%= link_to product_path(product), class: "block" do %>
+    <div class="aspect-square w-full overflow-hidden rounded-2xl bg-stone-100">
+      <% if product.image_url.present? %>
+        <%= image_tag product.image_url,
+          class: "h-full w-full object-cover",
+          alt: product.name %>
+      <% else %>
+        <div class="flex h-full w-full items-center justify-center text-sm text-stone-400">
+          No Image
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mt-5 space-y-2">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+      <%= product.protein_type %> / <%= product.flavor %>
+    </p>
+    <h3 class="text-lg font-semibold">
+      <%= link_to product.name, product_path(product), class: "hover:underline" %>
+    </h3>
+    <p class="text-sm text-stone-500"><%= product.brand %></p>
+    <div class="flex items-center justify-between pt-2 text-sm text-stone-600">
+      <span>総合満足度</span>
+      <% avg_score = product.product_stat&.avg_overall_score %>
+      <% if avg_score.present? %>
+        <% rounded = avg_score.round %>
+        <span class="text-amber-400"><%= "★" * rounded %><%= "☆" * (5 - rounded) %></span>
+        <span class="text-base font-semibold text-stone-900"><%= format("%.1f", avg_score) %>/5.0</span>
+      <% else %>
+        <span class="text-sm text-stone-400">未評価</span>
+      <% end %>
+    </div>
+  </div>
+</div>
