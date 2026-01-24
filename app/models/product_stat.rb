@@ -17,4 +17,22 @@ class ProductStat < ApplicationRecord
     stats.bookmarks_count = ProductBookmark.where(product_id: product_id).count
     stats.save!
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[
+      avg_overall_score
+      avg_sweetness
+      avg_richness
+      avg_aftertaste
+      avg_flavor_score
+      avg_solubility
+      avg_foam
+      reviews_count
+      bookmarks_count
+    ]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
 end
