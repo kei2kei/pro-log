@@ -32,6 +32,7 @@ module Recommendations
       candidates = Product.includes(:product_stat)
         .joins(:product_stat)
         .where("product_stats.reviews_count >= ?", min_reviews)
+        .where.not(id: @user.product_bookmarks.select(:product_id))
 
       scored = candidates.filter_map do |product|
         stats = product.product_stat
