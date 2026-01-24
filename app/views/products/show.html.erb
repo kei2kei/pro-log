@@ -1,4 +1,21 @@
 <main class="min-h-screen bg-white text-main">
+  <div class="js-product-show-skeleton mx-auto max-w-7xl px-6 py-12" aria-hidden="true">
+    <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+      <div class="space-y-6">
+        <div class="h-6 w-32 rounded-full bg-stone-200"></div>
+        <div class="h-10 w-2/3 rounded-full bg-stone-200"></div>
+        <div class="space-y-3">
+          <% 4.times do %>
+            <div class="h-4 w-full rounded-full bg-stone-200"></div>
+          <% end %>
+        </div>
+        <div class="h-20 rounded-2xl bg-stone-100"></div>
+      </div>
+      <div class="h-[480px] rounded-3xl bg-stone-100"></div>
+    </div>
+  </div>
+
+  <div class="js-product-show-body">
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
       <p class="text-xs uppercase tracking-[0.35em] text-brand">Product Detail</p>
@@ -128,4 +145,5 @@
       </div>
     <% end %>
   </section>
+  </div>
 </main>

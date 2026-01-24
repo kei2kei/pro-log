@@ -24,6 +24,12 @@
   </head>
 
   <body>
+    <div class="js-global-overlay fixed inset-0 z-50 hidden items-center justify-center bg-white/40">
+      <div class="shake-loader">
+        <%= image_tag "shaker.png", class: "shaker", alt: "Loading" %>
+        <p class="shake-text">読み込み中です…</p>
+      </div>
+    </div>
     <%= render 'shared/header' %>
     <% if flash[:notice].present? || flash[:alert].present? %>
       <div class="bg-white">
