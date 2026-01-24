@@ -6,129 +6,165 @@
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-6 py-12">
-    <div class="rounded-3xl border border-base bg-white p-8 shadow-sm">
-      <div class="flex flex-wrap gap-3">
-        <%= link_to "総合満足度", ranking_path(tab: "overall"), class: @tab == "overall" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
-        <%= link_to "ブックマーク数", ranking_path(tab: "bookmark"), class: @tab == "bookmark" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
-        <%= link_to "レビュー数", ranking_path(tab: "reviews"), class: @tab == "reviews" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+  <section class="relative mx-auto max-w-6xl px-6 py-12">
+    <div class="js-rankings-overlay absolute inset-0 z-20 hidden items-center justify-center rounded-3xl bg-white/40">
+      <div class="shake-loader">
+        <%= image_tag "shaker.png", class: "shaker", alt: "Loading" %>
+        <p class="shake-text">読み込み中です…</p>
       </div>
     </div>
 
-    <% if @tab == "reviews" %>
-      <div class="mt-10 space-y-4">
-        <% if @top_reviewed_products.any? %>
-          <% @top_reviewed_products.each_with_index do |product, index| %>
-            <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
-              <div class="flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
-                    <%= index + 1 %>
-                  </div>
-                  <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
-                    <% if product.image_url.present? %>
-                      <%= image_tag product.image_url, class: "h-full w-full object-cover", alt: product.name %>
-                    <% else %>
-                      <div class="flex h-full w-full items-center justify-center text-xs text-stone-400">
-                        No Image
-                      </div>
-                    <% end %>
-                  </div>
-                  <div>
-                    <p class="text-sm text-stone-500"><%= product.brand %> / <%= product.flavor %></p>
-                    <h2 class="text-lg font-semibold">
-                      <%= link_to product.name, product_path(product), class: "hover:underline" %>
-                    </h2>
-                  </div>
-                </div>
-                <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
-                  レビュー数 <%= product.product_stat&.reviews_count.to_i %>
+    <div class="js-rankings-skeleton hidden space-y-6">
+      <div class="rounded-3xl border border-base bg-white p-8 shadow-sm">
+        <div class="flex flex-wrap gap-3">
+          <% 3.times do %>
+            <div class="h-9 w-28 animate-pulse rounded-full bg-stone-100"></div>
+          <% end %>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <% 6.times do %>
+          <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="h-10 w-10 rounded-full bg-stone-100"></div>
+                <div class="h-14 w-14 rounded-2xl bg-stone-100"></div>
+                <div class="space-y-2">
+                  <div class="h-3 w-40 rounded bg-stone-100"></div>
+                  <div class="h-4 w-56 rounded bg-stone-100"></div>
                 </div>
               </div>
+              <div class="h-8 w-28 rounded-full bg-stone-100"></div>
             </div>
-          <% end %>
-        <% else %>
-          <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
-            まだ該当する商品がありません。
           </div>
         <% end %>
       </div>
-    <% elsif @tab == "bookmark" %>
-      <div class="mt-10 space-y-4">
-        <% if @top_bookmarked_products.any? %>
-          <% @top_bookmarked_products.each_with_index do |product, index| %>
-            <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
-              <div class="flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
-                    <%= index + 1 %>
+    </div>
+
+    <div class="js-rankings-body">
+      <div class="rounded-3xl border border-base bg-white p-8 shadow-sm">
+        <div class="flex flex-wrap gap-3">
+          <%= link_to "総合満足度", ranking_path(tab: "overall"), class: @tab == "overall" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+          <%= link_to "ブックマーク数", ranking_path(tab: "bookmark"), class: @tab == "bookmark" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+          <%= link_to "レビュー数", ranking_path(tab: "reviews"), class: @tab == "reviews" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+        </div>
+      </div>
+
+      <% if @tab == "reviews" %>
+        <div class="mt-10 space-y-4">
+          <% if @top_reviewed_products.any? %>
+            <% @top_reviewed_products.each_with_index do |product, index| %>
+              <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="flex items-center gap-4">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
+                      <%= index + 1 %>
+                    </div>
+                    <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
+                      <% if product.image_url.present? %>
+                        <%= image_tag product.image_url, class: "h-full w-full object-cover", alt: product.name %>
+                      <% else %>
+                        <div class="flex h-full w-full items-center justify-center text-xs text-stone-400">
+                          No Image
+                        </div>
+                      <% end %>
+                    </div>
+                    <div>
+                      <p class="text-sm text-stone-500"><%= product.brand %> / <%= product.flavor %></p>
+                      <h2 class="text-lg font-semibold">
+                        <%= link_to product.name, product_path(product), class: "hover:underline" %>
+                      </h2>
+                    </div>
                   </div>
-                  <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
-                    <% if product.image_url.present? %>
-                      <%= image_tag product.image_url, class: "h-full w-full object-cover", alt: product.name %>
-                    <% else %>
-                      <div class="flex h-full w-full items-center justify-center text-xs text-stone-400">
-                        No Image
-                      </div>
-                    <% end %>
+                  <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
+                    レビュー数 <%= product.product_stat&.reviews_count.to_i %>
                   </div>
-                  <div>
-                    <p class="text-sm text-stone-500"><%= product.brand %> / <%= product.flavor %></p>
-                    <h2 class="text-lg font-semibold">
-                      <%= link_to product.name, product_path(product), class: "hover:underline" %>
-                    </h2>
-                  </div>
-                </div>
-                <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
-                  ブックマーク <%= product.product_stat&.bookmarks_count.to_i %>
                 </div>
               </div>
+            <% end %>
+          <% else %>
+            <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
+              まだ該当する商品がありません。
             </div>
           <% end %>
-        <% else %>
-          <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
-            まだ該当する商品がありません。
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="mt-10 space-y-4">
-        <% if @top_overall_score_products.any? %>
-          <% @top_overall_score_products.each_with_index do |product, index| %>
-            <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
-              <div class="flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
-                    <%= index + 1 %>
+        </div>
+      <% elsif @tab == "bookmark" %>
+        <div class="mt-10 space-y-4">
+          <% if @top_bookmarked_products.any? %>
+            <% @top_bookmarked_products.each_with_index do |product, index| %>
+              <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="flex items-center gap-4">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
+                      <%= index + 1 %>
+                    </div>
+                    <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
+                      <% if product.image_url.present? %>
+                        <%= image_tag product.image_url, class: "h-full w-full object-cover", alt: product.name %>
+                      <% else %>
+                        <div class="flex h-full w-full items-center justify-center text-xs text-stone-400">
+                          No Image
+                        </div>
+                      <% end %>
+                    </div>
+                    <div>
+                      <p class="text-sm text-stone-500"><%= product.brand %> / <%= product.flavor %></p>
+                      <h2 class="text-lg font-semibold">
+                        <%= link_to product.name, product_path(product), class: "hover:underline" %>
+                      </h2>
+                    </div>
                   </div>
-                  <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
-                    <% if product.image_url.present? %>
-                      <%= image_tag product.image_url, class: "h-full w-full object-cover", alt: product.name %>
-                    <% else %>
-                      <div class="flex h-full w-full items-center justify-center text-xs text-stone-400">
-                        No Image
-                      </div>
-                    <% end %>
+                  <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
+                    ブックマーク <%= product.product_stat&.bookmarks_count.to_i %>
                   </div>
-                  <div>
-                    <p class="text-sm text-stone-500"><%= product.brand %> / <%= product.flavor %></p>
-                    <h2 class="text-lg font-semibold">
-                      <%= link_to product.name, product_path(product), class: "hover:underline" %>
-                    </h2>
-                  </div>
-                </div>
-                <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
-                  平均満足度 <%= format("%.1f", product.product_stat&.avg_overall_score.to_f) %>/5.0
                 </div>
               </div>
+            <% end %>
+          <% else %>
+            <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
+              まだ該当する商品がありません。
             </div>
           <% end %>
-        <% else %>
-          <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
-            まだ該当する商品がありません。
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+        </div>
+      <% else %>
+        <div class="mt-10 space-y-4">
+          <% if @top_overall_score_products.any? %>
+            <% @top_overall_score_products.each_with_index do |product, index| %>
+              <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="flex items-center gap-4">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
+                      <%= index + 1 %>
+                    </div>
+                    <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
+                      <% if product.image_url.present? %>
+                        <%= image_tag product.image_url, class: "h-full w-full object-cover", alt: product.name %>
+                      <% else %>
+                        <div class="flex h-full w-full items-center justify-center text-xs text-stone-400">
+                          No Image
+                        </div>
+                      <% end %>
+                    </div>
+                    <div>
+                      <p class="text-sm text-stone-500"><%= product.brand %> / <%= product.flavor %></p>
+                      <h2 class="text-lg font-semibold">
+                        <%= link_to product.name, product_path(product), class: "hover:underline" %>
+                      </h2>
+                    </div>
+                  </div>
+                  <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
+                    平均満足度 <%= format("%.1f", product.product_stat&.avg_overall_score.to_f) %>/5.0
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
+              まだ該当する商品がありません。
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </section>
 </main>

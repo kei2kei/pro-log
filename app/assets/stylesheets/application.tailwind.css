@@ -122,6 +122,46 @@
   display: none;
 }
 
+:root[data-loading="true"] .js-rankings-body {
+  display: none;
+}
+
+:root[data-loading="true"] .js-rankings-overlay {
+  display: flex;
+}
+
+:root:not([data-loading="true"]) .js-rankings-overlay {
+  display: none;
+}
+
+:root[data-loading="true"] .js-rankings-skeleton {
+  display: block;
+}
+
+:root:not([data-loading="true"]) .js-rankings-skeleton {
+  display: none;
+}
+
+:root[data-loading="true"] .js-profile-body {
+  display: none;
+}
+
+:root[data-loading="true"] .js-profile-overlay {
+  display: flex;
+}
+
+:root:not([data-loading="true"]) .js-profile-overlay {
+  display: none;
+}
+
+:root[data-loading="true"] .js-profile-skeleton {
+  display: block;
+}
+
+:root:not([data-loading="true"]) .js-profile-skeleton {
+  display: none;
+}
+
 .shake-loader {
   display: grid;
   place-items: center;
