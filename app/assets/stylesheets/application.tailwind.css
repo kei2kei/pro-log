@@ -77,3 +77,27 @@
     border: 2px solid #ffffff;
   }
 }
+
+:root[data-loading="true"] .js-products-grid {
+  display: none;
+}
+
+:root[data-loading="true"] .js-products-pagination {
+  display: none;
+}
+
+:root[data-loading="true"] .js-products-overlay {
+  display: flex;
+}
+
+:root:not([data-loading="true"]) .js-products-overlay {
+  display: none;
+}
+
+:root[data-loading="true"] .js-products-skeleton {
+  display: grid;
+}
+
+:root:not([data-loading="true"]) .js-products-skeleton {
+  display: none;
+}
