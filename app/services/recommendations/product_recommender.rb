@@ -22,11 +22,11 @@ module Recommendations
         variance = reviews.each_with_index.sum do |review, index|
           weights[index] * ((review.public_send(axis).to_f - mu[axis])**2)
         end
-        [Math.sqrt(variance / sum_w), MIN_SIGMA].max
+        [ Math.sqrt(variance / sum_w), MIN_SIGMA ].max
       end
 
       user_conf = AXES.sum { |axis| 1.0 / (1.0 + sigma[axis]) } / AXES.length
-      count_bonus = [1.0, reviews.size / 8.0].min
+      count_bonus = [ 1.0, reviews.size / 8.0 ].min
       user_conf_final = 0.3 + 0.7 * user_conf * count_bonus
 
       candidates = Product.includes(:product_stat)
@@ -48,7 +48,7 @@ module Recommendations
         next if axis_scores.any?(&:nil?)
 
         sim = axis_scores.sum / AXES.length
-        product_bonus = [1.0, stats.reviews_count.to_f / 10.0].min
+        product_bonus = [ 1.0, stats.reviews_count.to_f / 10.0 ].min
         score = sim * user_conf_final * product_bonus
         { product: product, score: score }
       end
