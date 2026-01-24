@@ -151,6 +151,13 @@
   </section>
 
   <section class="mx-auto max-w-7xl px-6 py-12">
+    <div class="js-products-overlay fixed inset-0 z-40 items-center justify-center bg-white/70 backdrop-blur-sm">
+      <div class="flex flex-col items-center gap-3">
+        <div class="h-12 w-12 animate-spin rounded-full border-4 border-brand/30 border-t-brand"></div>
+        <p class="text-sm font-semibold text-stone-600">読み込み中...</p>
+      </div>
+    </div>
+
     <div class="js-products-grid grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       <%= render partial: "products/product",
         collection: @products,
