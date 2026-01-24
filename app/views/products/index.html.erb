@@ -151,14 +151,29 @@
   </section>
 
   <section class="mx-auto max-w-7xl px-6 py-12">
-    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div class="js-products-grid grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       <%= render partial: "products/product",
         collection: @products,
         as: :product,
         locals: { bookmarks_by_product_id: @bookmarks_by_product_id } %>
     </div>
 
-    <div class="mt-12 flex justify-center">
+    <div class="js-products-skeleton mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3" aria-hidden="true">
+      <% 6.times do %>
+        <div class="animate-pulse rounded-3xl border border-base bg-white p-6 shadow-sm">
+          <div class="aspect-square w-full rounded-2xl bg-stone-100"></div>
+          <div class="mt-5 space-y-3">
+            <div class="h-3 w-24 rounded-full bg-stone-200"></div>
+            <div class="h-5 w-3/4 rounded-full bg-stone-200"></div>
+            <div class="h-4 w-1/2 rounded-full bg-stone-200"></div>
+            <div class="h-4 w-28 rounded-full bg-stone-200"></div>
+            <div class="h-4 w-full rounded-full bg-stone-200"></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="js-products-pagination mt-12 flex justify-center">
       <%= paginate @products %>
     </div>
   </section>
