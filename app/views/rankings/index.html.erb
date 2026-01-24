@@ -42,7 +42,7 @@
                   </div>
                 </div>
                 <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
-                  レビュー数 <%= product.reviews_count.to_i %>
+                  レビュー数 <%= product.product_stat&.reviews_count.to_i %>
                 </div>
               </div>
             </div>
@@ -80,7 +80,7 @@
                   </div>
                 </div>
                 <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
-                  ブックマーク <%= product.bookmarks_count.to_i %>
+                  ブックマーク <%= product.product_stat&.bookmarks_count.to_i %>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@
                   </div>
                 </div>
                 <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
-                  平均満足度 <%= format("%.1f", product.avg_score.to_f) %>/5.0
+                  平均満足度 <%= format("%.1f", product.product_stat&.avg_overall_score.to_f) %>/5.0
                 </div>
               </div>
             </div>
