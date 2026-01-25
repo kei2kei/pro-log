@@ -10,26 +10,26 @@
           <p class="text-xs uppercase tracking-[0.35em] text-white/70 font-['Space_Grotesk']">
             Protein review platform
           </p>
-          <h1 class="mt-4 text-4xl font-semibold leading-tight md:text-6xl font-['Fraunces']">
+          <h1 class="mt-4 text-3xl font-semibold leading-tight sm:text-4xl md:text-6xl font-['Fraunces']">
             Find your <span class="text-accent">perfect protein</span>
           </h1>
-          <p class="mt-6 text-lg text-white/80">
-            甘さ・濃さ・溶けやすさなど、味の6軸でプロテインを見える化。<br>
-            自分に合う一杯を、迷わず選べるレビューサイトです。
+          <p class="mt-6 text-base text-white/80 sm:text-lg">
+            <span class="block sm:inline">甘さ・濃さ・溶けやすさなど、味の6軸でプロテインを見える化。</span>
+            <span class="block sm:inline">自分に合う一杯を、迷わず選べるレビューサイトです。</span>
           </p>
           <% unless user_signed_in? %>
-            <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <%= link_to "会員登録する", new_user_registration_path, class: "btn-primary" %>
               <%= link_to "ログイン", new_user_session_path, class: "btn-outline" %>
             </div>
           <% end %>
           <div class="mt-8 flex justify-center">
             <% if user_signed_in? %>
-              <%= search_form_for @q, url: products_path, method: :get, class: "flex items-center gap-3" do |f| %>
+              <%= search_form_for @q, url: products_path, method: :get, class: "flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:items-center" do |f| %>
                 <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
                   placeholder: "商品名、ブランド名、フレーバー など",
-                  class: "h-14 w-96 rounded-lg border border-base bg-white px-5 text-base font-normal text-main placeholder:text-stone-400 md:w-[420px]" %>
-                <%= f.submit "検索", class: "btn-primary h-14 px-8" %>
+                  class: "h-12 w-full rounded-lg border border-base bg-white px-5 text-base font-normal text-main placeholder:text-stone-400 sm:h-14 sm:w-[420px]" %>
+                <%= f.submit "検索", class: "btn-primary h-12 w-full px-8 sm:h-14 sm:w-auto" %>
               <% end %>
             <% end %>
           </div>
