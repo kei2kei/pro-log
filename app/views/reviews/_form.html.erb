@@ -44,23 +44,25 @@
       [:foam, "泡立ち", ["泡立ちにくい", "やや泡立ちにくい", "普通", "やや泡立つ", "泡立つ"]]
     ].each do |field, label, labels| %>
       <% l1, l2, l3, l4, l5 = labels %>
-      <div class="grid gap-4 md:grid-cols-[140px_1fr] md:items-start">
-        <div class="pt-3 text-sm font-semibold text-stone-700"><%= label %></div>
-        <div class="relative w-full pb-7">
+      <div class="grid gap-3 md:grid-cols-[140px_1fr] md:items-start">
+        <div class="text-sm font-semibold text-stone-700 md:pt-2"><%= label %></div>
+        <div class="w-full">
           <%= f.range_field field, in: 1..5, step: 1, value: f.object.public_send(field) || 3,
             class: "rating-range w-full h-2 rounded-full bg-stone-200 appearance-none cursor-pointer" %>
-          <span class="absolute left-0 top-5 text-[10px] text-stone-400 md:text-xs"><%= l1 %></span>
-          <span class="absolute left-1/4 top-5 -translate-x-1/2 text-[10px] text-stone-400 md:text-xs"><%= l2 %></span>
-          <span class="absolute left-1/2 top-5 -translate-x-1/2 text-[10px] text-stone-400 md:text-xs"><%= l3 %></span>
-          <span class="absolute left-3/4 top-5 -translate-x-1/2 text-[10px] text-stone-400 md:text-xs"><%= l4 %></span>
-          <span class="absolute right-0 top-5 text-[10px] text-stone-400 md:text-xs"><%= l5 %></span>
+          <div class="mt-2 grid grid-cols-5 text-[10px] leading-tight text-stone-400 sm:text-xs">
+            <span class="text-left"><%= l1 %></span>
+            <span class="text-center"><%= l2 %></span>
+            <span class="text-center"><%= l3 %></span>
+            <span class="text-center"><%= l4 %></span>
+            <span class="text-right"><%= l5 %></span>
+          </div>
         </div>
       </div>
     <% end %>
   </div>
 
-  <div class="flex justify-center gap-3 pt-4">
-    <%= link_to "キャンセル", cancel_path, class: "rounded-full border border-base px-6 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
-    <%= f.submit "送信", class: "btn-primary rounded-full px-8 py-2" %>
+  <div class="flex flex-col items-stretch gap-3 pt-4 sm:flex-row sm:justify-center">
+    <%= f.submit "送信", class: "btn-primary w-full rounded-full px-8 py-2 sm:w-auto" %>
+    <%= link_to "キャンセル", cancel_path, class: "w-full rounded-full border border-base px-6 py-2 text-center text-sm font-semibold text-stone-600 hover:border-stone-300 sm:w-auto" %>
   </div>
 <% end %>

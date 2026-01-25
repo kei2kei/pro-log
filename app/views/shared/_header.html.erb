@@ -1,4 +1,4 @@
-<header class="relative z-10 border-b border-base bg-white text-main">
+<header class="relative z-50 border-b border-base bg-white text-main">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
     <div class="flex items-center gap-8">
       <%= link_to root_path, class: "flex items-center gap-2" do %>
@@ -29,11 +29,35 @@
             </div>
           <% end %>
         <% end %>
-        <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "rounded-lg border border-base px-4 py-2 text-sm font-semibold text-stone-600 transition hover:border-stone-300" %>
+        <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "hidden rounded-lg border border-base px-4 py-2 text-sm font-semibold text-stone-600 transition hover:border-stone-300 md:inline-flex" %>
       <% else %>
         <%= link_to "ログイン", new_user_session_path, class: "btn-primary" %>
-        <%= link_to "会員登録", new_user_registration_path, class: "btn-outline" %>
+        <%= link_to "会員登録", new_user_registration_path, class: "hidden btn-outline md:inline-flex" %>
       <% end %>
+
+      <details class="relative md:hidden">
+        <summary class="flex h-10 w-10 items-center justify-center rounded-lg border border-base text-stone-600 transition hover:border-stone-300">
+          <span class="sr-only">メニューを開く</span>
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </summary>
+        <div class="absolute right-0 mt-3 w-64 rounded-2xl border border-base bg-white p-4 shadow-md">
+          <nav class="space-y-2 text-sm font-medium text-stone-600">
+            <% unless user_signed_in? %>
+              <%= link_to "会員登録", new_user_registration_path, class: "block rounded-lg bg-brand px-4 py-2 text-white" %>
+              <%= link_to "ログイン", new_user_session_path, class: "block rounded-lg border border-base px-4 py-2 text-stone-600" %>
+            <% end %>
+            <%= link_to "使い方", about_path, class: "block rounded-lg px-4 py-2 hover:bg-stone-50" %>
+            <%= link_to "ランキング", ranking_path, class: "block rounded-lg px-4 py-2 hover:bg-stone-50" %>
+            <% if user_signed_in? %>
+              <%= link_to "プロテイン一覧", products_path, class: "block rounded-lg px-4 py-2 hover:bg-stone-50" %>
+              <%= link_to "マイページ", profile_path, class: "block rounded-lg px-4 py-2 hover:bg-stone-50" %>
+              <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "block rounded-lg px-4 py-2 hover:bg-stone-50" %>
+            <% end %>
+          </nav>
+        </div>
+      </details>
     </div>
   </div>
 </header>

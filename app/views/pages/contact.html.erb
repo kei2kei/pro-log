@@ -1,15 +1,15 @@
 <main class="min-h-screen bg-white text-main">
   <section class="border-b border-base bg-white">
-    <div class="mx-auto max-w-7xl px-6 py-12">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12">
       <p class="text-xs uppercase tracking-[0.35em] text-brand">Contact</p>
-      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">お問い合わせ</h1>
+      <h1 class="mt-4 text-3xl font-semibold font-['Fraunces'] sm:text-4xl">お問い合わせ</h1>
       <p class="mt-2 text-sm text-stone-500">ご質問・ご要望は以下の窓口までご連絡ください。</p>
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-6 py-12">
+  <section class="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12">
     <div class="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
-      <div class="rounded-3xl border border-base bg-white p-8 shadow-sm">
+      <div class="rounded-3xl border border-base bg-white p-6 shadow-sm sm:p-8">
         <div class="space-y-6 text-sm text-stone-700">
           <div>
             <p class="font-semibold text-stone-900">メールでのお問い合わせ</p>
@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <div class="rounded-3xl border border-base bg-white p-8 shadow-sm">
+      <div class="rounded-3xl border border-base bg-white p-6 shadow-sm sm:p-8">
         <h2 class="text-lg font-semibold text-stone-900">お問い合わせフォーム</h2>
         <p class="mt-2 text-sm text-stone-500">必要事項をご記入のうえ送信してください。</p>
 
@@ -67,9 +67,11 @@
             <%= f.text_field :website, autocomplete: "off" %>
           </div>
 
-          <div class="flex flex-wrap items-center gap-3">
+          <div class="flex flex-wrap items-center gap-3 overflow-x-auto">
             <% if ENV["RECAPTCHA_SITE_KEY"].present? %>
-              <%= recaptcha_tags %>
+              <div class="recaptcha-scale origin-left sm:origin-center">
+                <%= recaptcha_tags %>
+              </div>
             <% else %>
               <p class="text-xs text-stone-500">reCAPTCHAの設定が必要です。</p>
             <% end %>

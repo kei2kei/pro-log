@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import StarFilterController from "./star_filter_controller"
 application.register("star-filter", StarFilterController)
+
+import RangeOrderController from "./range_order_controller"
+application.register("range-order", RangeOrderController)
