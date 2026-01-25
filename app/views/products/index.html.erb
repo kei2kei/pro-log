@@ -58,7 +58,7 @@
               <%= f.select :protein_type_eq,
                 Product.protein_types.map { |k, v| [k, v] },
                 { include_blank: "プロテインの種類" },
-                class: "h-12 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_1rem_center] bg-no-repeat px-5 pr-10 text-sm text-stone-600 sm:h-12 sm:w-auto" %>
+                class: "h-12 w-full appearance-none rounded-full border border-base bg-white select-chevron px-5 text-sm text-stone-600 sm:h-12 sm:w-auto" %>
             </div>
           </div>
           <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -76,13 +76,13 @@
                   <%= f.select :product_stat_avg_sweetness_gteq,
                     [["指定しない", ""], ["甘くない", 1], ["やや甘くない", 2], ["普通", 3], ["やや甘め", 4], ["甘め", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "sweetness", range_order_kind: "min" } %>
                   <span class="text-stone-400">〜</span>
                   <%= f.select :product_stat_avg_sweetness_lteq,
                     [["指定しない", ""], ["甘くない", 1], ["やや甘くない", 2], ["普通", 3], ["やや甘め", 4], ["甘め", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "sweetness", range_order_kind: "max" } %>
                 </div>
               </div>
@@ -92,13 +92,13 @@
                   <%= f.select :product_stat_avg_richness_gteq,
                     [["指定しない", ""], ["薄め", 1], ["やや薄め", 2], ["普通", 3], ["やや濃いめ", 4], ["濃いめ", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "richness", range_order_kind: "min" } %>
                   <span class="text-stone-400">〜</span>
                   <%= f.select :product_stat_avg_richness_lteq,
                     [["指定しない", ""], ["薄め", 1], ["やや薄め", 2], ["普通", 3], ["やや濃いめ", 4], ["濃いめ", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "richness", range_order_kind: "max" } %>
                 </div>
               </div>
@@ -108,13 +108,13 @@
                   <%= f.select :product_stat_avg_aftertaste_gteq,
                     [["指定しない", ""], ["スッキリ", 1], ["ややスッキリ", 2], ["普通", 3], ["やや重め", 4], ["重い", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "aftertaste", range_order_kind: "min" } %>
                   <span class="text-stone-400">〜</span>
                   <%= f.select :product_stat_avg_aftertaste_lteq,
                     [["指定しない", ""], ["スッキリ", 1], ["ややスッキリ", 2], ["普通", 3], ["やや重め", 4], ["重い", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "aftertaste", range_order_kind: "max" } %>
                 </div>
               </div>
@@ -124,13 +124,13 @@
                   <%= f.select :product_stat_avg_flavor_score_gteq,
                     [["指定しない", ""], ["香りはしない", 1], ["香り控えめ", 2], ["普通", 3], ["やや香り豊か", 4], ["香り豊か", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "flavor_score", range_order_kind: "min" } %>
                   <span class="text-stone-400">〜</span>
                   <%= f.select :product_stat_avg_flavor_score_lteq,
                     [["指定しない", ""], ["香りはしない", 1], ["香り控えめ", 2], ["普通", 3], ["やや香り豊か", 4], ["香り豊か", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "flavor_score", range_order_kind: "max" } %>
                 </div>
               </div>
@@ -140,13 +140,13 @@
                   <%= f.select :product_stat_avg_solubility_gteq,
                     [["指定しない", ""], ["溶けにくい", 1], ["やや溶けにくい", 2], ["普通", 3], ["やや溶けやすい", 4], ["溶けやすい", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "solubility", range_order_kind: "min" } %>
                   <span class="text-stone-400">〜</span>
                   <%= f.select :product_stat_avg_solubility_lteq,
                     [["指定しない", ""], ["溶けにくい", 1], ["やや溶けにくい", 2], ["普通", 3], ["やや溶けやすい", 4], ["溶けやすい", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "solubility", range_order_kind: "max" } %>
                 </div>
               </div>
@@ -156,13 +156,13 @@
                   <%= f.select :product_stat_avg_foam_gteq,
                     [["指定しない", ""], ["泡立ちにくい", 1], ["やや泡立ちにくい", 2], ["普通", 3], ["やや泡立つ", 4], ["泡立つ", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "foam", range_order_kind: "min" } %>
                   <span class="text-stone-400">〜</span>
                   <%= f.select :product_stat_avg_foam_lteq,
                     [["指定しない", ""], ["泡立ちにくい", 1], ["やや泡立ちにくい", 2], ["普通", 3], ["やや泡立つ", 4], ["泡立つ", 5]],
                     {},
-                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M5%207l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-4 pr-9 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
+                    class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "foam", range_order_kind: "max" } %>
                 </div>
               </div>
