@@ -171,6 +171,16 @@
   padding-right: 2.25rem;
 }
 
+.recaptcha-scale {
+  transform: scale(0.86);
+}
+
+@media (min-width: 640px) {
+  .recaptcha-scale {
+    transform: scale(1);
+  }
+}
+
 @keyframes shaker-bounce {
   0% {
     transform: translateY(0) rotate(0deg);
