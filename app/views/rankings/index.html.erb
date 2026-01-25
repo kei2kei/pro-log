@@ -36,10 +36,10 @@
 
     <div class="js-rankings-body">
       <div class="rounded-3xl border border-base bg-white p-8 shadow-sm">
-        <div class="flex flex-wrap gap-3">
-          <%= link_to "総合満足度", ranking_path(tab: "overall"), class: @tab == "overall" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
-          <%= link_to "ブックマーク数", ranking_path(tab: "bookmark"), class: @tab == "bookmark" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
-          <%= link_to "レビュー数", ranking_path(tab: "reviews"), class: @tab == "reviews" ? "rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white" : "rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <%= link_to "総合満足度", ranking_path(tab: "overall"), class: @tab == "overall" ? "w-full rounded-full bg-brand px-5 py-2 text-center text-sm font-semibold text-white sm:w-auto" : "w-full rounded-full border border-base px-5 py-2 text-center text-sm font-semibold text-stone-600 hover:border-stone-300 sm:w-auto" %>
+          <%= link_to "ブックマーク数", ranking_path(tab: "bookmark"), class: @tab == "bookmark" ? "w-full rounded-full bg-brand px-5 py-2 text-center text-sm font-semibold text-white sm:w-auto" : "w-full rounded-full border border-base px-5 py-2 text-center text-sm font-semibold text-stone-600 hover:border-stone-300 sm:w-auto" %>
+          <%= link_to "レビュー数", ranking_path(tab: "reviews"), class: @tab == "reviews" ? "w-full rounded-full bg-brand px-5 py-2 text-center text-sm font-semibold text-white sm:w-auto" : "w-full rounded-full border border-base px-5 py-2 text-center text-sm font-semibold text-stone-600 hover:border-stone-300 sm:w-auto" %>
         </div>
       </div>
 
@@ -50,7 +50,7 @@
               <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
                 <div class="flex flex-wrap items-center justify-between gap-4">
                   <div class="flex items-center gap-4">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
+                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand/10 text-sm font-semibold text-brand-dark">
                       <%= index + 1 %>
                     </div>
                     <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
@@ -69,7 +69,7 @@
                       </h2>
                     </div>
                   </div>
-                  <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
+                <div class="rounded-full bg-brand/10 px-4 py-2 text-sm font-semibold text-brand-dark">
                     レビュー数 <%= product.product_stat&.reviews_count.to_i %>
                   </div>
                 </div>
@@ -88,7 +88,7 @@
               <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
                 <div class="flex flex-wrap items-center justify-between gap-4">
                   <div class="flex items-center gap-4">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
+                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand/10 text-sm font-semibold text-brand-dark">
                       <%= index + 1 %>
                     </div>
                     <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
@@ -107,7 +107,7 @@
                       </h2>
                     </div>
                   </div>
-                  <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
+                <div class="rounded-full bg-brand/10 px-4 py-2 text-sm font-semibold text-brand-dark">
                     ブックマーク <%= product.product_stat&.bookmarks_count.to_i %>
                   </div>
                 </div>
@@ -126,7 +126,7 @@
               <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
                 <div class="flex flex-wrap items-center justify-between gap-4">
                   <div class="flex items-center gap-4">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-stone-100 text-sm font-semibold text-stone-600">
+                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand/10 text-sm font-semibold text-brand-dark">
                       <%= index + 1 %>
                     </div>
                     <div class="h-14 w-14 overflow-hidden rounded-2xl bg-stone-100">
@@ -145,7 +145,7 @@
                       </h2>
                     </div>
                   </div>
-                  <div class="rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-700">
+                <div class="rounded-full bg-brand/10 px-4 py-2 text-sm font-semibold text-brand-dark">
                     平均満足度 <%= format("%.1f", product.product_stat&.avg_overall_score.to_f) %>/5.0
                   </div>
                 </div>
