@@ -77,3 +77,14 @@ ja:
       profile_list2: "ブックマークしたお気に入り商品"
       profile_list3: "いいねしたレビューの履歴"
       profile_list4: "プロフィール編集（名前・アイコン）"
+  rankings:
+    index:
+      kicker: "Ranking"
+      title: "ランキング"
+      tab_overall: "総合満足度"
+      tab_bookmark: "ブックマーク数"
+      tab_reviews: "レビュー数"
+      reviews_count: "レビュー数"
+      bookmarks_count: "ブックマーク"
+      avg_overall_score: "平均満足度"
+      empty_state: "まだ該当する商品がありません。"
