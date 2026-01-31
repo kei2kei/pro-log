@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
     raw_query = params.dig(:q, :name_or_brand_or_flavor_or_tags_name_cont)
     q_params = params.fetch(:q, {}).to_unsafe_h
     if raw_query.present?
-      terms = raw_query.to_s.split(/[\s　,、]+/).reject(&:blank?)
+      terms = raw_query.to_s.split(/[,、]+/).reject(&:blank?)
       q_params.delete("name_or_brand_or_flavor_or_tags_name_cont")
     end
 
