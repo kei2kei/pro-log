@@ -98,6 +98,14 @@ ja:
           password_hint: "最低 %{count} 文字"
           password_confirmation_label: "新しいパスワード（確認）"
           submit: "パスワードを更新"
+      confirmations:
+        new:
+          title: "確認メールの再送"
+          subtitle: "登録時のメールアドレスを入力してください。確認メールを再送します。"
+          email_label: "メールアドレス"
+          submit: "確認メールを再送する"
+          note: "受信できない場合は迷惑メールフォルダもご確認ください。"
+          back_to_signin: "ログイン画面へ戻る"
   errors:
     messages:
       already_confirmed: "は既に確認済みです。ログインしてください。"
