@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.min.js" defer></script>
+<% end %>
 <div class="min-h-screen bg-white text-main">
   <div class="relative overflow-hidden">
     <section class="relative z-10 text-white">
@@ -28,8 +32,9 @@
               <%= search_form_for @q, url: products_path, method: :get, class: "flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:items-center" do |f| %>
                 <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
                   placeholder: "商品名、ブランド名、フレーバー など",
-                  class: "h-12 w-full rounded-lg border border-base bg-white px-5 text-base font-normal text-main placeholder:text-stone-400 sm:h-14 sm:w-[420px]" %>
-                <%= f.submit "検索", class: "btn-primary h-12 w-full px-8 sm:h-14 sm:w-auto" %>
+                  class: "w-full rounded-lg border border-base bg-white text-base text-main placeholder:text-stone-400 sm:w-[420px]",
+                  data: { controller: "tagify", tagify_url_value: autocomplete_search_path, tagify_mode_value: "search", tagify_class_value: "w-full text-left" } %>
+                <%= f.submit "検索", class: "btn-primary h-11 w-full px-8 sm:w-auto" %>
               <% end %>
             <% end %>
           </div>
