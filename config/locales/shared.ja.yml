@@ -18,3 +18,10 @@ ja:
       privacy: "プライバシーポリシー"
       freepik_credit: "Designed by Freepik"
       copyright: "©2025 Pro-log. All rights reserved."
+    bookmark:
+      add: "ブックマーク"
+      saved: "ブックマーク済み"
+      remove: "ブックマーク解除"
+    like:
+      add: "いいね"
+      saved: "いいね済み"
