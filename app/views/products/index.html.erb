@@ -5,9 +5,9 @@
 <main class="min-h-screen bg-white text-main">
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <h1 class="text-4xl font-semibold font-['Fraunces']">プロテイン一覧</h1>
+      <h1 class="text-4xl font-semibold font-['Fraunces']"><%= t("products.index.title") %></h1>
       <p class="mt-3 text-sm text-stone-500">
-        甘さ・濃さ・溶けやすさなどのレビューをもとに比較できます。
+        <%= t("products.index.subtitle") %>
       </p>
 
       <div class="mt-8">
@@ -15,33 +15,34 @@
           url: products_path,
           method: :get,
           html: { class: "space-y-4", data: { controller: "range-order", action: "submit->range-order#normalize" } } do |f| %>
+          <% axis_option = ->(key) { [[t("products.index.unset"), ""]] + t("products.index.axis_options.#{key}").map.with_index(1) { |label, i| [label, i] } } %>
           <div class="flex flex-wrap items-center gap-3">
             <%= f.text_field :name_or_brand_or_flavor_or_tags_name_cont,
-              placeholder: "商品名、ブランド名、フレーバー、タグ など",
+              placeholder: t("products.index.search_placeholder"),
               class: "w-full max-w-2xl rounded-full border border-base bg-white text-sm text-stone-600 placeholder:text-stone-400",
               data: { controller: "tagify", tagify_url_value: autocomplete_search_path, tagify_mode_value: "search", tagify_class_value: "w-full text-left" } %>
           </div>
           <div class="grid gap-4 sm:flex sm:flex-wrap sm:items-end">
             <div class="flex w-full flex-col gap-1 text-xs text-stone-500 sm:w-auto">
-              <span>価格帯</span>
+              <span><%= t("products.index.price_label") %></span>
               <div class="flex w-full items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600 sm:w-auto">
-                <%= f.label :price_gteq, "最低価格", class: "sr-only" %>
+                <%= f.label :price_gteq, t("products.index.price_min_label"), class: "sr-only" %>
                 <%= f.number_field :price_gteq,
-                  placeholder: "¥0",
+                  placeholder: t("products.index.price_min_placeholder"),
                   class: "w-20 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none",
                   data: { range_order_group: "price", range_order_kind: "min" } %>
-                <span class="text-stone-400">~</span>
-                <%= f.label :price_lteq, "最高価格", class: "sr-only" %>
+                <span class="text-stone-400"><%= t("products.index.range_separator") %></span>
+                <%= f.label :price_lteq, t("products.index.price_max_label"), class: "sr-only" %>
                 <%= f.number_field :price_lteq,
-                  placeholder: "指定なし",
+                  placeholder: t("products.index.price_max_placeholder"),
                   class: "w-24 bg-transparent text-sm text-stone-600 placeholder:text-stone-400 focus:outline-none",
                   data: { range_order_group: "price", range_order_kind: "max" } %>
               </div>
             </div>
             <div class="flex w-full flex-col gap-1 text-xs text-stone-500 sm:w-auto">
-              <span>満足度（以上）</span>
+              <span><%= t("products.index.satisfaction_label") %></span>
               <div class="flex w-full items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600 sm:w-auto" data-controller="star-filter">
-                <%= f.label :product_stat_avg_overall_score_gteq, "満足度（以上）", class: "sr-only" %>
+                <%= f.label :product_stat_avg_overall_score_gteq, t("products.index.satisfaction_label"), class: "sr-only" %>
                 <%= f.hidden_field :product_stat_avg_overall_score_gteq, value: params.dig(:q, :product_stat_avg_overall_score_gteq), data: { "star-filter-target": "input" } %>
                 <div class="flex items-center gap-1">
                   <% 1.upto(5) do |score| %>
@@ -53,119 +54,119 @@
                       ★
                     </button>
                   <% end %>
-                  <span class="ml-2 text-xs text-stone-400">以上</span>
+                  <span class="ml-2 text-xs text-stone-400"><%= t("products.index.satisfaction_suffix") %></span>
                 </div>
               </div>
             </div>
             <div class="flex w-full flex-col gap-1 text-xs text-stone-500 sm:w-auto">
-              <span>プロテインタイプ</span>
-              <%= f.label :protein_type_eq, "プロテインタイプ", class: "sr-only" %>
+              <span><%= t("products.index.protein_type_label") %></span>
+              <%= f.label :protein_type_eq, t("products.index.protein_type_label"), class: "sr-only" %>
               <%= f.select :protein_type_eq,
                 Product.protein_types.map { |k, v| [k, v] },
-                { include_blank: "プロテインの種類" },
+                { include_blank: t("products.index.protein_type_placeholder") },
                 class: "h-12 w-full appearance-none rounded-full border border-base bg-white select-chevron px-5 text-sm text-stone-600 sm:h-12 sm:w-auto" %>
             </div>
           </div>
           <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <%= f.submit "検索", class: "btn-primary h-12 w-full rounded-full px-6 sm:w-auto" %>
-            <%= link_to "リセット", products_path, class: "h-12 w-full rounded-full border border-base px-5 py-2 text-center text-sm font-semibold text-stone-600 hover:border-stone-300 sm:w-auto" %>
+            <%= f.submit t("products.index.search_submit"), class: "btn-primary h-12 w-full rounded-full px-6 sm:w-auto" %>
+            <%= link_to t("products.index.search_reset"), products_path, class: "h-12 w-full rounded-full border border-base px-5 py-2 text-center text-sm font-semibold text-stone-600 hover:border-stone-300 sm:w-auto" %>
           </div>
           <details class="mt-6 rounded-3xl border border-base bg-white p-6 shadow-sm">
             <summary class="cursor-pointer text-sm font-semibold text-stone-700">
-              詳細検索
+              <%= t("products.index.advanced_search") %>
             </summary>
             <div class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               <div class="flex flex-col gap-2 text-xs text-stone-500">
-                <span>甘さ</span>
+                <span><%= t("products.index.axes.sweetness") %></span>
                 <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
                   <%= f.select :product_stat_avg_sweetness_gteq,
-                    [["指定しない", ""], ["甘くない", 1], ["やや甘くない", 2], ["普通", 3], ["やや甘め", 4], ["甘め", 5]],
+                    axis_option.call(:sweetness),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "sweetness", range_order_kind: "min" } %>
-                  <span class="text-stone-400">〜</span>
+                  <span class="text-stone-400"><%= t("products.index.range_separator") %></span>
                   <%= f.select :product_stat_avg_sweetness_lteq,
-                    [["指定しない", ""], ["甘くない", 1], ["やや甘くない", 2], ["普通", 3], ["やや甘め", 4], ["甘め", 5]],
+                    axis_option.call(:sweetness),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "sweetness", range_order_kind: "max" } %>
                 </div>
               </div>
               <div class="flex flex-col gap-2 text-xs text-stone-500">
-                <span>濃さ</span>
+                <span><%= t("products.index.axes.richness") %></span>
                 <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
                   <%= f.select :product_stat_avg_richness_gteq,
-                    [["指定しない", ""], ["薄め", 1], ["やや薄め", 2], ["普通", 3], ["やや濃いめ", 4], ["濃いめ", 5]],
+                    axis_option.call(:richness),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "richness", range_order_kind: "min" } %>
-                  <span class="text-stone-400">〜</span>
+                  <span class="text-stone-400"><%= t("products.index.range_separator") %></span>
                   <%= f.select :product_stat_avg_richness_lteq,
-                    [["指定しない", ""], ["薄め", 1], ["やや薄め", 2], ["普通", 3], ["やや濃いめ", 4], ["濃いめ", 5]],
+                    axis_option.call(:richness),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "richness", range_order_kind: "max" } %>
                 </div>
               </div>
               <div class="flex flex-col gap-2 text-xs text-stone-500">
-                <span>後味</span>
+                <span><%= t("products.index.axes.aftertaste") %></span>
                 <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
                   <%= f.select :product_stat_avg_aftertaste_gteq,
-                    [["指定しない", ""], ["スッキリ", 1], ["ややスッキリ", 2], ["普通", 3], ["やや重め", 4], ["重い", 5]],
+                    axis_option.call(:aftertaste),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "aftertaste", range_order_kind: "min" } %>
-                  <span class="text-stone-400">〜</span>
+                  <span class="text-stone-400"><%= t("products.index.range_separator") %></span>
                   <%= f.select :product_stat_avg_aftertaste_lteq,
-                    [["指定しない", ""], ["スッキリ", 1], ["ややスッキリ", 2], ["普通", 3], ["やや重め", 4], ["重い", 5]],
+                    axis_option.call(:aftertaste),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "aftertaste", range_order_kind: "max" } %>
                 </div>
               </div>
               <div class="flex flex-col gap-2 text-xs text-stone-500">
-                <span>風味</span>
+                <span><%= t("products.index.axes.flavor_score") %></span>
                 <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
                   <%= f.select :product_stat_avg_flavor_score_gteq,
-                    [["指定しない", ""], ["香りはしない", 1], ["香り控えめ", 2], ["普通", 3], ["やや香り豊か", 4], ["香り豊か", 5]],
+                    axis_option.call(:flavor_score),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "flavor_score", range_order_kind: "min" } %>
-                  <span class="text-stone-400">〜</span>
+                  <span class="text-stone-400"><%= t("products.index.range_separator") %></span>
                   <%= f.select :product_stat_avg_flavor_score_lteq,
-                    [["指定しない", ""], ["香りはしない", 1], ["香り控えめ", 2], ["普通", 3], ["やや香り豊か", 4], ["香り豊か", 5]],
+                    axis_option.call(:flavor_score),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "flavor_score", range_order_kind: "max" } %>
                 </div>
               </div>
               <div class="flex flex-col gap-2 text-xs text-stone-500">
-                <span>溶けやすさ</span>
+                <span><%= t("products.index.axes.solubility") %></span>
                 <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
                   <%= f.select :product_stat_avg_solubility_gteq,
-                    [["指定しない", ""], ["溶けにくい", 1], ["やや溶けにくい", 2], ["普通", 3], ["やや溶けやすい", 4], ["溶けやすい", 5]],
+                    axis_option.call(:solubility),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "solubility", range_order_kind: "min" } %>
-                  <span class="text-stone-400">〜</span>
+                  <span class="text-stone-400"><%= t("products.index.range_separator") %></span>
                   <%= f.select :product_stat_avg_solubility_lteq,
-                    [["指定しない", ""], ["溶けにくい", 1], ["やや溶けにくい", 2], ["普通", 3], ["やや溶けやすい", 4], ["溶けやすい", 5]],
+                    axis_option.call(:solubility),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "solubility", range_order_kind: "max" } %>
                 </div>
               </div>
               <div class="flex flex-col gap-2 text-xs text-stone-500">
-                <span>泡立ち</span>
+                <span><%= t("products.index.axes.foam") %></span>
                 <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
                   <%= f.select :product_stat_avg_foam_gteq,
-                    [["指定しない", ""], ["泡立ちにくい", 1], ["やや泡立ちにくい", 2], ["普通", 3], ["やや泡立つ", 4], ["泡立つ", 5]],
+                    axis_option.call(:foam),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "foam", range_order_kind: "min" } %>
-                  <span class="text-stone-400">〜</span>
+                  <span class="text-stone-400"><%= t("products.index.range_separator") %></span>
                   <%= f.select :product_stat_avg_foam_lteq,
-                    [["指定しない", ""], ["泡立ちにくい", 1], ["やや泡立ちにくい", 2], ["普通", 3], ["やや泡立つ", 4], ["泡立つ", 5]],
+                    axis_option.call(:foam),
                     {},
                     class: "h-11 w-full appearance-none rounded-full border border-base bg-white select-chevron px-4 text-sm text-stone-600 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30",
                     data: { range_order_group: "foam", range_order_kind: "max" } %>
