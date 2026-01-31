@@ -1,0 +1,17 @@
+ja:
+  registrations:
+    new:
+      title: "会員登録"
+      subtitle: "1分で登録できます。"
+      username_label: "ユーザーネーム"
+      avatar_label: "アバター画像"
+      email_label: "メールアドレス"
+      password_label: "パスワード"
+      password_hint: "最低 %{count} 文字"
+      password_confirmation_label: "パスワード確認"
+      submit: "登録する"
+      omniauth_title: "Googleアカウントで簡単登録"
+      omniauth_note: "入力を最小限にしてすぐに始められます。"
+      omniauth_cta: "Googleで登録する"
+      signin_prompt: "すでにアカウントをお持ちですか？"
+      signin_link: "ログイン"
