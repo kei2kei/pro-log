@@ -1,0 +1,8 @@
+ja:
+  contact_mailer:
+    contact_email:
+      received: "お問い合わせを受け付けました。"
+      name: "お名前"
+      email: "メール"
+      subject: "件名"
+      message: "本文"
