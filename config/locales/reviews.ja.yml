@@ -1,0 +1,25 @@
+ja:
+  reviews:
+    show:
+      og_description: "%{product}のレビュー"
+      kicker: "Review Detail"
+      title: "%{username}さんのレビュー"
+      axis_title: "%{username}さんの評価"
+      reviewed_product_label: "レビューした商品"
+      other_reviews_title: "%{username}さんがレビューした商品"
+      other_reviews_empty: "このユーザーの他のレビューはありません。"
+      other_overall_label: "総合満足度 %{score}.0/5.0"
+      no_image: "No Image"
+      share:
+        kicker: "Share"
+        title: "レビューをXで共有しませんか？"
+        description: "投稿直後にシェアすると反応が集まりやすいです。"
+        close: "閉じる"
+        later: "あとで"
+        cta: "Xでシェア"
+        tweet: "%{brand}の%{product}を飲んだ感想を投稿しました。\n\n満足度：%{stars}%{blanks}（%{score}/5.0）\n\nPro-logで%{username}さんのプロテインレビューを見よう！\n\n#プロテインレビュー #%{brand} #プロテイン"
+        tweet_short: "%{brand}の%{product}を飲んだ感想を投稿しました。\n満足度：%{stars}%{blanks}（%{score}/5.0）\nPro-log(%{root_url})で%{username}さんのプロテインレビューを見る。\n#プロテインレビュー #%{brand} #プロテイン"
+      actions:
+        edit: "編集"
+        delete: "削除"
+        delete_confirm: "このレビューを削除しますか？"
