@@ -1,5 +1,67 @@
 ja:
   reviews:
+    new:
+      title: "プロテインのレビュー作成"
+    edit:
+      title: "レビューを編集"
+    form:
+      kicker: "Review"
+      product_label: "レビューする商品"
+      no_image: "No Image"
+      overall_label: "総合満足度"
+      overall_unselected: "未選択"
+      title_label: "レビュータイトル"
+      comment_label: "レビュー内容"
+      tags_label: "タグ"
+      tags_hint: "カンマ・スペース区切りで入力"
+      tags_placeholder: "例: チョコ, 甘め など"
+      axis_title: "各項目の評価"
+      axes:
+        sweetness: "甘さ"
+        richness: "濃さ"
+        aftertaste: "後味"
+        flavor_score: "風味"
+        solubility: "溶けやすさ"
+        foam: "泡立ち"
+      axis_options:
+        sweetness:
+          - "甘くない"
+          - "やや甘くない"
+          - "普通"
+          - "やや甘め"
+          - "甘め"
+        richness:
+          - "薄め"
+          - "やや薄め"
+          - "普通"
+          - "やや濃いめ"
+          - "濃いめ"
+        aftertaste:
+          - "スッキリ"
+          - "ややスッキリ"
+          - "普通"
+          - "やや重め"
+          - "重い"
+        flavor_score:
+          - "香りはしない"
+          - "香り控えめ"
+          - "普通"
+          - "やや香り豊か"
+          - "香り豊か"
+        solubility:
+          - "溶けにくい"
+          - "やや溶けにくい"
+          - "普通"
+          - "やや溶けやすい"
+          - "溶けやすい"
+        foam:
+          - "泡立ちにくい"
+          - "やや泡立ちにくい"
+          - "普通"
+          - "やや泡立つ"
+          - "泡立つ"
+      submit: "送信"
+      cancel: "キャンセル"
     show:
       og_description: "%{product}のレビュー"
       kicker: "Review Detail"

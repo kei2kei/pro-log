@@ -5,8 +5,8 @@
 <main class="min-h-screen bg-white text-main">
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12">
-      <p class="text-xs uppercase tracking-[0.35em] text-brand">Review</p>
-      <h1 class="mt-4 text-3xl font-semibold font-['Fraunces'] sm:text-4xl">プロテインのレビュー作成</h1>
+      <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("reviews.form.kicker") %></p>
+      <h1 class="mt-4 text-3xl font-semibold font-['Fraunces'] sm:text-4xl"><%= t("reviews.new.title") %></h1>
     </div>
   </section>
 
@@ -16,7 +16,7 @@
 
       <div class="grid gap-8 md:grid-cols-[1fr_220px] md:items-center">
         <div>
-          <p class="text-sm text-stone-500">レビューする商品</p>
+          <p class="text-sm text-stone-500"><%= t("reviews.form.product_label") %></p>
           <h2 class="mt-2 text-2xl font-semibold"><%= @product.name %></h2>
           <p class="mt-1 text-sm text-stone-500"><%= @product.brand %></p>
         </div>
@@ -25,7 +25,7 @@
             <%= image_tag @product.image_url, class: "h-full w-full object-contain", alt: @product.name %>
           <% else %>
             <div class="flex h-full w-full items-center justify-center text-sm text-stone-400">
-              No Image
+              <%= t("reviews.form.no_image") %>
             </div>
           <% end %>
         </div>
@@ -42,10 +42,10 @@
     const inputs = document.querySelectorAll('input[name="review[overall_score]"]');
     if (!output || inputs.length === 0) return;
 
-    const update = () => {
-      const checked = Array.from(inputs).find((input) => input.checked);
-      output.textContent = checked ? `${checked.value}.0/5.0` : "未選択";
-    };
+      const update = () => {
+        const checked = Array.from(inputs).find((input) => input.checked);
+        output.textContent = checked ? `${checked.value}.0/5.0` : "<%= j(t("reviews.form.overall_unselected")) %>";
+      };
 
     inputs.forEach((input) => input.addEventListener("change", update));
     update();
