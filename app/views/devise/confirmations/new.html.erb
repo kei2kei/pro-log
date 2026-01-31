@@ -7,7 +7,7 @@
       </p>
 
       <%= form_for(resource, as: resource_name, url: user_confirmation_path(resource_name), html: { method: :post, class: "mt-6 space-y-4" }) do |f| %>
-        <%= render "devise/shared/error_messages", resource: resource %>
+        <%= render "shared/form_errors", resource: resource %>
 
         <div>
           <%= f.label :email, t("devise.views.confirmations.new.email_label"), class: "text-sm font-medium text-stone-700" %>
