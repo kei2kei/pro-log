@@ -1,12 +1,4 @@
 <div class="rounded-3xl border border-base bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-  <% axis_labels = {
-    sweetness: ["甘くない", "やや甘くない", "普通", "やや甘め", "甘め"],
-    richness: ["薄め", "やや薄め", "普通", "やや濃いめ", "濃いめ"],
-    aftertaste: ["スッキリ", "ややスッキリ", "普通", "やや重め", "重い"],
-    flavor_score: ["香りはしない", "香り控えめ", "普通", "やや香り豊か", "香り豊か"],
-    solubility: ["溶けにくい", "やや溶けにくい", "普通", "やや溶けやすい", "溶けやすい"],
-    foam: ["泡立ちにくい", "やや泡立ちにくい", "普通", "やや泡立つ", "泡立つ"]
-  } %>
   <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
     <%= link_to review_path(review), class: "block flex-1" do %>
       <div class="grid gap-6 md:grid-cols-[140px_1fr]">
