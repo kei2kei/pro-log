@@ -84,6 +84,20 @@ ja:
           omniauth_cta: "Googleで登録する"
           signin_prompt: "すでにアカウントをお持ちですか？"
           signin_link: "ログイン"
+        edit:
+          kicker: "Security"
+          title: "アカウント情報の変更"
+          subtitle: "メールアドレスやパスワードを変更できます。"
+          email_section_title: "メールアドレス変更"
+          email_section_note: "変更を保存するには現在のパスワードが必要です。"
+          email_label: "新しいメールアドレス"
+          pending_reconfirmation_html: "確認メールを送信しました。<strong>%{email}</strong> を確認して変更を完了してください。"
+          password_section_title: "パスワード変更"
+          current_password_label: "現在のパスワード"
+          password_label: "新しいパスワード"
+          password_confirmation_label: "新しいパスワード（確認）"
+          submit: "変更内容を保存する"
+          back_to_profile: "プロフィールに戻る"
       passwords:
         new:
           title: "パスワード再設定"

@@ -1,12 +1,12 @@
 <main class="min-h-screen bg-white text-main">
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <p class="text-xs uppercase tracking-[0.35em] text-brand">Security</p>
+      <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("devise.views.registrations.edit.kicker") %></p>
       <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">
-        アカウント情報の変更
+        <%= t("devise.views.registrations.edit.title") %>
       </h1>
       <p class="mt-2 text-sm text-stone-500">
-        メールアドレスやパスワードを変更できます。
+        <%= t("devise.views.registrations.edit.subtitle") %>
       </p>
     </div>
   </section>
@@ -20,11 +20,11 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="mb-10 border-b border-base pb-8">
-        <h2 class="mb-4 text-xl font-semibold">メールアドレス変更</h2>
-        <p class="mb-4 text-sm text-stone-500">変更を保存するには現在のパスワードが必要です。</p>
+        <h2 class="mb-4 text-xl font-semibold"><%= t("devise.views.registrations.edit.email_section_title") %></h2>
+        <p class="mb-4 text-sm text-stone-500"><%= t("devise.views.registrations.edit.email_section_note") %></p>
 
         <div class="mb-6">
-          <%= f.label :email, "新しいメールアドレス",
+          <%= f.label :email, t("devise.views.registrations.edit.email_label"),
             class: "mb-2 block text-sm font-semibold text-stone-700" %>
           <%= f.email_field :email,
             autocomplete: "email",
@@ -33,15 +33,15 @@
 
         <% if resource.pending_reconfirmation? %>
           <div class="mt-4 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-            確認メールを送信しました。<strong><%= resource.unconfirmed_email %></strong> を確認して変更を完了してください。
+            <%= t("devise.views.registrations.edit.pending_reconfirmation_html", email: resource.unconfirmed_email).html_safe %>
           </div>
         <% end %>
       </div>
 
-      <h2 class="mb-4 text-xl font-semibold">パスワード変更</h2>
+      <h2 class="mb-4 text-xl font-semibold"><%= t("devise.views.registrations.edit.password_section_title") %></h2>
 
       <div class="mb-6">
-        <%= f.label :current_password, "現在のパスワード",
+        <%= f.label :current_password, t("devise.views.registrations.edit.current_password_label"),
           class: "mb-2 block text-sm font-semibold text-stone-700" %>
         <%= f.password_field :current_password,
           autocomplete: "current-password",
@@ -49,7 +49,7 @@
       </div>
 
       <div class="mb-6">
-        <%= f.label :password, "新しいパスワード",
+        <%= f.label :password, t("devise.views.registrations.edit.password_label"),
           class: "mb-2 block text-sm font-semibold text-stone-700" %>
         <%= f.password_field :password,
           autocomplete: "new-password",
@@ -57,7 +57,7 @@
       </div>
 
       <div class="mb-8">
-        <%= f.label :password_confirmation, "新しいパスワード（確認）",
+        <%= f.label :password_confirmation, t("devise.views.registrations.edit.password_confirmation_label"),
           class: "mb-2 block text-sm font-semibold text-stone-700" %>
         <%= f.password_field :password_confirmation,
           autocomplete: "new-password",
@@ -65,10 +65,10 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <%= f.submit "変更内容を保存する",
+        <%= f.submit t("devise.views.registrations.edit.submit"),
           class: "btn-primary px-6 py-3" %>
 
-        <%= link_to "プロフィールに戻る",
+        <%= link_to t("devise.views.registrations.edit.back_to_profile"),
           profile_path,
           class: "text-sm text-stone-500 hover:text-brand" %>
       </div>
