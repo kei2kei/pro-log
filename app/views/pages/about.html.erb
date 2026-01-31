@@ -1,27 +1,25 @@
 <main class="min-h-screen bg-white text-main">
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <p class="text-xs uppercase tracking-[0.35em] text-brand">Getting Started</p>
-      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">Pro-logの使い方</h1>
+      <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("pages.about.kicker") %></p>
+      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']"><%= t("pages.about.title") %></h1>
       <p class="mt-4 max-w-2xl text-base leading-relaxed text-stone-700">
-        Pro-logは、味の6軸スコアとリアルなレビューで、あなたにぴったりのプロテイン探しをお手伝いするサービスです。  
-ここでは、登録からレビュー投稿まで——実際の使い方を、わかりやすく順番にご紹介します。
+        <%= t("pages.about.intro_body_html").html_safe %>
       </p>
     </div>
   </section>
 
   <section id="signup" class="border-t border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']">1. アカウント登録をする</h2>
+      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']"><%= t("pages.about.signup_title") %></h2>
       <p class="mt-4 text-base leading-relaxed text-stone-700">
-        ブックマークやレビュー投稿など、便利な機能を使うにはアカウント登録が必要です。  
-むずかしい設定はなし。サクッと始められます！
+        <%= t("pages.about.signup_body_html").html_safe %>
       </p>
 
       <ul class="mt-4 list-disc space-y-2 pl-5 text-base text-stone-700">
-        <li>右上の「会員登録」をクリック</li>
-        <li>メールアドレスとパスワードを入力</li>
-        <li>ユーザー名を決めたら、もうスタートOK！</li>
+        <li><%= t("pages.about.signup_list1") %></li>
+        <li><%= t("pages.about.signup_list2") %></li>
+        <li><%= t("pages.about.signup_list3") %></li>
       </ul>
 
     </div>
@@ -29,30 +27,30 @@
 
   <section id="search-products" class="border-t border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']">2. プロテインを探す</h2>
+      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']"><%= t("pages.about.search_title") %></h2>
       <p class="mt-4 text-base leading-relaxed text-stone-700">
-        気になるプロテインを、名前・ブランド・味などからラクに検索できます。
+        <%= t("pages.about.search_body") %>
       </p>
 
       <ul class="mt-4 list-disc space-y-2 pl-5 text-base text-stone-700">
-        <li>フリーワードで気になるキーワードを検索</li>
-        <li>価格帯やタイプで、好みに合わせて絞り込み</li>
-        <li>あとで見たい商品は、ブックマークして保存</li>
+        <li><%= t("pages.about.search_list1") %></li>
+        <li><%= t("pages.about.search_list2") %></li>
+        <li><%= t("pages.about.search_list3") %></li>
       </ul>
     </div>
   </section>
 
   <section id="product-detail" class="border-t border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']">3. プロテインの詳細を見る</h2>
+      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']"><%= t("pages.about.detail_title") %></h2>
       <p class="mt-4 text-base leading-relaxed text-stone-700">
-        商品カードをクリックすると、味の傾向や栄養情報など、知りたいポイントをまとめて確認できます。
+        <%= t("pages.about.detail_body") %>
       </p>
 
       <ul class="mt-4 list-disc space-y-2 pl-5 text-base text-stone-700">
-        <li>ブランド / フレーバー / 価格帯</li>
-        <li>栄養成分と総合満足度</li>
-        <li>甘さ・濃さなど、6軸スコアで「味のイメージ」をチェック</li>
+        <li><%= t("pages.about.detail_list1") %></li>
+        <li><%= t("pages.about.detail_list2") %></li>
+        <li><%= t("pages.about.detail_list3") %></li>
       </ul>
 
     </div>
@@ -60,16 +58,15 @@
 
   <section id="review" class="border-t border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']">4. レビューを投稿する</h2>
+      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']"><%= t("pages.about.review_title") %></h2>
       <p class="mt-4 text-base leading-relaxed text-stone-700">
-        実際に飲んでみたら、あなたの感想もぜひシェアしてみましょう。  
-あなたの一言が、誰かの失敗を防ぐヒントになります。
+        <%= t("pages.about.review_body_html").html_safe %>
       </p>
 
       <ul class="mt-4 list-disc space-y-2 pl-5 text-base text-stone-700">
-        <li>まずは総合満足度（星）を選択</li>
-        <li>6軸スライダーで、感じた味をサクッと入力</li>
-        <li>コメントやタグで、ひとこと補足（任意）</li>
+        <li><%= t("pages.about.review_list1") %></li>
+        <li><%= t("pages.about.review_list2") %></li>
+        <li><%= t("pages.about.review_list3") %></li>
       </ul>
 
     </div>
@@ -77,16 +74,16 @@
 
   <section id="profile" class="border-t border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']">5. マイページを使う</h2>
+      <h2 class="text-3xl font-semibold leading-snug font-['Fraunces']"><%= t("pages.about.profile_title") %></h2>
       <p class="mt-4 text-base leading-relaxed text-stone-700">
-        マイページでは、あなたの“プロテイン履歴”がひと目でわかります。
+        <%= t("pages.about.profile_body") %>
       </p>
 
       <ul class="mt-4 list-disc space-y-2 pl-5 text-base text-stone-700">
-        <li>これまでに投稿したレビュー</li>
-        <li>ブックマークしたお気に入り商品</li>
-        <li>いいねしたレビューの履歴</li>
-        <li>プロフィール編集（名前・アイコン）</li>
+        <li><%= t("pages.about.profile_list1") %></li>
+        <li><%= t("pages.about.profile_list2") %></li>
+        <li><%= t("pages.about.profile_list3") %></li>
+        <li><%= t("pages.about.profile_list4") %></li>
       </ul>
 
     </div>
