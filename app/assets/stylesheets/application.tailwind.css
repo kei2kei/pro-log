@@ -175,6 +175,11 @@
   transform: scale(0.86);
 }
 
+.tagify__input,
+.tagify__input::before {
+  line-height: 1.2;
+}
+
 @media (min-width: 640px) {
   .recaptcha-scale {
     transform: scale(1);
