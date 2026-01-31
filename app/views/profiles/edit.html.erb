@@ -1,8 +1,8 @@
 <main class="min-h-screen bg-white text-main">
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <p class="text-xs uppercase tracking-[0.35em] text-brand">Profile</p>
-      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">プロフィール編集</h1>
+      <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("profiles.edit.kicker") %></p>
+      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']"><%= t("profiles.edit.title") %></h1>
     </div>
   </section>
 
@@ -23,19 +23,19 @@
           </div>
           <div class="space-y-4">
             <div>
-              <%= f.label :username, "ユーザー名", class: "text-sm font-semibold text-stone-700" %>
+              <%= f.label :username, t("profiles.edit.username_label"), class: "text-sm font-semibold text-stone-700" %>
               <%= f.text_field :username, class: "mt-2 w-full rounded-2xl border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
             </div>
             <div>
-              <%= f.label :avatar, "アバター", class: "text-sm font-semibold text-stone-700" %>
+              <%= f.label :avatar, t("profiles.edit.avatar_label"), class: "text-sm font-semibold text-stone-700" %>
               <%= f.file_field :avatar, class: "mt-2 w-full rounded-2xl border border-base bg-white px-4 py-2 text-sm text-stone-600 file:mr-4 file:rounded-full file:border-0 file:bg-brand-light/20 file:px-4 file:py-2 file:text-xs file:font-semibold file:text-brand-dark" %>
             </div>
           </div>
         </div>
 
         <div class="flex justify-center gap-3">
-          <%= link_to "戻る", profile_path, class: "rounded-full border border-base px-6 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
-          <%= f.submit "更新する", class: "btn-primary rounded-full px-8 py-2" %>
+          <%= link_to t("profiles.edit.back"), profile_path, class: "rounded-full border border-base px-6 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300" %>
+          <%= f.submit t("profiles.edit.submit"), class: "btn-primary rounded-full px-8 py-2" %>
         </div>
       <% end %>
     </div>
