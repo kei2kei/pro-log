@@ -17,7 +17,7 @@
       url: registration_path(resource_name),
       html: { method: :put }) do |f| %>
 
-      <%= render "devise/shared/error_messages", resource: resource %>
+      <%= render "shared/form_errors", resource: resource %>
 
       <div class="mb-10 border-b border-base pb-8">
         <h2 class="mb-4 text-xl font-semibold"><%= t("devise.views.registrations.edit.email_section_title") %></h2>

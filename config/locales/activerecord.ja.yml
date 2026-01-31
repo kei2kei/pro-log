@@ -1,5 +1,83 @@
 ja:
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            username:
+              blank: "ユーザー名を入力してください"
+              taken: "このユーザー名は使用できません"
+            email:
+              blank: "メールアドレスを入力してください"
+              taken: "このメールアドレスは既に登録されています"
+              invalid: "メールアドレスの形式が正しくありません"
+            password:
+              blank: "パスワードを入力してください"
+              too_short: "パスワードは%{count}文字以上で入力してください"
+            password_confirmation:
+              confirmation: "パスワードが一致しません"
+            current_password:
+              blank: "現在のパスワードを入力してください"
+            uid:
+              taken: "この外部アカウントは既に使用されています"
+            provider:
+              taken: "この外部アカウントは既に使用されています"
+        product:
+          attributes:
+            name:
+              blank: "商品名を入力してください"
+            brand:
+              blank: "ブランド名を入力してください"
+            price:
+              blank: "価格を入力してください"
+              not_a_number: "価格は数値で入力してください"
+            protein_type:
+              blank: "プロテインタイプを選択してください"
+        review:
+          attributes:
+            title:
+              blank: "レビュータイトルを入力してください"
+            overall_score:
+              greater_than_or_equal_to: "総合満足度は1〜5で入力してください"
+              less_than_or_equal_to: "総合満足度は1〜5で入力してください"
+              only_integer: "総合満足度は1〜5の整数で入力してください"
+            sweetness:
+              greater_than_or_equal_to: "甘さは1〜5で入力してください"
+              less_than_or_equal_to: "甘さは1〜5で入力してください"
+              only_integer: "甘さは1〜5の整数で入力してください"
+            richness:
+              greater_than_or_equal_to: "濃さは1〜5で入力してください"
+              less_than_or_equal_to: "濃さは1〜5で入力してください"
+              only_integer: "濃さは1〜5の整数で入力してください"
+            aftertaste:
+              greater_than_or_equal_to: "後味は1〜5で入力してください"
+              less_than_or_equal_to: "後味は1〜5で入力してください"
+              only_integer: "後味は1〜5の整数で入力してください"
+            flavor_score:
+              greater_than_or_equal_to: "風味は1〜5で入力してください"
+              less_than_or_equal_to: "風味は1〜5で入力してください"
+              only_integer: "風味は1〜5の整数で入力してください"
+            solubility:
+              greater_than_or_equal_to: "溶けやすさは1〜5で入力してください"
+              less_than_or_equal_to: "溶けやすさは1〜5で入力してください"
+              only_integer: "溶けやすさは1〜5の整数で入力してください"
+            foam:
+              greater_than_or_equal_to: "泡立ちは1〜5で入力してください"
+              less_than_or_equal_to: "泡立ちは1〜5で入力してください"
+              only_integer: "泡立ちは1〜5の整数で入力してください"
+        tag:
+          attributes:
+            name:
+              blank: "タグ名を入力してください"
+              taken: "同じタグが既に存在します"
+        product_bookmark:
+          attributes:
+            user:
+              taken: "既にブックマークされています"
+        review_like:
+          attributes:
+            user:
+              taken: "既にいいねされています"
     models:
       user: "ユーザー"
       product: "プロテイン"
@@ -67,3 +145,10 @@ ja:
         avg_foam: "泡立ち平均"
         reviews_count: "レビュー数"
         bookmarks_count: "ブックマーク数"
+  activemodel:
+    attributes:
+      contact_form:
+        name: "お名前"
+        email: "メール"
+        subject: "件名"
+        message: "本文"

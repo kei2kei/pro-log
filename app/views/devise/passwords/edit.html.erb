@@ -4,7 +4,7 @@
       <h1 class="text-3xl font-semibold font-['Fraunces']"><%= t("devise.views.passwords.edit.title") %></h1>
       <p class="mt-2 text-sm text-stone-500"><%= t("devise.views.passwords.edit.subtitle") %></p>
 
-      <%= render "devise/shared/error_messages", resource: resource %>
+      <%= render "shared/form_errors", resource: resource %>
 
       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt-6 space-y-4" }) do |f| %>
         <%= f.hidden_field :reset_password_token %>

@@ -39,8 +39,12 @@ class ReviewsController < ApplicationController
 
   def destroy
     product = @review.product
-    @review.destroy
-    redirect_to product_path(product), notice: "レビューを削除しました。"
+    if @review.destroy
+      redirect_to product_path(product), notice: "レビューを削除しました。"
+    else
+      redirect_back fallback_location: review_path(@review),
+                    alert: "レビューの削除に失敗しました。"
+    end
   end
 
   private
