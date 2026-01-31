@@ -7,7 +7,7 @@
           alt: product.name %>
       <% else %>
         <div class="flex h-full w-full items-center justify-center text-sm text-stone-400">
-          No Image
+          <%= t("products.recommendation_card.no_image") %>
         </div>
       <% end %>
     </div>
@@ -22,14 +22,14 @@
     </h3>
     <p class="text-sm text-stone-500"><%= product.brand %></p>
     <div class="flex items-center justify-between pt-2 text-sm text-stone-600">
-      <span>総合満足度</span>
+      <span><%= t("products.recommendation_card.overall_label") %></span>
       <% avg_score = product.product_stat&.avg_overall_score %>
       <% if avg_score.present? %>
         <% rounded = avg_score.round %>
         <span class="text-amber-400"><%= "★" * rounded %><%= "☆" * (5 - rounded) %></span>
         <span class="text-base font-semibold text-stone-900"><%= format("%.1f", avg_score) %>/5.0</span>
       <% else %>
-        <span class="text-sm text-stone-400">未評価</span>
+        <span class="text-sm text-stone-400"><%= t("products.recommendation_card.not_rated") %></span>
       <% end %>
     </div>
   </div>
