@@ -13,6 +13,7 @@ export default class extends Controller {
     const isSearch = this.modeValue === "search"
     this.tagify = new window.Tagify(this.element, {
       maxTags: isSearch ? 5 : undefined,
+      delimiters: ",|\\s|、",
       whitelist: [],
       dropdown: {
         enabled: 0,
