@@ -27,7 +27,7 @@ class AutocompleteController < ApplicationController
     SQL
 
     results = ActiveRecord::Base.connection.exec_query(
-      ActiveRecord::Base.send(:sanitize_sql_array, [sql, { pattern: pattern }])
+      ActiveRecord::Base.send(:sanitize_sql_array, [ sql, { pattern: pattern } ])
     )
 
     render json: results.rows.flatten
