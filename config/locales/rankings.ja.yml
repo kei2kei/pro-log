@@ -1,0 +1,12 @@
+ja:
+  rankings:
+    index:
+      kicker: "Ranking"
+      title: "ランキング"
+      tab_overall: "総合満足度"
+      tab_bookmark: "ブックマーク数"
+      tab_reviews: "レビュー数"
+      reviews_count: "レビュー数"
+      bookmarks_count: "ブックマーク"
+      avg_overall_score: "平均満足度"
+      empty_state: "まだ該当する商品がありません。"
