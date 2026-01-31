@@ -1,5 +1,10 @@
 ja:
   products:
+    card:
+      no_image: "No Image"
+      reference_link: "楽天商品ページへ"
+      image_credit: "画像提供：楽天市場"
+      not_rated: "未評価"
     index:
       title: "プロテイン一覧"
       subtitle: "甘さ・濃さ・溶けやすさなどのレビューをもとに比較できます。"

@@ -7,7 +7,7 @@
           alt: product.name %>
       <% else %>
         <div class="flex h-full w-full items-center justify-center text-sm text-stone-400">
-          No Image
+          <%= t("products.card.no_image") %>
         </div>
       <% end %>
     </div>
@@ -20,13 +20,13 @@
           target: "_blank",
           rel: "noopener",
           class: "group flex items-center gap-1 text-xs text-stone-500 transition-colors hover:underline hover:text-stone-500" do %>
-          楽天商品ページへ
+          <%= t("products.card.reference_link") %>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover:text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3h7m0 0v7m0-7L10 14"/>
           </svg>
         <% end %>
       <% else %>
-        <span class="text-xs text-stone-500">画像提供：楽天市場</span>
+        <span class="text-xs text-stone-500"><%= t("products.card.image_credit") %></span>
       <% end %>
     </div>
   <% end %>
@@ -48,7 +48,7 @@
         <span class="text-amber-400"><%= "★" * rounded %><%= "☆" * (5 - rounded) %></span>
         <span class="text-sm font-semibold text-stone-700"><%= format("%.1f", avg_score) %>/5.0</span>
       <% else %>
-        <span class="text-sm text-stone-400">未評価</span>
+        <span class="text-sm text-stone-400"><%= t("products.card.not_rated") %></span>
       <% end %>
     </div>
   </div>
