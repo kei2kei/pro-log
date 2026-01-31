@@ -1,49 +1,49 @@
 <main class="min-h-screen bg-white text-main">
   <div class="mx-auto flex max-w-7xl justify-center px-6 py-16">
     <div class="w-full max-w-md rounded-2xl border border-base bg-white p-8 shadow-sm">
-      <h1 class="text-3xl font-semibold font-['Fraunces']">会員登録</h1>
-      <p class="mt-2 text-sm text-stone-500">1分で登録できます。</p>
+      <h1 class="text-3xl font-semibold font-['Fraunces']"><%= t("devise.views.registrations.new.title") %></h1>
+      <p class="mt-2 text-sm text-stone-500"><%= t("devise.views.registrations.new.subtitle") %></p>
 
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "mt-6 space-y-4" }) do |f| %>
         <div>
-          <%= f.label :username, "ユーザーネーム", class: "text-sm font-medium text-stone-700" %>
+          <%= f.label :username, t("devise.views.registrations.new.username_label"), class: "text-sm font-medium text-stone-700" %>
           <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
         </div>
 
         <div>
-          <%= f.label :avatar, "アバター画像", class: "text-sm font-medium text-stone-700" %>
+          <%= f.label :avatar, t("devise.views.registrations.new.avatar_label"), class: "text-sm font-medium text-stone-700" %>
           <%= f.file_field :avatar, accept: "image/*", class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-stone-600 file:mr-4 file:rounded-lg file:border-0 file:bg-brand-light/20 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-dark hover:file:bg-brand-light/30" %>
         </div>
 
         <div>
-          <%= f.label :email, "メールアドレス", class: "text-sm font-medium text-stone-700" %>
+          <%= f.label :email, t("devise.views.registrations.new.email_label"), class: "text-sm font-medium text-stone-700" %>
           <%= f.email_field :email, autocomplete: "email", class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
         </div>
 
         <div>
-          <%= f.label :password, "パスワード", class: "text-sm font-medium text-stone-700" %>
+          <%= f.label :password, t("devise.views.registrations.new.password_label"), class: "text-sm font-medium text-stone-700" %>
           <% if @minimum_password_length %>
-            <p class="mt-1 text-xs text-stone-400">最低 <%= @minimum_password_length %> 文字</p>
+            <p class="mt-1 text-xs text-stone-400"><%= t("devise.views.registrations.new.password_hint", count: @minimum_password_length) %></p>
           <% end %>
           <%= f.password_field :password, autocomplete: "new-password", class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
         </div>
 
         <div>
-          <%= f.label :password_confirmation, "パスワード確認", class: "text-sm font-medium text-stone-700" %>
+          <%= f.label :password_confirmation, t("devise.views.registrations.new.password_confirmation_label"), class: "text-sm font-medium text-stone-700" %>
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
         </div>
 
-        <%= f.submit "登録する", class: "btn-primary mt-2 w-full" %>
+        <%= f.submit t("devise.views.registrations.new.submit"), class: "btn-primary mt-2 w-full" %>
       <% end %>
 
       <% if devise_mapping.omniauthable? %>
         <div class="mt-6 rounded-2xl border border-base bg-stone-50 px-4 py-4 text-center text-sm text-stone-600">
-          <p class="font-semibold text-stone-700">Googleアカウントで簡単登録</p>
-          <p class="mt-1 text-xs text-stone-500">入力を最小限にしてすぐに始められます。</p>
+          <p class="font-semibold text-stone-700"><%= t("devise.views.registrations.new.omniauth_title") %></p>
+          <p class="mt-1 text-xs text-stone-500"><%= t("devise.views.registrations.new.omniauth_note") %></p>
           <div class="mt-3">
-            <%= button_to "Googleで登録する",
+            <%= button_to t("devise.views.registrations.new.omniauth_cta"),
               user_google_oauth2_omniauth_authorize_path,
               method: :post,
               data: { turbo: false },
@@ -54,8 +54,8 @@
       <% end %>
 
       <div class="mt-6 text-center text-[11px] text-stone-500 tracking-tight whitespace-nowrap">
-        すでにアカウントをお持ちですか？
-        <%= link_to "ログイン", new_session_path(resource_name), class: "font-semibold text-brand hover:text-brand-dark" %>
+        <%= t("devise.views.registrations.new.signin_prompt") %>
+        <%= link_to t("devise.views.registrations.new.signin_link"), new_session_path(resource_name), class: "font-semibold text-brand hover:text-brand-dark" %>
       </div>
     </div>
   </div>

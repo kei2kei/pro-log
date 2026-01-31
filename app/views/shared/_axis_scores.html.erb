@@ -1,12 +1,12 @@
 <% scores = values || {} %>
 <div class="space-y-6">
-  <% [
-    [:sweetness, "甘さ", "甘め", "やや甘め", "普通", "やや甘さ控えめ", "甘くない"],
-    [:richness, "濃さ", "濃いめ", "やや濃いめ", "普通", "やや薄め", "薄め"],
-    [:aftertaste, "後味", "後味重め", "やや重め", "普通", "ややスッキリめ", "後味スッキリ"],
-    [:flavor_score, "風味", "風味豊か", "やや風味あり", "普通", "やや風味控えめ", "風味控えめ"],
-    [:solubility, "溶けやすさ", "溶けやすい", "やや溶けやすい", "普通", "やや溶けにくい", "溶けにくい"],
-    [:foam, "泡立ち", "泡立ちやすい", "やや泡立ちやすい", "普通", "やや泡立ちにくい", "泡立ちにくい"]
+<% [
+    [:sweetness, t("shared.axis_scores.axis.sweetness"), t("shared.axis_scores.labels.sweetness.strong"), t("shared.axis_scores.labels.sweetness.semi_strong"), t("shared.axis_scores.labels.sweetness.normal"), t("shared.axis_scores.labels.sweetness.semi_weak"), t("shared.axis_scores.labels.sweetness.weak")],
+    [:richness, t("shared.axis_scores.axis.richness"), t("shared.axis_scores.labels.richness.strong"), t("shared.axis_scores.labels.richness.semi_strong"), t("shared.axis_scores.labels.richness.normal"), t("shared.axis_scores.labels.richness.semi_weak"), t("shared.axis_scores.labels.richness.weak")],
+    [:aftertaste, t("shared.axis_scores.axis.aftertaste"), t("shared.axis_scores.labels.aftertaste.strong"), t("shared.axis_scores.labels.aftertaste.semi_strong"), t("shared.axis_scores.labels.aftertaste.normal"), t("shared.axis_scores.labels.aftertaste.semi_weak"), t("shared.axis_scores.labels.aftertaste.weak")],
+    [:flavor_score, t("shared.axis_scores.axis.flavor_score"), t("shared.axis_scores.labels.flavor_score.strong"), t("shared.axis_scores.labels.flavor_score.semi_strong"), t("shared.axis_scores.labels.flavor_score.normal"), t("shared.axis_scores.labels.flavor_score.semi_weak"), t("shared.axis_scores.labels.flavor_score.weak")],
+    [:solubility, t("shared.axis_scores.axis.solubility"), t("shared.axis_scores.labels.solubility.strong"), t("shared.axis_scores.labels.solubility.semi_strong"), t("shared.axis_scores.labels.solubility.normal"), t("shared.axis_scores.labels.solubility.semi_weak"), t("shared.axis_scores.labels.solubility.weak")],
+    [:foam, t("shared.axis_scores.axis.foam"), t("shared.axis_scores.labels.foam.strong"), t("shared.axis_scores.labels.foam.semi_strong"), t("shared.axis_scores.labels.foam.normal"), t("shared.axis_scores.labels.foam.semi_weak"), t("shared.axis_scores.labels.foam.weak")]
   ].each do |key, axis_label, strong, semi_strong, normal_label, semi_weak, weak| %>
     <% value = scores[key] || scores[key.to_s] %>
     <% position = value ? ((value - 1) / 4.0 * 100).round(1) : 50 %>

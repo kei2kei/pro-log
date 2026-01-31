@@ -1,0 +1,30 @@
+ja:
+  profiles:
+    show:
+      kicker: "My Page"
+      title: "マイページ"
+      username_label: "ユーザー名"
+      email_label: "メール"
+      edit_profile: "プロフィール編集"
+      edit_login_info: "ログイン情報の変更（メール・パスワード）"
+      delete_account: "退会する"
+      delete_confirm: "退会すると30日後にアカウントが完全削除されます。よろしいですか？"
+      tabs:
+        bookmarks: "ブックマーク"
+        likes: "いいね"
+        reviews: "レビュー"
+      empty:
+        likes: "まだいいねしたレビューがありません。"
+        reviews: "まだレビューがありません。"
+        bookmarks: "まだ該当する商品がありません。"
+      pending_confirmation:
+        title: "メールアドレス変更を確認中です"
+        body_html: "%{email} 宛に確認メールを送信しています。<br>確認が完了するまで、現在のメールアドレスは引き続き利用できます。"
+        resend: "確認メールを再送する"
+    edit:
+      kicker: "Profile"
+      title: "プロフィール編集"
+      username_label: "ユーザー名"
+      avatar_label: "アバター"
+      back: "戻る"
+      submit: "更新する"

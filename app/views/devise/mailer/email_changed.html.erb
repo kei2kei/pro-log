@@ -1,7 +1,7 @@
-<p><%= @email %> さん</p>
+<p><%= t("devise.views.mailer.email_changed.greeting", email: @email) %></p>
 
 <% if @resource.try(:unconfirmed_email?) %>
-  <p>メールアドレスを <%= @resource.unconfirmed_email %> に変更する手続きを受け付けました。</p>
+  <p><%= t("devise.views.mailer.email_changed.pending_body", email: @resource.unconfirmed_email) %></p>
 <% else %>
-  <p>メールアドレスを <%= @resource.email %> に変更しました。</p>
+  <p><%= t("devise.views.mailer.email_changed.completed_body", email: @resource.email) %></p>
 <% end %>

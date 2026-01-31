@@ -52,6 +52,95 @@ ja:
       send_instructions: "アカウントロック解除の手順を、数分以内にメールでご連絡します。"
       send_paranoid_instructions: "アカウントが存在する場合、ロック解除の手順を数分以内にメールでご連絡します。"
       unlocked: "アカウントのロックを解除しました。ログインしてください。"
+    views:
+      sessions:
+        new:
+          title: "ログイン"
+          subtitle: "おかえりなさい。"
+          email_label: "メールアドレス"
+          password_label: "パスワード"
+          remember_me: "ログイン状態を保持"
+          submit: "ログインする"
+          signup_prompt: "まだアカウントがありませんか？"
+          signup_link: "会員登録"
+          omniauth_title: "Googleアカウントで簡単ログイン"
+          omniauth_note: "パスワード入力なしでログインできます。"
+          omniauth_cta: "Googleでサインインする"
+          forgot_password: "パスワードをお忘れですか？"
+          resend_confirmation: "確認メールを再送する"
+      registrations:
+        new:
+          title: "会員登録"
+          subtitle: "1分で登録できます。"
+          username_label: "ユーザーネーム"
+          avatar_label: "アバター画像"
+          email_label: "メールアドレス"
+          password_label: "パスワード"
+          password_hint: "最低 %{count} 文字"
+          password_confirmation_label: "パスワード確認"
+          submit: "登録する"
+          omniauth_title: "Googleアカウントで簡単登録"
+          omniauth_note: "入力を最小限にしてすぐに始められます。"
+          omniauth_cta: "Googleで登録する"
+          signin_prompt: "すでにアカウントをお持ちですか？"
+          signin_link: "ログイン"
+        edit:
+          kicker: "Security"
+          title: "アカウント情報の変更"
+          subtitle: "メールアドレスやパスワードを変更できます。"
+          email_section_title: "メールアドレス変更"
+          email_section_note: "変更を保存するには現在のパスワードが必要です。"
+          email_label: "新しいメールアドレス"
+          pending_reconfirmation_html: "確認メールを送信しました。<strong>%{email}</strong> を確認して変更を完了してください。"
+          password_section_title: "パスワード変更"
+          current_password_label: "現在のパスワード"
+          password_label: "新しいパスワード"
+          password_confirmation_label: "新しいパスワード（確認）"
+          submit: "変更内容を保存する"
+          back_to_profile: "プロフィールに戻る"
+      passwords:
+        new:
+          title: "パスワード再設定"
+          subtitle: "登録済みのメールアドレスに再設定用のリンクを送信します。"
+          email_label: "メールアドレス"
+          submit: "再設定リンクを送信"
+          back_to_signin: "ログイン画面へ戻る"
+        edit:
+          title: "パスワードの再設定"
+          subtitle: "新しいパスワードを入力してください。"
+          password_label: "新しいパスワード"
+          password_hint: "最低 %{count} 文字"
+          password_confirmation_label: "新しいパスワード（確認）"
+          submit: "パスワードを更新"
+      confirmations:
+        new:
+          title: "確認メールの再送"
+          subtitle: "登録時のメールアドレスを入力してください。確認メールを再送します。"
+          email_label: "メールアドレス"
+          submit: "確認メールを再送する"
+          note: "受信できない場合は迷惑メールフォルダもご確認ください。"
+          back_to_signin: "ログイン画面へ戻る"
+      mailer:
+        confirmation_instructions:
+          greeting: "%{email} さん"
+          body: "メールアドレスの確認が必要です。以下のリンクから確認を完了してください。"
+          cta: "メールアドレスを確認する"
+        reset_password_instructions:
+          body: "以下のリンクからパスワードの再設定を行なってください。"
+          cta: "パスワードリセット"
+          note: "次のパスワードが作成されるまでパスワードの変更は行われません。"
+        email_changed:
+          greeting: "%{email} さん"
+          pending_body: "メールアドレスを %{email} に変更する手続きを受け付けました。"
+          completed_body: "メールアドレスを %{email} に変更しました。"
+        password_change:
+          greeting: "%{email} さん"
+          body: "パスワードが変更されました。"
+        unlock_instructions:
+          greeting: "%{email} さん"
+          body: "ログイン試行回数が上限を超えたため、アカウントをロックしました。"
+          note: "以下のリンクからロック解除を行ってください。"
+          cta: "アカウントのロックを解除する"
   errors:
     messages:
       already_confirmed: "は既に確認済みです。ログインしてください。"

@@ -1,7 +1,7 @@
 <% content_for :head do %>
   <meta property="og:type" content="article">
   <meta property="og:title" content="<%= @review.title %>">
-  <meta property="og:description" content="<%= @review.product.name %>のレビュー">
+  <meta property="og:description" content="<%= t("reviews.show.og_description", product: @review.product.name) %>">
   <meta property="og:url" content="<%= request.original_url %>">
   <meta property="og:image" content="<%= image_url("ogp.png") %>">
   <meta name="twitter:card" content="summary_large_image">
@@ -13,15 +13,21 @@
       <div class="w-full max-w-lg rounded-3xl bg-white p-8 shadow-2xl">
         <div class="flex items-start justify-between gap-4">
           <div>
-            <p class="text-xs uppercase tracking-[0.35em] text-brand">Share</p>
-            <h2 class="mt-2 text-2xl font-semibold">レビューをXで共有しませんか？</h2>
-            <p class="mt-3 text-sm text-stone-500">投稿直後にシェアすると反応が集まりやすいです。</p>
+            <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("reviews.show.share.kicker") %></p>
+            <h2 class="mt-2 text-2xl font-semibold"><%= t("reviews.show.share.title") %></h2>
+            <p class="mt-3 text-sm text-stone-500"><%= t("reviews.show.share.description") %></p>
           </div>
-          <button type="button" data-close-share class="rounded-full border border-base px-3 py-1 text-xs font-semibold text-stone-600 hover:border-stone-300">閉じる</button>
+          <button type="button" data-close-share class="rounded-full border border-base px-3 py-1 text-xs font-semibold text-stone-600 hover:border-stone-300"><%= t("reviews.show.share.close") %></button>
         </div>
         <div class="mt-6 flex flex-wrap items-center gap-3">
           <% score_text = format("%.1f", @review.overall_score.to_f) %>
-          <% share_text = ERB::Util.url_encode("#{@review.product.brand}の#{@review.product.name}を飲んだ感想を投稿しました。\n\n満足度：#{'★' * @review.overall_score}#{'☆' * (5 - @review.overall_score)}（#{score_text}/5.0）\n\nPro-logで#{@review.user.username}さんのプロテインレビューを見よう！\n\n#プロテインレビュー ##{@review.product.brand} #プロテイン") %>
+          <% share_text = ERB::Util.url_encode(t("reviews.show.share.tweet",
+            brand: @review.product.brand,
+            product: @review.product.name,
+            stars: "★" * @review.overall_score,
+            blanks: "☆" * (5 - @review.overall_score),
+            score: score_text,
+            username: @review.user.username)) %>
           <% share_url = ERB::Util.url_encode(request.original_url) %>
           <%= link_to "https://twitter.com/intent/tweet?text=#{share_text}&url=#{share_url}",
             target: "_blank",
@@ -30,18 +36,18 @@
             <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
               <path d="M13.682 10.621 20.24 3h-1.554l-5.7 6.621L8.53 3H3.285l6.879 10.008L3.285 21h1.554l6.014-6.979L15.454 21h5.245l-7.017-10.379Zm-2.04 2.368-.698-.999-5.57-7.97h2.387l4.495 6.429.698.999 5.846 8.366h-2.387l-4.73-6.826Z"></path>
             </svg>
-            Xでシェア
+            <%= t("reviews.show.share.cta") %>
           <% end %>
-          <button type="button" data-close-share class="rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300">あとで</button>
+          <button type="button" data-close-share class="rounded-full border border-base px-5 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300"><%= t("reviews.show.share.later") %></button>
         </div>
       </div>
     </div>
   <% end %>
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <p class="text-xs uppercase tracking-[0.35em] text-brand">Review Detail</p>
+      <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("reviews.show.kicker") %></p>
       <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">
-        <%= @review.user.username %>さんのレビュー
+        <%= t("reviews.show.title", username: @review.user.username) %>
       </h1>
     </div>
   </section>
@@ -81,20 +87,27 @@
             <% if @review.user == current_user %>
               <div class="flex flex-wrap gap-3 pt-2">
                 <% score_text = format("%.1f", @review.overall_score.to_f) %>
-                <% share_text = ERB::Util.url_encode("#{@review.product.brand}の#{@review.product.name}を飲んだ感想を投稿しました。\n満足度：#{'★' * @review.overall_score}#{'☆' * (5 - @review.overall_score)}（#{score_text}/5.0）\nPro-log(#{root_url})で#{@review.user.username}さんのプロテインレビューを見る。\n#プロテインレビュー ##{@review.product.brand} #プロテイン") %>
+                <% share_text = ERB::Util.url_encode(t("reviews.show.share.tweet_short",
+                  brand: @review.product.brand,
+                  product: @review.product.name,
+                  stars: "★" * @review.overall_score,
+                  blanks: "☆" * (5 - @review.overall_score),
+                  score: score_text,
+                  username: @review.user.username,
+                  root_url: root_url)) %>
                 <% share_url = ERB::Util.url_encode(request.original_url) %>
                 <%= link_to "https://twitter.com/intent/tweet?text=#{share_text}&url=#{share_url}",
                   target: "_blank",
                   rel: "noopener",
                   class: "inline-flex items-center gap-2 rounded-full bg-black px-4 py-2 text-xs font-semibold text-white hover:bg-stone-800",
-                  aria: { label: "Xでシェア" } do %>
+                  aria: { label: t("reviews.show.share.cta") } do %>
                   <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
                     <path d="M13.682 10.621 20.24 3h-1.554l-5.7 6.621L8.53 3H3.285l6.879 10.008L3.285 21h1.554l6.014-6.979L15.454 21h5.245l-7.017-10.379Zm-2.04 2.368-.698-.999-5.57-7.97h2.387l4.495 6.429.698.999 5.846 8.366h-2.387l-4.73-6.826Z"></path>
                   </svg>
-                  Xでシェア
+                  <%= t("reviews.show.share.cta") %>
                 <% end %>
-                <%= link_to "編集", edit_review_path(@review), class: "btn-primary rounded-full px-4 py-2 text-xs" %>
-                <%= button_to "削除", review_path(@review), method: :delete, data: { confirm: "このレビューを削除しますか？" }, class: "rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
+                <%= link_to t("reviews.show.actions.edit"), edit_review_path(@review), class: "btn-primary rounded-full px-4 py-2 text-xs" %>
+                <%= button_to t("reviews.show.actions.delete"), review_path(@review), method: :delete, data: { confirm: t("reviews.show.actions.delete_confirm") }, class: "rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
               </div>
             <% end %>
           </div>
@@ -105,9 +118,7 @@
       </div>
 
       <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
-        <h2 class="text-2xl font-semibold font-['Fraunces']">
-          <%= @review.user.username %>さんの評価
-        </h2>
+        <h2 class="text-2xl font-semibold font-['Fraunces']"><%= t("reviews.show.axis_title", username: @review.user.username) %></h2>
 
         <div class="mt-8 px-3 sm:px-5">
           <%= render "shared/axis_scores", values: {
@@ -125,7 +136,7 @@
         class: "block rounded-3xl border border-base bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" do %>
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-semibold text-stone-600">レビューした商品</p>
+            <p class="text-sm font-semibold text-stone-600"><%= t("reviews.show.reviewed_product_label") %></p>
             <h2 class="mt-2 text-2xl font-semibold"><%= @review.product.name %></h2>
             <p class="mt-1 text-sm text-stone-500"><%= @review.product.brand %> / <%= @review.product.protein_type %> / <%= @review.product.flavor %></p>
           </div>
@@ -139,7 +150,7 @@
                 alt: @review.product.name %>
             <% else %>
               <div class="flex h-full w-full items-center justify-center rounded-2xl border border-base bg-stone-50 text-sm font-semibold text-stone-400">
-                No Image
+                <%= t("reviews.show.no_image") %>
               </div>
             <% end %>
           </div>
@@ -149,7 +160,7 @@
   </section>
 
   <section class="mx-auto max-w-7xl px-6 py-12">
-    <h2 class="text-3xl font-semibold font-['Fraunces']"><%= @review.user.username %>さんがレビューした商品</h2>
+    <h2 class="text-3xl font-semibold font-['Fraunces']"><%= t("reviews.show.other_reviews_title", username: @review.user.username) %></h2>
     <% if @other_reviews.any? %>
       <div class="mt-8 grid gap-6 md:grid-cols-2">
         <% @other_reviews.each do |review| %>
@@ -162,12 +173,12 @@
                     alt: review.product.name %>
                 <% else %>
                   <div class="flex h-full w-full items-center justify-center rounded-2xl border border-base bg-stone-50 text-xs font-semibold text-stone-400">
-                    No Image
+                    <%= t("reviews.show.no_image") %>
                   </div>
                 <% end %>
               </div>
               <div>
-                <p class="text-xs font-semibold text-stone-500">総合満足度 <%= review.overall_score %>.0/5.0</p>
+                <p class="text-xs font-semibold text-stone-500"><%= t("reviews.show.other_overall_label", score: review.overall_score) %></p>
                 <p class="mt-1 text-sm font-semibold text-stone-900"><%= review.product.name %></p>
                 <p class="text-xs text-stone-500"><%= review.product.brand %></p>
               </div>
@@ -177,7 +188,7 @@
       </div>
     <% else %>
       <div class="mt-6 rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
-        このユーザーの他のレビューはありません。
+        <%= t("reviews.show.other_reviews_empty") %>
       </div>
     <% end %>
   </section>

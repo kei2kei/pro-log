@@ -1,9 +1,9 @@
 <main class="min-h-screen bg-white text-main">
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12">
-      <p class="text-xs uppercase tracking-[0.35em] text-brand">Contact</p>
-      <h1 class="mt-4 text-3xl font-semibold font-['Fraunces'] sm:text-4xl">お問い合わせ</h1>
-      <p class="mt-2 text-sm text-stone-500">ご質問・ご要望は以下の窓口までご連絡ください。</p>
+      <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("pages.contact.kicker") %></p>
+      <h1 class="mt-4 text-3xl font-semibold font-['Fraunces'] sm:text-4xl"><%= t("pages.contact.title") %></h1>
+      <p class="mt-2 text-sm text-stone-500"><%= t("pages.contact.subtitle") %></p>
     </div>
   </section>
 
@@ -12,26 +12,26 @@
       <div class="rounded-3xl border border-base bg-white p-6 shadow-sm sm:p-8">
         <div class="space-y-6 text-sm text-stone-700">
           <div>
-            <p class="font-semibold text-stone-900">メールでのお問い合わせ</p>
-            <p class="mt-2 text-stone-600">内容を確認のうえ、順次ご返信いたします。</p>
+            <p class="font-semibold text-stone-900"><%= t("pages.contact.email_title") %></p>
+            <p class="mt-2 text-stone-600"><%= t("pages.contact.email_description") %></p>
           </div>
           <div class="flex flex-wrap items-center gap-3 rounded-2xl border border-base bg-stone-50 px-4 py-3">
-            <span class="text-stone-500">Eメールアドレス</span>
-            <span class="font-semibold text-brand">support@pro-log.jp</span>
+            <span class="text-stone-500"><%= t("pages.contact.email_label") %></span>
+            <span class="font-semibold text-brand"><%= t("pages.contact.email_value") %></span>
           </div>
           <p class="text-xs text-stone-500">
-            返信までにお時間をいただく場合があります。あらかじめご了承ください。
+            <%= t("pages.contact.email_note") %>
           </p>
         </div>
       </div>
 
       <div class="rounded-3xl border border-base bg-white p-6 shadow-sm sm:p-8">
-        <h2 class="text-lg font-semibold text-stone-900">お問い合わせフォーム</h2>
-        <p class="mt-2 text-sm text-stone-500">必要事項をご記入のうえ送信してください。</p>
+        <h2 class="text-lg font-semibold text-stone-900"><%= t("pages.contact.form_title") %></h2>
+        <p class="mt-2 text-sm text-stone-500"><%= t("pages.contact.form_description") %></p>
 
         <% if @contact_form&.errors&.any? %>
           <div class="mt-6 rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-            <p class="font-semibold">入力内容をご確認ください。</p>
+            <p class="font-semibold"><%= t("pages.contact.form_error_title") %></p>
             <ul class="mt-2 list-disc space-y-1 pl-5">
               <% @contact_form.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
@@ -43,27 +43,27 @@
         <%= form_with model: @contact_form, url: contact_path, method: :post, class: "mt-6 space-y-6", local: true do |f| %>
           <div class="grid gap-4 md:grid-cols-2">
             <div>
-              <%= f.label :name, "お名前", class: "text-sm font-semibold text-stone-700" %>
+              <%= f.label :name, t("pages.contact.form_name"), class: "text-sm font-semibold text-stone-700" %>
               <%= f.text_field :name, class: "mt-2 w-full rounded-xl border border-base bg-white px-4 py-2.5 text-sm text-stone-900 shadow-sm focus:border-brand focus:outline-none" %>
             </div>
             <div>
-              <%= f.label :email, "メールアドレス", class: "text-sm font-semibold text-stone-700" %>
+              <%= f.label :email, t("pages.contact.form_email"), class: "text-sm font-semibold text-stone-700" %>
               <%= f.email_field :email, class: "mt-2 w-full rounded-xl border border-base bg-white px-4 py-2.5 text-sm text-stone-900 shadow-sm focus:border-brand focus:outline-none" %>
             </div>
           </div>
 
           <div>
-            <%= f.label :subject, "件名", class: "text-sm font-semibold text-stone-700" %>
+            <%= f.label :subject, t("pages.contact.form_subject"), class: "text-sm font-semibold text-stone-700" %>
             <%= f.text_field :subject, class: "mt-2 w-full rounded-xl border border-base bg-white px-4 py-2.5 text-sm text-stone-900 shadow-sm focus:border-brand focus:outline-none" %>
           </div>
 
           <div>
-            <%= f.label :message, "本文", class: "text-sm font-semibold text-stone-700" %>
+            <%= f.label :message, t("pages.contact.form_message"), class: "text-sm font-semibold text-stone-700" %>
             <%= f.text_area :message, rows: 6, class: "mt-2 w-full rounded-2xl border border-base bg-white px-4 py-3 text-sm text-stone-900 shadow-sm focus:border-brand focus:outline-none" %>
           </div>
 
           <div class="hidden">
-            <%= f.label :website, "Webサイト" %>
+            <%= f.label :website, t("pages.contact.form_website") %>
             <%= f.text_field :website, autocomplete: "off" %>
           </div>
 
@@ -73,13 +73,13 @@
                 <%= recaptcha_tags %>
               </div>
             <% else %>
-              <p class="text-xs text-stone-500">reCAPTCHAの設定が必要です。</p>
+              <p class="text-xs text-stone-500"><%= t("pages.contact.recaptcha_missing") %></p>
             <% end %>
           </div>
 
           <div class="flex flex-wrap items-center gap-3">
-            <%= f.submit "送信する", class: "btn-primary px-6 py-2.5 text-sm font-semibold" %>
-            <p class="text-xs text-stone-500">※内容により返信できない場合があります。</p>
+            <%= f.submit t("pages.contact.submit"), class: "btn-primary px-6 py-2.5 text-sm font-semibold" %>
+            <p class="text-xs text-stone-500"><%= t("pages.contact.form_note") %></p>
           </div>
         <% end %>
       </div>

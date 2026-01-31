@@ -1,5 +1,5 @@
-<p><%= @email %> さん</p>
+<p><%= t("devise.views.mailer.confirmation_instructions.greeting", email: @email) %></p>
 
-<p>メールアドレスの確認が必要です。以下のリンクから確認を完了してください。</p>
+<p><%= t("devise.views.mailer.confirmation_instructions.body") %></p>
 
-<p><%= link_to "メールアドレスを確認する", user_confirmation_url(confirmation_token: @token) %></p>
+<p><%= link_to t("devise.views.mailer.confirmation_instructions.cta"), user_confirmation_url(confirmation_token: @token) %></p>

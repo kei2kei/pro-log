@@ -1,16 +1,16 @@
 <main class="min-h-screen bg-white text-main">
   <div class="mx-auto flex max-w-7xl justify-center px-6 py-16">
     <div class="w-full max-w-md rounded-2xl border border-base bg-white p-8 shadow-sm">
-      <h1 class="text-3xl font-semibold font-['Fraunces']">確認メールの再送</h1>
+      <h1 class="text-3xl font-semibold font-['Fraunces']"><%= t("devise.views.confirmations.new.title") %></h1>
       <p class="mt-2 text-sm text-stone-500">
-        登録時のメールアドレスを入力してください。確認メールを再送します。
+        <%= t("devise.views.confirmations.new.subtitle") %>
       </p>
 
       <%= form_for(resource, as: resource_name, url: user_confirmation_path(resource_name), html: { method: :post, class: "mt-6 space-y-4" }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
 
         <div>
-          <%= f.label :email, "メールアドレス", class: "text-sm font-medium text-stone-700" %>
+          <%= f.label :email, t("devise.views.confirmations.new.email_label"), class: "text-sm font-medium text-stone-700" %>
           <%= f.email_field :email,
             autofocus: true,
             autocomplete: "email",
@@ -18,15 +18,15 @@
             class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
         </div>
 
-        <%= f.submit "確認メールを再送する", class: "btn-primary mt-2 w-full" %>
+        <%= f.submit t("devise.views.confirmations.new.submit"), class: "btn-primary mt-2 w-full" %>
       <% end %>
 
       <div class="mt-6 text-center text-xs text-stone-500">
-        受信できない場合は迷惑メールフォルダもご確認ください。
+        <%= t("devise.views.confirmations.new.note") %>
       </div>
 
       <div class="mt-4 text-center text-xs text-stone-500">
-        <%= link_to "ログイン画面へ戻る", new_session_path(resource_name), class: "font-semibold text-brand hover:text-brand-dark" %>
+        <%= link_to t("devise.views.confirmations.new.back_to_signin"), new_session_path(resource_name), class: "font-semibold text-brand hover:text-brand-dark" %>
       </div>
     </div>
   </div>

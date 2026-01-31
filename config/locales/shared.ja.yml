@@ -1,0 +1,72 @@
+ja:
+  shared:
+    header:
+      brand: "Pro-log"
+      avatar_alt: "ユーザーアバター"
+      login: "ログイン"
+      logout: "ログアウト"
+      signup: "会員登録"
+      open_menu: "メニューを開く"
+      nav:
+        about: "使い方"
+        ranking: "ランキング"
+        products: "プロテイン一覧"
+        profile: "マイページ"
+    footer:
+      contact: "お問い合わせ"
+      terms: "利用規約"
+      privacy: "プライバシーポリシー"
+      freepik_credit: "Designed by Freepik"
+      copyright: "©2025 Pro-log. All rights reserved."
+    bookmark:
+      add: "ブックマーク"
+      saved: "ブックマーク済み"
+      remove: "ブックマーク解除"
+    like:
+      add: "いいね"
+      saved: "いいね済み"
+    axis_scores:
+      axis:
+        sweetness: "甘さ"
+        richness: "濃さ"
+        aftertaste: "後味"
+        flavor_score: "風味"
+        solubility: "溶けやすさ"
+        foam: "泡立ち"
+      labels:
+        sweetness:
+          strong: "甘め"
+          semi_strong: "やや甘め"
+          normal: "普通"
+          semi_weak: "やや甘さ控えめ"
+          weak: "甘くない"
+        richness:
+          strong: "濃いめ"
+          semi_strong: "やや濃いめ"
+          normal: "普通"
+          semi_weak: "やや薄め"
+          weak: "薄め"
+        aftertaste:
+          strong: "後味重め"
+          semi_strong: "やや重め"
+          normal: "普通"
+          semi_weak: "ややスッキリめ"
+          weak: "後味スッキリ"
+        flavor_score:
+          strong: "風味豊か"
+          semi_strong: "やや風味あり"
+          normal: "普通"
+          semi_weak: "やや風味控えめ"
+          weak: "風味控えめ"
+        solubility:
+          strong: "溶けやすい"
+          semi_strong: "やや溶けやすい"
+          normal: "普通"
+          semi_weak: "やや溶けにくい"
+          weak: "溶けにくい"
+        foam:
+          strong: "泡立ちやすい"
+          semi_strong: "やや泡立ちやすい"
+          normal: "普通"
+          semi_weak: "やや泡立ちにくい"
+          weak: "泡立ちにくい"

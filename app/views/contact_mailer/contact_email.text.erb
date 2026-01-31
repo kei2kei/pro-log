@@ -1,8 +1,8 @@
-お問い合わせを受け付けました。
+<%= t("contact_mailer.contact_email.received") %>
 
-お名前: <%= @contact_form.name %>
-メール: <%= @contact_form.email %>
-件名: <%= @contact_form.subject %>
+<%= t("contact_mailer.contact_email.name") %>: <%= @contact_form.name %>
+<%= t("contact_mailer.contact_email.email") %>: <%= @contact_form.email %>
+<%= t("contact_mailer.contact_email.subject") %>: <%= @contact_form.subject %>
 
-本文:
+<%= t("contact_mailer.contact_email.message") %>:
 <%= @contact_form.message %>

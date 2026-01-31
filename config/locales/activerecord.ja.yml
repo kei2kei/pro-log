@@ -1,0 +1,69 @@
+ja:
+  activerecord:
+    models:
+      user: "ユーザー"
+      product: "プロテイン"
+      review: "レビュー"
+      product_bookmark: "ブックマーク"
+      review_like: "いいね"
+      tag: "タグ"
+      product_tagging: "商品タグ"
+      review_tagging: "レビュータグ"
+      product_stat: "集計"
+    attributes:
+      user:
+        username: "ユーザー名"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
+        current_password: "現在のパスワード"
+        provider: "プロバイダ"
+        uid: "UID"
+      product:
+        name: "商品名"
+        brand: "ブランド名"
+        price: "価格"
+        protein_type: "プロテインタイプ"
+        flavor: "フレーバー"
+        calorie: "カロリー"
+        protein: "たんぱく質"
+        fat: "脂質"
+        carbohydrate: "炭水化物"
+        image_url: "画像URL"
+        reference_url: "参照URL"
+      review:
+        title: "タイトル"
+        comment: "コメント"
+        overall_score: "総合満足度"
+        sweetness: "甘さ"
+        richness: "濃さ"
+        aftertaste: "後味"
+        flavor_score: "風味"
+        solubility: "溶けやすさ"
+        foam: "泡立ち"
+        user: "ユーザー"
+        product: "商品"
+      product_bookmark:
+        user: "ユーザー"
+        product: "商品"
+      review_like:
+        user: "ユーザー"
+        review: "レビュー"
+      tag:
+        name: "タグ名"
+      product_tagging:
+        product: "商品"
+        tag: "タグ"
+      review_tagging:
+        review: "レビュー"
+        tag: "タグ"
+      product_stat:
+        avg_overall_score: "平均満足度"
+        avg_sweetness: "甘さ平均"
+        avg_richness: "濃さ平均"
+        avg_aftertaste: "後味平均"
+        avg_flavor_score: "風味平均"
+        avg_solubility: "溶けやすさ平均"
+        avg_foam: "泡立ち平均"
+        reviews_count: "レビュー数"
+        bookmarks_count: "ブックマーク数"

@@ -18,8 +18,8 @@
   <div class="js-product-show-body">
   <section class="border-b border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <p class="text-xs uppercase tracking-[0.35em] text-brand">Product Detail</p>
-      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']">プロテイン詳細</h1>
+      <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("products.show.kicker") %></p>
+      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']"><%= t("products.show.title") %></h1>
     </div>
   </section>
 
@@ -27,28 +27,28 @@
     <div class="grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr]">
       <div class="space-y-6">
         <div class="space-y-2">
-          <p class="text-sm font-semibold text-brand">商品名</p>
+          <p class="text-sm font-semibold text-brand"><%= t("products.show.name_label") %></p>
           <h2 class="text-3xl font-semibold"><%= @product.name %></h2>
         </div>
         <div class="grid gap-4 text-sm text-stone-600">
           <div class="flex items-center justify-between border-b border-base pb-3">
-            <span>ブランド</span>
+            <span><%= t("products.show.brand_label") %></span>
             <span class="font-semibold text-stone-900"><%= @product.brand %></span>
           </div>
           <div class="flex items-center justify-between border-b border-base pb-3">
-            <span>種類</span>
+            <span><%= t("products.show.type_label") %></span>
             <span class="font-semibold text-stone-900"><%= @product.protein_type %></span>
           </div>
           <div class="flex items-center justify-between border-b border-base pb-3">
-            <span>フレーバー</span>
-            <span class="font-semibold text-stone-900"><%= @product.flavor.presence || "未登録" %></span>
+            <span><%= t("products.show.flavor_label") %></span>
+            <span class="font-semibold text-stone-900"><%= @product.flavor.presence || t("products.show.flavor_fallback") %></span>
           </div>
           <div class="flex items-center justify-between border-b border-base pb-3">
-            <span>価格帯</span>
+            <span><%= t("products.show.price_label") %></span>
             <span class="font-semibold text-stone-900">¥<%= @product.price %></span>
           </div>
           <div class="rounded-2xl border border-base bg-white p-4 shadow-sm">
-            <p class="text-sm font-semibold text-stone-700">栄養成分（1スクープあたり）</p>
+            <p class="text-sm font-semibold text-stone-700"><%= t("products.show.nutrition_title") %></p>
             <p class="mt-2 text-sm text-stone-600">
               <%= @product.calorie || "---" %>kcal
               （P:<%= @product.protein || "-" %>g / F:<%= @product.fat || "-" %>g / C:<%= @product.carbohydrate || "-" %>g）
@@ -65,13 +65,13 @@
         <% end %>
 
         <div class="flex items-center gap-4 rounded-2xl border border-base bg-white px-5 py-4 shadow-sm">
-          <span class="text-sm font-semibold text-stone-600">総合満足度</span>
+          <span class="text-sm font-semibold text-stone-600"><%= t("products.show.overall_label") %></span>
           <% average_score = @product.overall_average_score %>
           <% if average_score.present? %>
             <span class="text-lg font-semibold text-stone-900"><%= format("%.1f", average_score) %>/5.0</span>
             <span class="text-accent"><%= "★" * average_score.round %><%= "☆" * (5 - average_score.round) %></span>
           <% else %>
-            <span class="text-lg font-semibold text-stone-900">評価準備中</span>
+            <span class="text-lg font-semibold text-stone-900"><%= t("products.show.overall_pending") %></span>
           <% end %>
         </div>
 
@@ -85,7 +85,7 @@
               alt: @product.name %>
           <% else %>
             <div class="flex h-64 w-full items-center justify-center text-sm text-stone-400">
-              No Image
+              <%= t("products.show.no_image") %>
             </div>
           <% end %>
         </div>
@@ -94,13 +94,13 @@
           <% safe_reference_url = safe_external_url(@product.reference_url) %>
           <div class="mt-3 flex flex-col items-center gap-1">
             <% if safe_reference_url.present? %>
-              <%= link_to "楽天商品ページへ", safe_reference_url,
+              <%= link_to t("products.show.rakuten_link"), safe_reference_url,
                     target: "_blank",
                     rel: "noopener",
                     class: "text-sm font-semibold text-brand hover:underline" %>
             <% end %>
             <p class="text-[11px] text-stone-400">
-              画像／データ提供：楽天市場
+              <%= t("products.show.rakuten_credit") %>
             </p>
           </div>
         <% end %>
@@ -115,8 +115,8 @@
 
   <section class="border-t border-base bg-white">
     <div class="mx-auto max-w-7xl px-6 py-12">
-      <h2 class="text-3xl font-semibold font-['Fraunces']">このプロテインの特徴</h2>
-      <p class="mt-3 text-sm text-stone-500">レビュー集計後に表示されます。</p>
+      <h2 class="text-3xl font-semibold font-['Fraunces']"><%= t("products.show.feature_title") %></h2>
+      <p class="mt-3 text-sm text-stone-500"><%= t("products.show.feature_note") %></p>
 
       <div class="mt-10">
         <%= render "shared/axis_scores", values: @product.review_averages %>
@@ -126,8 +126,8 @@
 
   <section class="mx-auto max-w-7xl px-6 py-12">
     <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <h2 class="text-3xl font-semibold font-['Fraunces']">レビュー一覧</h2>
-      <%= link_to "レビューをする", new_product_review_path(@product), class: "btn-primary rounded-full px-5 py-2" %>
+      <h2 class="text-3xl font-semibold font-['Fraunces']"><%= t("products.show.reviews_title") %></h2>
+      <%= link_to t("products.show.review_cta"), new_product_review_path(@product), class: "btn-primary rounded-full px-5 py-2" %>
     </div>
 
     <div class="mt-8 space-y-6">
@@ -135,7 +135,7 @@
         <%= render partial: "reviews/review", collection: @reviews, as: :review %>
       <% else %>
         <div class="rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
-          まだレビューがありません。
+          <%= t("products.show.reviews_empty") %>
         </div>
       <% end %>
     </div>

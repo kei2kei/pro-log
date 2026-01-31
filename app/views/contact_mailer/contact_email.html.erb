@@ -1,13 +1,13 @@
-<p>お問い合わせを受け付けました。</p>
+<p><%= t("contact_mailer.contact_email.received") %></p>
 
 <dl>
-  <dt>お名前</dt>
+  <dt><%= t("contact_mailer.contact_email.name") %></dt>
   <dd><%= @contact_form.name %></dd>
-  <dt>メール</dt>
+  <dt><%= t("contact_mailer.contact_email.email") %></dt>
   <dd><%= @contact_form.email %></dd>
-  <dt>件名</dt>
+  <dt><%= t("contact_mailer.contact_email.subject") %></dt>
   <dd><%= @contact_form.subject %></dd>
 </dl>
 
-<p>本文</p>
+<p><%= t("contact_mailer.contact_email.message") %></p>
 <p><%= simple_format(@contact_form.message) %></p>
