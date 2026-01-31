@@ -13,11 +13,15 @@ class ReviewLikesController < ApplicationController
     else
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            view_context.dom_id(@review, :like_buttons),
-            partial: "shared/like_buttons",
-            locals: { review: @review }
-          ), status: :unprocessable_entity
+          flash.now[:alert] = "レビューにいいねできませんでした。"
+          render turbo_stream: [
+            turbo_stream.replace(
+              view_context.dom_id(@review, :like_buttons),
+              partial: "shared/like_buttons",
+              locals: { review: @review }
+            ),
+            turbo_stream.replace("flash", partial: "shared/flash")
+          ], status: :unprocessable_entity
         end
         format.html do
           redirect_back fallback_location: review_path(@review),
@@ -38,11 +42,15 @@ class ReviewLikesController < ApplicationController
     else
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            view_context.dom_id(@review, :like_buttons),
-            partial: "shared/like_buttons",
-            locals: { review: @review }
-          ), status: :unprocessable_entity
+          flash.now[:alert] = "レビューのいいね解除に失敗しました。"
+          render turbo_stream: [
+            turbo_stream.replace(
+              view_context.dom_id(@review, :like_buttons),
+              partial: "shared/like_buttons",
+              locals: { review: @review }
+            ),
+            turbo_stream.replace("flash", partial: "shared/flash")
+          ], status: :unprocessable_entity
         end
         format.html do
           redirect_back fallback_location: review_path(@review),
