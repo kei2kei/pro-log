@@ -1,0 +1,20 @@
+ja:
+  shared:
+    header:
+      brand: "Pro-log"
+      avatar_alt: "ユーザーアバター"
+      login: "ログイン"
+      logout: "ログアウト"
+      signup: "会員登録"
+      open_menu: "メニューを開く"
+      nav:
+        about: "使い方"
+        ranking: "ランキング"
+        products: "プロテイン一覧"
+        profile: "マイページ"
+    footer:
+      contact: "お問い合わせ"
+      terms: "利用規約"
+      privacy: "プライバシーポリシー"
+      freepik_credit: "Designed by Freepik"
+      copyright: "©2025 Pro-log. All rights reserved."
