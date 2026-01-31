@@ -70,3 +70,5 @@ ja:
           normal: "普通"
           semi_weak: "やや泡立ちにくい"
           weak: "泡立ちにくい"
+    form_errors:
+      title: "入力内容をご確認ください（%{count}件）"
