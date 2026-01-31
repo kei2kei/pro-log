@@ -120,6 +120,27 @@ ja:
           submit: "確認メールを再送する"
           note: "受信できない場合は迷惑メールフォルダもご確認ください。"
           back_to_signin: "ログイン画面へ戻る"
+      mailer:
+        confirmation_instructions:
+          greeting: "%{email} さん"
+          body: "メールアドレスの確認が必要です。以下のリンクから確認を完了してください。"
+          cta: "メールアドレスを確認する"
+        reset_password_instructions:
+          body: "以下のリンクからパスワードの再設定を行なってください。"
+          cta: "パスワードリセット"
+          note: "次のパスワードが作成されるまでパスワードの変更は行われません。"
+        email_changed:
+          greeting: "%{email} さん"
+          pending_body: "メールアドレスを %{email} に変更する手続きを受け付けました。"
+          completed_body: "メールアドレスを %{email} に変更しました。"
+        password_change:
+          greeting: "%{email} さん"
+          body: "パスワードが変更されました。"
+        unlock_instructions:
+          greeting: "%{email} さん"
+          body: "ログイン試行回数が上限を超えたため、アカウントをロックしました。"
+          note: "以下のリンクからロック解除を行ってください。"
+          cta: "アカウントのロックを解除する"
   errors:
     messages:
       already_confirmed: "は既に確認済みです。ログインしてください。"
