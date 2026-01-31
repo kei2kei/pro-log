@@ -36,10 +36,14 @@ class ProfilesController < ApplicationController
 
   def destroy
     user = current_user
-    user.update!(deleted_at: Time.current)
-    UserDeletionJob.set(wait: 30.days).perform_later(user.id)
-    sign_out user
-    redirect_to root_path, notice: "退会手続きを受け付けました。"
+    if user.update(deleted_at: Time.current)
+      UserDeletionJob.set(wait: 30.days).perform_later(user.id)
+      sign_out user
+      redirect_to root_path, notice: "退会手続きを受け付けました。"
+    else
+      redirect_back fallback_location: profile_path,
+                    alert: "退会手続きに失敗しました。"
+    end
   end
 
   private
