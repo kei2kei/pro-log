@@ -24,5 +24,11 @@ module ProLog
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.i18n.default_locale = :ja
+
+    # Allow system test host when running with remote Selenium.
+    if ENV["SELENIUM_REMOTE_URL"].present?
+      config.hosts << "web"
+      config.hosts << "web:3000"
+    end
   end
 end
