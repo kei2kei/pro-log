@@ -78,4 +78,20 @@ RSpec.describe "商品一覧の検索", type: :request do
     expect(response.body).to include("HighScore")
     expect(response.body).not_to include("LowScore")
   end
+
+  it "フリーワードと種類の複合条件で絞り込める" do
+    match = create(:product, name: "Alpha Whey", protein_type: :whey)
+    create(:product, name: "Alpha Soy", protein_type: :soy)
+
+    get products_path, params: {
+      q: {
+        name_or_brand_or_flavor_or_tags_name_cont: "Alpha",
+        protein_type_eq: Product.protein_types[:whey]
+      }
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Alpha Whey")
+    expect(response.body).not_to include("Alpha Soy")
+  end
 end
