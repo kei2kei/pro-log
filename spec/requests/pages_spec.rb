@@ -60,3 +60,28 @@ RSpec.describe "お問い合わせ", type: :request do
     end
   end
 end
+
+RSpec.describe "トップページのおすすめ表示", type: :request do
+  it "未ログインではおすすめを表示しない" do
+    get root_path
+    expect(response).to have_http_status(:ok)
+    expect(response.body).not_to include(I18n.t("pages.home.recommendations_title"))
+  end
+
+  it "ログイン時におすすめが表示される" do
+    user = create(:user)
+    product = create(:product, name: "Recommend")
+    create(:product_stat, product: product, reviews_count: 0)
+
+    allow_any_instance_of(Recommendations::ProductRecommender)
+      .to receive(:recommend)
+      .and_return([ product ])
+
+    sign_in user, scope: :user
+    get root_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(I18n.t("pages.home.recommendations_title"))
+    expect(response.body).to include("Recommend")
+  end
+end
