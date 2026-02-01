@@ -2,6 +2,7 @@ ja:
   errors:
     format: "%{attribute}%{message}"
     messages:
+      record_invalid: "入力内容に誤りがあります"
       taken: "はすでに使用されています"
       blank: "を入力してください"
       invalid: "は不正な値です"

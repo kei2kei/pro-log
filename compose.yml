@@ -28,11 +28,21 @@ services:
       - node_modules:/pro-log/node_modules
     environment:
       TZ: Asia/Tokyo
+      SELENIUM_REMOTE_URL: http://selenium:4444/wd/hub
     ports:
       - "3000:3000"
     depends_on:
       db:
         condition: service_healthy
+      selenium:
+        condition: service_started
+  selenium:
+    image: selenium/standalone-chromium:latest
+    shm_size: 2gb
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "4444:4444"
 volumes:
   bundle_data:
   postgresql_data:
