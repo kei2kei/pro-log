@@ -45,7 +45,7 @@ Capybara.register_driver :selenium_remote do |app|
   Capybara::Selenium::Driver.new(
     app,
     browser: :remote,
-    url: ENV.fetch("SELENIUM_REMOTE_URL", "http://localhost:4444/wd/hub"),
+    url: ENV.fetch("SELENIUM_REMOTE_URL"),
     options: options
   )
 end
@@ -66,7 +66,11 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.before(:each, type: :system) do
-    driven_by :selenium_remote
+    if ENV["SELENIUM_REMOTE_URL"].present?
+      driven_by :selenium_remote
+    else
+      driven_by :selenium_chrome_headless
+    end
   end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
