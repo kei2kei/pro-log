@@ -51,6 +51,6 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
-  # Allow system test host (Capybara app_host)
-  config.hosts << "web:3001"
+  # Allow all hosts in test to avoid HostAuthorization 403s in request specs.
+  config.hosts.clear
 end
