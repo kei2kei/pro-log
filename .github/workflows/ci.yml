@@ -107,6 +107,7 @@ jobs:
         image: selenium/standalone-chromium:latest
         ports:
           - 4444:4444
+        options: --add-host=host.docker.internal:host-gateway
 
       # redis:
       #   image: valkey/valkey:8
