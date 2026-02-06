@@ -40,7 +40,7 @@ RSpec.describe "Product#商品一覧と詳細", type: :system do
       product = create(:product, name: "Recommended Product")
 
       allow(Recommendations::ProductRecommender).to receive(:new)
-        .and_return(instance_double(Recommendations::ProductRecommender, recommend: [product]))
+        .and_return(instance_double(Recommendations::ProductRecommender, recommend: [ product ]))
 
       visit root_path
       click_link product.name
