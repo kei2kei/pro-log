@@ -127,6 +127,15 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Run System Tests
         env:
           RAILS_ENV: test
@@ -137,6 +146,7 @@ jobs:
           # REDIS_URL: redis://localhost:6379/0
         run: |
           bin/rails db:test:prepare
+          SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
           bundle exec rspec spec/system
 
       - name: Keep screenshots from failed system tests
