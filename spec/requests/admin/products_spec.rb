@@ -1,24 +1,23 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Admin::Products", type: :request do
-  describe "GET /index" do
-    it "returns http success" do
-      get "/admin/products/index"
-      expect(response).to have_http_status(:success)
+  let(:admin) { create(:user, admin: true) }
+
+  before do
+    sign_in admin
+  end
+
+  describe "GET /admin/products" do
+    it "一覧を表示できる" do
+      get admin_products_path
+      expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "GET /new" do
-    it "returns http success" do
-      get "/admin/products/new"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET /create" do
-    it "returns http success" do
-      get "/admin/products/create"
-      expect(response).to have_http_status(:success)
+  describe "GET /admin/products/new" do
+    it "新規作成画面を表示できる" do
+      get new_admin_product_path
+      expect(response).to have_http_status(:ok)
     end
   end
 end
