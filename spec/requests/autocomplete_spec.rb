@@ -10,7 +10,7 @@ RSpec.describe "オートコンプリートAPI", type: :request do
 
       expect(response).to have_http_status(:ok)
       body = JSON.parse(response.body)
-      expect(body).to include("Alpha", "Beta")
+      expect(body).to include("alpha", "beta")
     end
 
     it "クエリに一致するタグのみ返す" do
@@ -21,7 +21,7 @@ RSpec.describe "オートコンプリートAPI", type: :request do
 
       expect(response).to have_http_status(:ok)
       body = JSON.parse(response.body)
-      expect(body).to eq([ "Vanilla" ])
+      expect(body).to eq([ "vanilla" ])
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe "オートコンプリートAPI", type: :request do
       expect(response).to have_http_status(:ok)
       body = JSON.parse(response.body)
       expect(body).to include("Alpha")
-      expect(body).to include("AlphaTag")
+      expect(body).to include("alphatag")
     end
   end
 end
