@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "いいね", type: :system do
+  include ActionView::RecordIdentifier
+
   let(:user) { create(:user) }
   let(:reviewer) { create(:user) }
   let(:product) { create(:product, name: "Like Target") }
@@ -17,14 +19,20 @@ RSpec.describe "いいね", type: :system do
   describe "いいね登録" do
     it "レビューにいいねできる" do
       visit product_path(product)
-      click_button I18n.t("shared.like.add")
+      within("turbo-frame##{dom_id(review, :like)}") do
+        click_button I18n.t("shared.like.add")
+      end
 
-      expect(page).to have_button(I18n.t("shared.like.saved"))
+      within("turbo-frame##{dom_id(review, :like)}") do
+        expect(page).to have_button(I18n.t("shared.like.saved"))
+      end
     end
 
     it "プロフィールのいいね一覧に反映される" do
       visit product_path(product)
-      click_button I18n.t("shared.like.add")
+      within("turbo-frame##{dom_id(review, :like)}") do
+        click_button I18n.t("shared.like.add")
+      end
 
       visit profile_path(tab: "likes")
       expect(page).to have_content(review.title)
@@ -34,17 +42,25 @@ RSpec.describe "いいね", type: :system do
   describe "いいね解除" do
     it "いいねを解除できる" do
       visit product_path(product)
-      click_button I18n.t("shared.like.add")
+      within("turbo-frame##{dom_id(review, :like)}") do
+        click_button I18n.t("shared.like.add")
+      end
 
-      click_button I18n.t("shared.like.saved")
-      expect(page).to have_button(I18n.t("shared.like.add"))
+      within("turbo-frame##{dom_id(review, :like)}") do
+        click_button I18n.t("shared.like.saved")
+        expect(page).to have_button(I18n.t("shared.like.add"))
+      end
     end
 
     it "プロフィールのいいね一覧から消える" do
       visit product_path(product)
-      click_button I18n.t("shared.like.add")
+      within("turbo-frame##{dom_id(review, :like)}") do
+        click_button I18n.t("shared.like.add")
+      end
 
-      click_button I18n.t("shared.like.saved")
+      within("turbo-frame##{dom_id(review, :like)}") do
+        click_button I18n.t("shared.like.saved")
+      end
 
       visit profile_path(tab: "likes")
       expect(page).not_to have_content(review.title)
