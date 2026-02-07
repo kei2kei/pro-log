@@ -53,4 +53,8 @@ Rails.application.configure do
 
   # Allow all hosts in test to avoid HostAuthorization 403s in request specs.
   config.hosts.clear
+
+  # Avoid Propshaft missing asset errors in request specs.
+  config.assets.compile = true
+  config.assets.unknown_asset_fallback = true
 end

@@ -103,11 +103,6 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
-      selenium:
-        image: selenium/standalone-chromium:latest
-        ports:
-          - 4444:4444
-        options: --add-host=host.docker.internal:host-gateway
 
       # redis:
       #   image: valkey/valkey:8
@@ -117,7 +112,7 @@ jobs:
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev node-gyp libvips
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev node-gyp libvips chromium chromium-driver
 
       - name: Checkout code
         uses: actions/checkout@v5
@@ -140,8 +135,7 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-          CAPYBARA_APP_HOST: http://host.docker.internal:3001
+          CAPYBARA_APP_HOST: http://127.0.0.1:3001
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: |
