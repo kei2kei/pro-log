@@ -13,14 +13,14 @@ RSpec.describe "ブックマーク", type: :system do
   describe "ブックマーク登録" do
     it "商品詳細からブックマークできる" do
       visit product_path(product)
-      click_button I18n.t("shared.bookmark.add")
+      find("button[aria-label='#{I18n.t('shared.bookmark.add')}']").click
 
-      expect(page).to have_button(I18n.t("shared.bookmark.saved"))
+      expect(page).to have_button(I18n.t("shared.bookmark.saved"), exact: false)
     end
 
     it "プロフィールのブックマーク一覧に反映される" do
       visit product_path(product)
-      click_button I18n.t("shared.bookmark.add")
+      find("button[aria-label='#{I18n.t('shared.bookmark.add')}']").click
 
       visit profile_path(tab: "bookmarks")
       expect(page).to have_content(product.name)
@@ -30,17 +30,17 @@ RSpec.describe "ブックマーク", type: :system do
   describe "ブックマーク解除" do
     it "ブックマークを解除できる" do
       visit product_path(product)
-      click_button I18n.t("shared.bookmark.add")
+      find("button[aria-label='#{I18n.t('shared.bookmark.add')}']").click
 
-      click_button I18n.t("shared.bookmark.saved")
+      find("button[aria-label='#{I18n.t('shared.bookmark.remove')}']").click
       expect(page).to have_button(I18n.t("shared.bookmark.add"))
     end
 
     it "プロフィールのブックマーク一覧から消える" do
       visit product_path(product)
-      click_button I18n.t("shared.bookmark.add")
+      find("button[aria-label='#{I18n.t('shared.bookmark.add')}']").click
 
-      click_button I18n.t("shared.bookmark.saved")
+      find("button[aria-label='#{I18n.t('shared.bookmark.remove')}']").click
 
       visit profile_path(tab: "bookmarks")
       expect(page).not_to have_content(product.name)
