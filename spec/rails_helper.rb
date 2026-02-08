@@ -66,7 +66,11 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.before(:each, type: :system) do
-    driven_by :selenium_remote
+    if ENV["SELENIUM_REMOTE_URL"].present?
+      driven_by :selenium_remote
+    else
+      driven_by :selenium_chrome_headless
+    end
   end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
@@ -97,6 +101,28 @@ end
 
 Capybara.server = :puma, { Silent: true }
 Capybara.default_max_wait_time = 5
+Capybara.always_include_port = true
+
+# When using a remote browser (Selenium Grid / standalone-chromium), the browser runs in another container.
+# It must reach the Capybara app host over the Docker network.
 Capybara.server_host = "0.0.0.0"
-Capybara.server_port = 3001
-Capybara.app_host = "http://web:3001"
+Capybara.server_port = Integer(ENV.fetch("CAPYBARA_SERVER_PORT", "3001"))
+
+capybara_app_host = ENV["CAPYBARA_APP_HOST"].to_s.strip
+
+Capybara.app_host = if capybara_app_host.present?
+  if capybara_app_host.start_with?("http://", "https://")
+    capybara_app_host
+  else
+    "http://#{capybara_app_host}:#{Capybara.server_port}"
+  end
+else
+  "http://127.0.0.1:#{Capybara.server_port}"
+end
+
+require "uri"
+
+capybara_uri = URI.parse(Capybara.app_host)
+Rails.application.routes.default_url_options[:host] = capybara_uri.host
+Rails.application.routes.default_url_options[:port] = capybara_uri.port
+Rails.application.routes.default_url_options[:protocol] = capybara_uri.scheme

@@ -18,12 +18,18 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
-      
+
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
-      
+
   lint:
     runs-on: ubuntu-latest
     env:
@@ -63,15 +69,9 @@ jobs:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      # redis:
-      #   image: valkey/valkey:8
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev node-gyp
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev node-gyp libvips
 
       - name: Checkout code
         uses: actions/checkout@v5
@@ -81,13 +81,21 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+
       - name: Run tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test
+        run: |
+          yarn install --frozen-lockfile
+          bin/rails db:drop db:create db:schema:load
+          SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
+          bundle exec rspec
 
   system-test:
     runs-on: ubuntu-latest
@@ -102,15 +110,15 @@ jobs:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      # redis:
-      #   image: valkey/valkey:8
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+      selenium:
+        image: selenium/standalone-chromium:latest
+        ports:
+          - 4444:4444
+        options: --shm-size=2g --add-host=host.docker.internal:host-gateway
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev node-gyp
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev node-gyp libvips
 
       - name: Checkout code
         uses: actions/checkout@v5
@@ -120,13 +128,33 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Run System Tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test:system
+          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+          CAPYBARA_SERVER_HOST: 0.0.0.0
+          CAPYBARA_SERVER_PORT: 3001
+        run: |
+          # Use Docker host gateway IP so the Selenium container can reach the Capybara server
+          DOCKER_HOST_IP=$(ip -4 addr show docker0 | awk '/inet / {print $2}' | cut -d/ -f1)
+          echo "Docker host IP: ${DOCKER_HOST_IP}"
+          export CAPYBARA_APP_HOST="http://${DOCKER_HOST_IP}:3001"
+          echo "CAPYBARA_APP_HOST=${CAPYBARA_APP_HOST}"
+
+          yarn install --frozen-lockfile
+          bin/rails db:drop db:create db:schema:load
+          SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
+          bundle exec rspec spec/system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
@@ -135,3 +163,18 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test, system-test, lint, scan_ruby]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Trigger Render deploy
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "RENDER_DEPLOY_HOOK_URL is not set"
+            exit 1
+          fi
+          curl -fsS "$RENDER_DEPLOY_HOOK_URL"
