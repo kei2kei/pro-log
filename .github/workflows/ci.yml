@@ -18,6 +18,12 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
       
@@ -88,7 +94,9 @@ jobs:
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: |
-          bin/rails db:prepare
+          yarn install --frozen-lockfile
+          bin/rails db:drop db:create db:schema:load
+          SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
           bundle exec rspec
 
   system-test:
@@ -126,6 +134,12 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+
       - name: Run System Tests
         env:
           RAILS_ENV: test
@@ -134,7 +148,9 @@ jobs:
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: |
-          bin/rails db:prepare
+          yarn install --frozen-lockfile
+          bin/rails db:drop db:create db:schema:load
+          SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
           bundle exec rspec spec/system
 
       - name: Keep screenshots from failed system tests
