@@ -119,3 +119,10 @@ Capybara.app_host = if capybara_app_host.present?
 else
   "http://127.0.0.1:#{Capybara.server_port}"
 end
+
+require "uri"
+
+capybara_uri = URI.parse(Capybara.app_host)
+Rails.application.routes.default_url_options[:host] = capybara_uri.host
+Rails.application.routes.default_url_options[:port] = capybara_uri.port
+Rails.application.routes.default_url_options[:protocol] = capybara_uri.scheme
