@@ -108,11 +108,14 @@ Capybara.always_include_port = true
 Capybara.server_host = "0.0.0.0"
 Capybara.server_port = Integer(ENV.fetch("CAPYBARA_SERVER_PORT", "3001"))
 
-capybara_host = if ENV["CAPYBARA_APP_HOST"].present?
-  ENV["CAPYBARA_APP_HOST"]
-else
-  # Local (non-Docker) default
-  "127.0.0.1"
-end
+capybara_app_host = ENV["CAPYBARA_APP_HOST"].to_s.strip
 
-Capybara.app_host = "http://#{capybara_host}:#{Capybara.server_port}"
+Capybara.app_host = if capybara_app_host.present?
+  if capybara_app_host.start_with?("http://", "https://")
+    capybara_app_host
+  else
+    "http://#{capybara_app_host}:#{Capybara.server_port}"
+  end
+else
+  "http://127.0.0.1:#{Capybara.server_port}"
+end
