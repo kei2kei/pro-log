@@ -30,6 +30,13 @@ RSpec.configure do |config|
 
     Capybara.server_host = "0.0.0.0"
     Capybara.server_port = 3001
-    Capybara.app_host = "http://web:3001"
+
+    default_app_host = if ENV["SELENIUM_REMOTE_URL"].present?
+      "http://web:#{Capybara.server_port}"
+    else
+      "http://127.0.0.1:#{Capybara.server_port}"
+    end
+
+    Capybara.app_host = ENV["CAPYBARA_APP_HOST"].presence || default_app_host
   end
 end
