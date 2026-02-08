@@ -1,6 +1,5 @@
 module SystemHelpers
   def sign_in_as(user, password: "Password1")
-    puts "[Capybara] app_host=#{Capybara.app_host} server_host=#{Capybara.server_host} server_port=#{Capybara.server_port}"
     visit new_user_session_path
     fill_in I18n.t("devise.views.sessions.new.email_label"), with: user.email
     fill_in I18n.t("devise.views.sessions.new.password_label"), with: password

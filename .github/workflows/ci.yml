@@ -134,6 +134,9 @@ jobs:
           node-version-file: .node-version
           cache: yarn
 
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Run System Tests
         env:
           RAILS_ENV: test
