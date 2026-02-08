@@ -54,7 +54,7 @@ RSpec.describe "会員登録", type: :system do
 
         click_button I18n.t("devise.views.registrations.new.submit")
 
-        expect(page).to have_content("入力内容をご確認ください")
+        expect(page).to have_content(I18n.t("shared.form_errors.title", count: 2))
       end
     end
   end
