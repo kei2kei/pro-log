@@ -68,6 +68,7 @@ ja:
           omniauth_cta: "Googleでサインインする"
           forgot_password: "パスワードをお忘れですか？"
           resend_confirmation: "確認メールを再送する"
+          unlock_account: "ロック解除メールを再送する"
       registrations:
         new:
           title: "会員登録"
@@ -118,7 +119,13 @@ ja:
           subtitle: "登録時のメールアドレスを入力してください。確認メールを再送します。"
           email_label: "メールアドレス"
           submit: "確認メールを再送する"
-          note: "受信できない場合は迷惑メールフォルダもご確認ください。"
+      unlocks:
+        new:
+          title: "アカウントロック解除"
+          subtitle: "登録済みのメールアドレスにロック解除用のリンクを送信します。"
+          email_label: "メールアドレス"
+          submit: "ロック解除メールを送信"
+          note: "ログイン試行回数が上限に達するとアカウントがロックされます。<br>受信できない場合は迷惑メールフォルダもご確認ください。"
           back_to_signin: "ログイン画面へ戻る"
       mailer:
         confirmation_instructions:

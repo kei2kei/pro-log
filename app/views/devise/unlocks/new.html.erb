@@ -1,0 +1,32 @@
+<main class="min-h-screen bg-white text-main">
+  <div class="mx-auto flex max-w-7xl justify-center px-6 py-16">
+    <div class="w-full max-w-md rounded-2xl border border-base bg-white p-8 shadow-sm">
+      <h1 class="text-3xl font-semibold font-['Fraunces']"><%= t("devise.views.unlocks.new.title") %></h1>
+      <p class="mt-2 text-sm text-stone-500">
+        <%= t("devise.views.unlocks.new.subtitle") %>
+      </p>
+
+      <%= form_for(resource, as: resource_name, url: user_unlock_path, html: { method: :post, class: "mt-6 space-y-4" }) do |f| %>
+        <%= render "shared/form_errors", resource: resource %>
+
+        <div>
+          <%= f.label :email, t("devise.views.unlocks.new.email_label"), class: "text-sm font-medium text-stone-700" %>
+          <%= f.email_field :email,
+            autofocus: true,
+            autocomplete: "email",
+            class: "mt-2 w-full rounded-lg border border-base bg-white px-4 py-3 text-sm text-main focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-light/30" %>
+        </div>
+
+        <%= f.submit t("devise.views.unlocks.new.submit"), class: "btn-primary mt-2 w-full" %>
+      <% end %>
+
+      <div class="mt-6 text-center text-xs text-stone-500">
+        <%= t("devise.views.unlocks.new.note").html_safe %>
+      </div>
+
+      <div class="mt-4 text-center text-xs text-stone-500">
+        <%= link_to t("devise.views.unlocks.new.back_to_signin"), new_session_path(resource_name), class: "font-semibold text-brand hover:text-brand-dark" %>
+      </div>
+    </div>
+  </div>
+</main>

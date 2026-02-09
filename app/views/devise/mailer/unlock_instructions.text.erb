@@ -1,0 +1,7 @@
+<%= t("devise.views.mailer.unlock_instructions.greeting", email: @resource.email) %>
+
+<%= t("devise.views.mailer.unlock_instructions.body") %>
+
+<%= t("devise.views.mailer.unlock_instructions.note") %>
+
+<%= user_unlock_url(unlock_token: @token) %>
