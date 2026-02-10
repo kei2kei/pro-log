@@ -61,23 +61,22 @@
             </tr>
 
             <% axis_rows = {
-              sweetness: ["甘くない", "やや甘くない", "普通", "やや甘め", "甘め"],
-              richness: ["薄め", "やや薄め", "普通", "やや濃いめ", "濃いめ"],
-              aftertaste: ["スッキリ", "ややスッキリ", "普通", "やや重め", "重い"],
-              flavor_score: ["香りはしない", "香り控えめ", "普通", "やや香り豊か", "香り豊か"],
-              solubility: ["溶けにくい", "やや溶けにくい", "普通", "やや溶けやすい", "溶けやすい"],
-              foam: ["泡立ちにくい", "やや泡立ちにくい", "普通", "やや泡立つ", "泡立つ"]
+              sweetness: "甘さ",
+              richness: "濃さ",
+              aftertaste: "後味",
+              flavor_score: "風味",
+              solubility: "溶けやすさ",
+              foam: "泡立ち"
             } %>
 
-            <% axis_rows.each do |key, labels| %>
+            <% axis_rows.each do |key, label| %>
               <tr>
-                <th class="px-6 py-4 text-sm font-semibold text-stone-700"><%= labels[2] %></th>
+                <th class="px-6 py-4 text-sm font-semibold text-stone-700"><%= label %></th>
                 <% products.each do |product| %>
                   <% avg = product.product_stat&.public_send("avg_#{key}") %>
                   <td class="px-6 py-4 text-sm text-stone-600">
                     <% if avg.present? %>
-                      <% index = [[avg.round, 1].max, 5].min - 1 %>
-                      <span class="text-stone-700"><%= labels[index] %></span>
+                      <span class="text-stone-700"><%= axis_label_for_avg(key, avg) %></span>
                     <% else %>
                       <span class="text-stone-400">未集計</span>
                     <% end %>
