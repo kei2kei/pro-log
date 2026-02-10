@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   post "contact", to: "pages#create_contact"
   get "ranking", to: "rankings#index"
   post "compare/items", to: "comparisons#add", as: :compare_items
+  delete "compare/items/:product_id", to: "comparisons#remove", as: :compare_item
   resource :profile, only: [ :show, :edit, :update, :destroy ]
 
   resources :products, only: [ :index, :show ] do
