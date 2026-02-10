@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  helper_method :compared_product_ids
+  helper_method :compared_product_ids, :compare_full?
 
   unless Rails.env.development? || Rails.env.test?
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
   def compared_product_ids
     return [] unless user_signed_in?
     session[:compare_product_ids] ||= []
+  end
+
+  def compare_full?
+    compared_product_ids.size >= 3
   end
 
   private
