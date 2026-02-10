@@ -15,4 +15,9 @@ class ComparisonsController < ApplicationController
     session[:compare_product_ids] = ids
     redirect_to params[:return_to].presence || compare_path
   end
+
+  def clear
+    session.delete(:compare_product_ids)
+    redirect_back fallback_location: products_path
+  end
 end

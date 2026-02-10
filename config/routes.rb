@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get "ranking", to: "rankings#index"
   post "compare/items", to: "comparisons#add", as: :compare_items
   delete "compare/items/:product_id", to: "comparisons#remove", as: :compare_item
+  delete "compare", to: "comparisons#clear"
   resource :profile, only: [ :show, :edit, :update, :destroy ]
 
   resources :products, only: [ :index, :show ] do
