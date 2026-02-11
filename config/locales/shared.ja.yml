@@ -29,6 +29,7 @@ ja:
       add: "比較に追加"
       selected: "比較中"
       full: "比較は最大3件まで"
+      limit_alert: "比較できるのは最大3件までです。"
       tray_title: "比較中"
       tray_count: "%{count} 件選択中"
       open: "比較する"
