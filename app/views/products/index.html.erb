@@ -21,7 +21,7 @@
           <div class="grid gap-4 sm:flex sm:flex-wrap sm:items-end">
             <div class="flex w-full flex-col gap-1 text-xs text-stone-500 sm:w-auto">
               <span><%= t("products.index.price_label") %></span>
-              <div class="flex w-full items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600 sm:w-auto">
+              <div class="flex h-11 w-full items-center gap-2 rounded-full border border-base bg-white px-4 text-sm text-stone-600 sm:h-12 sm:w-auto">
                 <%= f.label :price_gteq, t("products.index.price_min_label"), class: "sr-only" %>
                 <%= f.number_field :price_gteq,
                   placeholder: t("products.index.price_min_placeholder"),
@@ -37,7 +37,7 @@
             </div>
             <div class="flex w-full flex-col gap-1 text-xs text-stone-500 sm:w-auto">
               <span><%= t("products.index.satisfaction_label") %></span>
-              <div class="flex w-full items-center gap-2 rounded-full border border-base bg-white px-4 py-2 text-sm text-stone-600 sm:w-auto" data-controller="star-filter">
+              <div class="flex h-12 w-full items-center gap-2 rounded-full border border-base bg-white px-4 text-sm text-stone-600 sm:w-auto" data-controller="star-filter">
                 <%= f.label :product_stat_avg_overall_score_gteq, t("products.index.satisfaction_label"), class: "sr-only" %>
                 <%= f.hidden_field :product_stat_avg_overall_score_gteq, value: params.dig(:q, :product_stat_avg_overall_score_gteq), data: { "star-filter-target": "input" } %>
                 <div class="flex items-center gap-1">
