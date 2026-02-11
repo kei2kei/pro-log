@@ -30,7 +30,6 @@ RSpec.describe "Product#商品一覧と詳細", type: :system do
       product = create(:product, name: "List Product")
 
       visit products_path
-      wait_for_ui_idle
       detail_link = find("a[href='#{product_path(product)}']", match: :first)
       detail_link.click
       page.execute_script("arguments[0].click()", detail_link.native) if page.current_path == products_path
