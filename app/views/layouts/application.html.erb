@@ -33,7 +33,9 @@
     <%= render 'shared/header' %>
     <%= render "shared/flash" %>
     <%= yield %>
-    <%= render "shared/compare_tray" %>
+    <div id="compare_tray">
+      <%= render "shared/compare_tray" %>
+    </div>
     <%= render 'shared/footer' %>
   </body>
 </html>
