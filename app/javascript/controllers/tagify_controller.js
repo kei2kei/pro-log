@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import Tagify from "@yaireo/tagify"
 
 export default class extends Controller {
   static values = {
@@ -8,11 +9,9 @@ export default class extends Controller {
   }
 
   connect() {
-    if (!window.Tagify) return
-
     const isSearch = this.modeValue === "search"
     const delimiters = isSearch ? ",|、" : ",|\\s|、"
-    this.tagify = new window.Tagify(this.element, {
+    this.tagify = new Tagify(this.element, {
       maxTags: isSearch ? 5 : undefined,
       delimiters: delimiters,
       whitelist: [],
