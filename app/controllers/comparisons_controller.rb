@@ -4,7 +4,7 @@ class ComparisonsController < ApplicationController
   def add
     @product = Product.find(params[:product_id])
     ids = compared_product_ids
-    ids << @product.id unless ids.include?(@product.id)
+    ids << @product.id if !ids.include?(@product.id) && ids.size < 3
     session[:compare_product_ids] = ids
 
     respond_to do |format|
