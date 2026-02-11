@@ -29,7 +29,7 @@ RSpec.describe "比較機能", type: :system do
       expect(page).to have_button(I18n.t("shared.compare.selected"), disabled: true)
     end
 
-    it "3件追加すると4件目は追加できない表示になる" do
+    it "3件追加後に4件目を押すと追加されず通知が表示される" do
       visit products_path
       add_to_compare_from_index(products.first)
       add_to_compare_from_index(products.second)
@@ -38,9 +38,12 @@ RSpec.describe "比較機能", type: :system do
       card = find("h2 a", text: products.fourth.name).ancestor("div.rounded-3xl")
       within(card) do
         click_button I18n.t("shared.compare.add")
-        expect(page).to have_button(I18n.t("shared.compare.full"), disabled: true)
       end
+      expect(page).to have_content(I18n.t("shared.compare.limit_alert"))
       expect(page).to have_content(I18n.t("shared.compare.tray_count", count: 3))
+      within("#compare_tray") do
+        expect(page).not_to have_content(products.fourth.name)
+      end
     end
   end
 

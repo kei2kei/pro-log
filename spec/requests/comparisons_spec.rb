@@ -36,6 +36,7 @@ RSpec.describe "Comparisons", type: :request do
         products.each { |product| post compare_items_path(product_id: product.id) }
 
         expect(session[:compare_product_ids]).to eq(products.first(3).map(&:id))
+        expect(flash[:alert]).to eq(I18n.t("shared.compare.limit_alert"))
       end
 
       it "turbo_streamで応答できる" do
