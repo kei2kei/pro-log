@@ -1,4 +1,8 @@
 module SystemHelpers
+  def wait_for_ui_idle
+    expect(page).to have_no_css("html[data-loading='true']", wait: 10)
+  end
+
   def sign_in_as(user, password: "Password1")
     visit new_user_session_path
     fill_in I18n.t("devise.views.sessions.new.email_label"), with: user.email

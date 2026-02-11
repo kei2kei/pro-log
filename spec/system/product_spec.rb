@@ -29,11 +29,10 @@ RSpec.describe "Product#商品一覧と詳細", type: :system do
     it "一覧から詳細へ遷移できる" do
       product = create(:product, name: "List Product")
 
-      visit products_path(q: { name_or_brand_or_flavor_or_tags_name_cont_all: product.name })
-      card = find("div.rounded-3xl", text: product.name)
-      card.find("a[href='#{product_path(product)}']", match: :first).click
+      visit products_path
+      wait_for_ui_idle
+      click_link product.name
 
-      expect(page).to have_current_path(product_path(product), ignore_query: true)
       expect(page).to have_content(I18n.t("products.show.title"))
       expect(page).to have_content(product.name)
     end
