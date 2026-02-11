@@ -2,11 +2,11 @@
   <section class="mx-auto max-w-7xl px-6 py-12">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.25em] text-stone-400">Compare</p>
-        <h1 class="mt-2 text-3xl font-semibold font-['Fraunces']">商品比較</h1>
-        <p class="mt-2 text-sm text-stone-500">最大3つまで選んで、価格と評価を並べて確認できます。</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.25em] text-stone-400"><%= t("comparisons.show.kicker") %></p>
+        <h1 class="mt-2 text-3xl font-semibold font-['Fraunces']"><%= t("comparisons.show.title") %></h1>
+        <p class="mt-2 text-sm text-stone-500"><%= t("comparisons.show.subtitle") %></p>
       </div>
-      <%= button_to "比較をクリア", compare_path, method: :delete,
+      <%= button_to t("comparisons.show.clear"), compare_path, method: :delete,
         class: "rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
     </div>
 
@@ -18,7 +18,7 @@
         <table class="min-w-full text-left text-sm">
           <thead class="bg-stone-50 text-stone-600">
             <tr>
-              <th class="px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em]">商品</th>
+              <th class="px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em]"><%= t("comparisons.show.table.product") %></th>
               <% products.each do |product| %>
                 <th class="px-6 py-4">
                   <div class="flex min-w-[220px] flex-col gap-3">
@@ -38,7 +38,7 @@
           </thead>
           <tbody class="divide-y divide-base">
             <tr>
-              <th class="px-6 py-4 text-sm font-semibold text-stone-700">価格</th>
+              <th class="px-6 py-4 text-sm font-semibold text-stone-700"><%= t("comparisons.show.table.price") %></th>
               <% products.each do |product| %>
                 <td class="px-6 py-4 text-sm font-semibold text-stone-700">
                   <%= number_to_currency(product.price, unit: "¥", precision: 0, format: "%u%n") %>
@@ -46,7 +46,7 @@
               <% end %>
             </tr>
             <tr>
-              <th class="px-6 py-4 text-sm font-semibold text-stone-700">総合満足度</th>
+              <th class="px-6 py-4 text-sm font-semibold text-stone-700"><%= t("comparisons.show.table.overall") %></th>
               <% products.each do |product| %>
                 <% avg = product.product_stat&.avg_overall_score %>
                 <td class="px-6 py-4 text-sm text-stone-600">
@@ -54,19 +54,19 @@
                     <span class="text-amber-400"><%= "★" * avg.round %><%= "☆" * (5 - avg.round) %></span>
                     <span class="ml-2 font-semibold text-stone-700"><%= format("%.1f", avg) %>/5.0</span>
                   <% else %>
-                    <span class="text-stone-400">未集計</span>
+                    <span class="text-stone-400"><%= t("comparisons.show.unaggregated") %></span>
                   <% end %>
                 </td>
               <% end %>
             </tr>
 
             <% axis_rows = {
-              sweetness: "甘さ",
-              richness: "濃さ",
-              aftertaste: "後味",
-              flavor_score: "風味",
-              solubility: "溶けやすさ",
-              foam: "泡立ち"
+              sweetness: t("comparisons.show.table.axis.sweetness"),
+              richness: t("comparisons.show.table.axis.richness"),
+              aftertaste: t("comparisons.show.table.axis.aftertaste"),
+              flavor_score: t("comparisons.show.table.axis.flavor_score"),
+              solubility: t("comparisons.show.table.axis.solubility"),
+              foam: t("comparisons.show.table.axis.foam")
             } %>
 
             <% axis_rows.each do |key, label| %>
@@ -78,7 +78,7 @@
                     <% if avg.present? %>
                       <span class="text-stone-700"><%= axis_label_for_avg(key, avg) %></span>
                     <% else %>
-                      <span class="text-stone-400">未集計</span>
+                      <span class="text-stone-400"><%= t("comparisons.show.unaggregated") %></span>
                     <% end %>
                   </td>
                 <% end %>
@@ -89,7 +89,7 @@
       </div>
     <% else %>
       <div class="mt-8 rounded-3xl border border-dashed border-base bg-white p-8 text-center text-sm text-stone-500">
-        比較中の商品がありません。
+        <%= t("comparisons.show.empty_state") %>
       </div>
     <% end %>
   </section>

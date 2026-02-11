@@ -25,6 +25,15 @@ ja:
     like:
       add: "いいね"
       saved: "いいね済み"
+    compare:
+      add: "比較に追加"
+      selected: "比較中"
+      full: "比較は最大3件まで"
+      tray_title: "比較中"
+      tray_count: "%{count} 件選択中"
+      open: "比較する"
+      clear: "すべてクリア"
+      remove: "削除"
     axis_scores:
       axis:
         sweetness: "甘さ"

@@ -1,0 +1,20 @@
+ja:
+  comparisons:
+    show:
+      kicker: "Compare"
+      title: "商品比較"
+      subtitle: "最大3つまで選んで、価格と評価を並べて確認できます。"
+      clear: "比較をクリア"
+      table:
+        product: "商品"
+        price: "価格"
+        overall: "総合満足度"
+        axis:
+          sweetness: "甘さ"
+          richness: "濃さ"
+          aftertaste: "後味"
+          flavor_score: "風味"
+          solubility: "溶けやすさ"
+          foam: "泡立ち"
+      unaggregated: "未集計"
+      empty_state: "比較中の商品がありません。"
