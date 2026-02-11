@@ -13,7 +13,7 @@ module ApplicationHelper
   def axis_label(axis, value)
     labels = I18n.t("axis_labels.#{axis}", default: [])
     return "" if labels.blank? || value.blank?
-    index = [[value.to_i, 1].max, 5].min - 1
+    index = [ [ value.to_i, 1 ].max, 5 ].min - 1
     labels[index]
   end
 

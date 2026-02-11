@@ -23,13 +23,13 @@ RSpec.describe "Comparisons", type: :request do
       it "比較対象を追加できる" do
         post compare_items_path(product_id: products.first.id)
 
-        expect(session[:compare_product_ids]).to eq([products.first.id])
+        expect(session[:compare_product_ids]).to eq([ products.first.id ])
       end
 
       it "同一商品は重複追加されない" do
         2.times { post compare_items_path(product_id: products.first.id) }
 
-        expect(session[:compare_product_ids]).to eq([products.first.id])
+        expect(session[:compare_product_ids]).to eq([ products.first.id ])
       end
 
       it "4件目は追加されない（最大3件）" do
@@ -56,7 +56,7 @@ RSpec.describe "Comparisons", type: :request do
 
       delete compare_item_path(product_id: products.first.id)
 
-      expect(session[:compare_product_ids]).to eq([products.second.id])
+      expect(session[:compare_product_ids]).to eq([ products.second.id ])
     end
 
     it "turbo_streamで応答できる" do
