@@ -1,0 +1,4 @@
+<%= turbo_stream.update "compare_tray", partial: "shared/compare_tray" %>
+<% if @product.present? %>
+  <%= turbo_stream.replace dom_id(@product, :compare_button), partial: "shared/compare_button", locals: { product: @product } %>
+<% end %>

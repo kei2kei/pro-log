@@ -104,10 +104,15 @@
             </p>
           </div>
         <% end %>
-        <div class="mt-4 flex justify-center">
-          <%= render "shared/bookmark_button",
-            product: @product,
-            bookmark: @bookmarks_by_product_id[@product.id] %>
+        <div class="mt-4 flex flex-col items-center gap-2">
+          <div class="w-full max-w-[220px]">
+            <%= render "shared/bookmark_button",
+              product: @product,
+              bookmark: @bookmarks_by_product_id[@product.id] %>
+          </div>
+          <div class="w-full max-w-[220px]">
+            <%= render "shared/compare_button", product: @product %>
+          </div>
         </div>
       </div>
     </div>

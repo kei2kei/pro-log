@@ -1,24 +1,24 @@
 <% scores = values || {} %>
 <div class="space-y-6">
 <% [
-    [:sweetness, t("shared.axis_scores.axis.sweetness"), t("shared.axis_scores.labels.sweetness.strong"), t("shared.axis_scores.labels.sweetness.semi_strong"), t("shared.axis_scores.labels.sweetness.normal"), t("shared.axis_scores.labels.sweetness.semi_weak"), t("shared.axis_scores.labels.sweetness.weak")],
-    [:richness, t("shared.axis_scores.axis.richness"), t("shared.axis_scores.labels.richness.strong"), t("shared.axis_scores.labels.richness.semi_strong"), t("shared.axis_scores.labels.richness.normal"), t("shared.axis_scores.labels.richness.semi_weak"), t("shared.axis_scores.labels.richness.weak")],
-    [:aftertaste, t("shared.axis_scores.axis.aftertaste"), t("shared.axis_scores.labels.aftertaste.strong"), t("shared.axis_scores.labels.aftertaste.semi_strong"), t("shared.axis_scores.labels.aftertaste.normal"), t("shared.axis_scores.labels.aftertaste.semi_weak"), t("shared.axis_scores.labels.aftertaste.weak")],
-    [:flavor_score, t("shared.axis_scores.axis.flavor_score"), t("shared.axis_scores.labels.flavor_score.strong"), t("shared.axis_scores.labels.flavor_score.semi_strong"), t("shared.axis_scores.labels.flavor_score.normal"), t("shared.axis_scores.labels.flavor_score.semi_weak"), t("shared.axis_scores.labels.flavor_score.weak")],
-    [:solubility, t("shared.axis_scores.axis.solubility"), t("shared.axis_scores.labels.solubility.strong"), t("shared.axis_scores.labels.solubility.semi_strong"), t("shared.axis_scores.labels.solubility.normal"), t("shared.axis_scores.labels.solubility.semi_weak"), t("shared.axis_scores.labels.solubility.weak")],
-    [:foam, t("shared.axis_scores.axis.foam"), t("shared.axis_scores.labels.foam.strong"), t("shared.axis_scores.labels.foam.semi_strong"), t("shared.axis_scores.labels.foam.normal"), t("shared.axis_scores.labels.foam.semi_weak"), t("shared.axis_scores.labels.foam.weak")]
-  ].each do |key, axis_label, strong, semi_strong, normal_label, semi_weak, weak| %>
+    [:sweetness, t("shared.axis_scores.axis.sweetness")],
+    [:richness, t("shared.axis_scores.axis.richness")],
+    [:aftertaste, t("shared.axis_scores.axis.aftertaste")],
+    [:flavor_score, t("shared.axis_scores.axis.flavor_score")],
+    [:solubility, t("shared.axis_scores.axis.solubility")],
+    [:foam, t("shared.axis_scores.axis.foam")]
+  ].each do |key, axis_label| %>
     <% value = scores[key] || scores[key.to_s] %>
     <% position = value ? ((value - 1) / 4.0 * 100).round(1) : 50 %>
     <div class="grid gap-3 md:grid-cols-[140px_1fr] md:items-start">
       <div class="pt-1 text-sm font-semibold text-stone-700"><%= axis_label %></div>
       <div class="space-y-1">
-        <div class="grid grid-cols-5 gap-x-1 text-[10px] leading-tight text-stone-500">
-          <span class="col-start-1 text-left"><%= weak %></span>
-          <span class="col-start-3 text-center"><%= normal_label %></span>
-          <span class="col-start-5 text-right"><%= strong %></span>
-          <span class="col-start-2 hidden text-center sm:inline"><%= semi_weak %></span>
-          <span class="col-start-4 hidden text-center sm:inline"><%= semi_strong %></span>
+        <div class="relative h-4 text-[10px] leading-tight text-stone-500">
+          <span class="absolute left-0 text-left"><%= axis_label(key, 1) %></span>
+          <span class="absolute left-1/4 -translate-x-1/2 text-center hidden sm:inline"><%= axis_label(key, 2) %></span>
+          <span class="absolute left-1/2 -translate-x-1/2 text-center"><%= axis_label(key, 3) %></span>
+          <span class="absolute left-3/4 -translate-x-1/2 text-center hidden sm:inline"><%= axis_label(key, 4) %></span>
+          <span class="absolute right-0 text-right"><%= axis_label(key, 5) %></span>
         </div>
         <div class="relative h-3 rounded-full bg-stone-200">
           <% [0, 25, 50, 75, 100].each do |mark| %>
