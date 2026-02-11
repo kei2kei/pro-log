@@ -8,6 +8,8 @@ ja:
       table:
         product: "商品"
         price: "価格"
+        calorie: "カロリー"
+        pfc: "P/F/C"
         overall: "総合満足度"
         axis:
           sweetness: "甘さ"

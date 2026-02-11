@@ -15,22 +15,25 @@
     <% if ids.any? %>
       <% products_by_id = Product.where(id: ids).index_by(&:id) %>
       <% products = ids.filter_map { |id| products_by_id[id] } %>
+      <% value_cell_class = "px-4 py-3 text-sm text-stone-700 sm:px-6 sm:py-4" %>
       <div class="mt-8 overflow-x-auto rounded-3xl border border-base bg-white shadow-sm">
-        <table class="min-w-full text-left text-sm">
+        <table class="w-full min-w-[860px] text-left text-xs sm:text-sm">
           <thead class="bg-stone-50 text-stone-600">
             <tr>
-              <th class="px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em]"><%= t("comparisons.show.table.product") %></th>
+              <th class="w-28 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.15em] sm:w-40 sm:px-6 sm:py-4 sm:text-xs sm:tracking-[0.2em]"><%= t("comparisons.show.table.product") %></th>
               <% products.each do |product| %>
-                <th class="px-6 py-4">
-                  <div class="flex min-w-[220px] flex-col gap-3">
-                    <div class="h-28 w-28 overflow-hidden rounded-2xl bg-stone-100">
+                <th class="px-4 py-3 sm:px-6 sm:py-4">
+                  <div class="flex min-w-[200px] flex-col gap-2 sm:min-w-[220px] sm:gap-3">
+                    <%= link_to product_path(product), class: "block h-20 w-20 overflow-hidden rounded-xl bg-stone-100 sm:h-28 sm:w-28 sm:rounded-2xl" do %>
                       <% if product.image_url.present? %>
                         <%= image_tag product.image_url, class: "h-full w-full object-cover", alt: product.name %>
                       <% end %>
-                    </div>
+                    <% end %>
                     <div>
-                      <p class="text-sm font-semibold text-stone-900"><%= product.name %></p>
-                      <p class="text-xs text-stone-500"><%= product.brand %> ・ <%= product.flavor %></p>
+                      <p class="line-clamp-2 text-xs font-semibold text-stone-900 sm:text-sm">
+                        <%= link_to product.name, product_path(product), class: "hover:underline" %>
+                      </p>
+                      <p class="line-clamp-2 text-[11px] text-stone-500 sm:text-xs"><%= product.brand %> ・ <%= product.flavor %></p>
                     </div>
                   </div>
                 </th>
@@ -39,23 +42,47 @@
           </thead>
           <tbody class="divide-y divide-base">
             <tr>
-              <th class="px-6 py-4 text-sm font-semibold text-stone-700"><%= t("comparisons.show.table.price") %></th>
+              <th class="px-4 py-3 text-xs font-semibold text-stone-700 sm:px-6 sm:py-4 sm:text-sm"><%= t("comparisons.show.table.price") %></th>
               <% products.each do |product| %>
-                <td class="px-6 py-4 text-sm font-semibold text-stone-700">
+                <td class="<%= value_cell_class %>">
                   <%= number_to_currency(product.price, unit: "¥", precision: 0, format: "%u%n") %>
                 </td>
               <% end %>
             </tr>
             <tr>
-              <th class="px-6 py-4 text-sm font-semibold text-stone-700"><%= t("comparisons.show.table.overall") %></th>
+              <th class="px-4 py-3 text-xs font-semibold text-stone-700 sm:px-6 sm:py-4 sm:text-sm"><%= t("comparisons.show.table.calorie") %></th>
+              <% products.each do |product| %>
+                <td class="<%= value_cell_class %>">
+                  <% if product.calorie.present? %>
+                    <%= product.calorie %>kcal
+                  <% else %>
+                    <span class="text-sm text-stone-400"><%= t("comparisons.show.unaggregated") %></span>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
+            <tr>
+              <th class="px-4 py-3 text-xs font-semibold text-stone-700 sm:px-6 sm:py-4 sm:text-sm"><%= t("comparisons.show.table.pfc") %></th>
+              <% products.each do |product| %>
+                <td class="<%= value_cell_class %>">
+                  <% if product.protein.present? || product.fat.present? || product.carbohydrate.present? %>
+                    P:<%= product.protein || "-" %>g / F:<%= product.fat || "-" %>g / C:<%= product.carbohydrate || "-" %>g
+                  <% else %>
+                    <span class="text-sm text-stone-400"><%= t("comparisons.show.unaggregated") %></span>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
+            <tr>
+              <th class="px-4 py-3 text-xs font-semibold text-stone-700 sm:px-6 sm:py-4 sm:text-sm"><%= t("comparisons.show.table.overall") %></th>
               <% products.each do |product| %>
                 <% avg = product.product_stat&.avg_overall_score %>
-                <td class="px-6 py-4 text-sm text-stone-600">
+                <td class="<%= value_cell_class %>">
                   <% if avg.present? %>
                     <span class="text-amber-400"><%= "★" * avg.round %><%= "☆" * (5 - avg.round) %></span>
-                    <span class="ml-2 font-semibold text-stone-700"><%= format("%.1f", avg) %>/5.0</span>
+                    <span class="ml-1 sm:ml-2"><%= format("%.1f", avg) %>/5.0</span>
                   <% else %>
-                    <span class="text-stone-400"><%= t("comparisons.show.unaggregated") %></span>
+                    <span class="text-sm text-stone-400"><%= t("comparisons.show.unaggregated") %></span>
                   <% end %>
                 </td>
               <% end %>
@@ -72,14 +99,14 @@
 
             <% axis_rows.each do |key, label| %>
               <tr>
-                <th class="px-6 py-4 text-sm font-semibold text-stone-700"><%= label %></th>
+                <th class="px-4 py-3 text-xs font-semibold text-stone-700 sm:px-6 sm:py-4 sm:text-sm"><%= label %></th>
                 <% products.each do |product| %>
                   <% avg = product.product_stat&.public_send("avg_#{key}") %>
-                  <td class="px-6 py-4 text-sm text-stone-600">
+                  <td class="<%= value_cell_class %>">
                     <% if avg.present? %>
-                      <span class="text-stone-700"><%= axis_label_for_avg(key, avg) %></span>
+                      <%= axis_label_for_avg(key, avg) %>
                     <% else %>
-                      <span class="text-stone-400"><%= t("comparisons.show.unaggregated") %></span>
+                      <span class="text-sm text-stone-400"><%= t("comparisons.show.unaggregated") %></span>
                     <% end %>
                   </td>
                 <% end %>
