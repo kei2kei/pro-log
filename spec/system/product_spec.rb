@@ -30,8 +30,9 @@ RSpec.describe "Product#商品一覧と詳細", type: :system do
       product = create(:product, name: "List Product")
 
       visit products_path
-      click_link product.name
+      find("a[href='#{product_path(product)}']", text: product.name, exact_text: true, match: :first).click
 
+      expect(page).to have_current_path(product_path(product), ignore_query: true)
       expect(page).to have_content(I18n.t("products.show.title"))
       expect(page).to have_content(product.name)
     end
