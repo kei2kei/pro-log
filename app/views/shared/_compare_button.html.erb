@@ -1,10 +1,10 @@
 <%= turbo_frame_tag dom_id(product, :compare_button) do %>
   <% if compared_product_ids.include?(product.id) %>
-    <button type="button" class="w-full rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-400" disabled>
+    <button type="button" class="flex w-full items-center justify-center gap-2 rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-xs font-semibold text-stone-400" disabled>
       <%= t("shared.compare.selected") %>
     </button>
   <% elsif compare_full? %>
-    <button type="button" class="w-full rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-400" disabled>
+    <button type="button" class="flex w-full items-center justify-center gap-2 rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-xs font-semibold text-stone-400" disabled>
       <%= t("shared.compare.full") %>
     </button>
   <% else %>
@@ -12,6 +12,6 @@
       compare_items_path(product_id: product.id),
       method: :post,
       form: { data: { loading: "skip" } },
-      class: "w-full rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
+      class: "flex w-full items-center justify-center gap-2 rounded-full border border-stone-200 px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
   <% end %>
 <% end %>
