@@ -16,8 +16,10 @@ class Admin::RakutenProductsController < ApplicationController
         shop_code: @selected_shop_code,
         pages: @pages
       )
+      set_registered_products_lookup
     else
       @results = []
+      @registered_products_by_reference_url = {}
     end
   rescue StandardError => e
     Rails.logger.error("[RakutenSearch] #{e.class}: #{e.message}")
@@ -39,6 +41,12 @@ class Admin::RakutenProductsController < ApplicationController
   end
 
   private
+
+  def set_registered_products_lookup
+    urls = @results.map { |item| item[:url] }.compact.uniq
+    @registered_products_by_reference_url =
+      Product.where(reference_url: urls).order(updated_at: :desc).group_by(&:reference_url)
+  end
 
   def official_shop_params
     params.require(:official_shop).permit(:shop_code, :shop_name)
