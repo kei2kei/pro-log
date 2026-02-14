@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     resources :products do
       collection do
         get :bulk_new
+        post :bulk_suggest
         post :bulk_create
       end
 
