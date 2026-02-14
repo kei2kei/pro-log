@@ -77,7 +77,7 @@
                   <tr class="border-b border-stone-100">
                     <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][flavor]", row_data[:flavor], class: "w-40 rounded border border-base px-2 py-1" %></td>
                     <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][price]", row_data[:price], class: "w-24 rounded border border-base px-2 py-1" %></td>
-                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][calorie]", row_data[:calorie], class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][calorie]", row_data[:calorie], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
                     <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][protein]", row_data[:protein], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
                     <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][fat]", row_data[:fat], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
                     <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][carbohydrate]", row_data[:carbohydrate], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>

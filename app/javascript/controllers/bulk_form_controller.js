@@ -81,7 +81,7 @@ export default class extends Controller {
       <tr class="border-b border-stone-100">
         <td class="px-2 py-2"><input type="text" name="bulk[items][${index}][flavor]" value="${value("flavor")}" class="w-40 rounded border border-base px-2 py-1" /></td>
         <td class="px-2 py-2"><input type="number" name="bulk[items][${index}][price]" value="${value("price")}" class="w-24 rounded border border-base px-2 py-1" /></td>
-        <td class="px-2 py-2"><input type="number" name="bulk[items][${index}][calorie]" value="${value("calorie")}" class="w-20 rounded border border-base px-2 py-1" /></td>
+        <td class="px-2 py-2"><input type="number" name="bulk[items][${index}][calorie]" value="${value("calorie")}" step="0.1" class="w-20 rounded border border-base px-2 py-1" /></td>
         <td class="px-2 py-2"><input type="number" name="bulk[items][${index}][protein]" value="${value("protein")}" step="0.1" class="w-20 rounded border border-base px-2 py-1" /></td>
         <td class="px-2 py-2"><input type="number" name="bulk[items][${index}][fat]" value="${value("fat")}" step="0.1" class="w-20 rounded border border-base px-2 py-1" /></td>
         <td class="px-2 py-2"><input type="number" name="bulk[items][${index}][carbohydrate]" value="${value("carbohydrate")}" step="0.1" class="w-20 rounded border border-base px-2 py-1" /></td>
