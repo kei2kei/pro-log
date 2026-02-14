@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     resources :rakuten_products do
       collection do
         get :search
+        post :add_official_shop
       end
     end
   end
