@@ -3,10 +3,19 @@ class Admin::RakutenProductsController < ApplicationController
   before_action :require_admin!
 
   def search
-    @keyword = params[:keyword]
+    @keyword = params[:keyword].to_s.strip
+    @selected_shop_code = params[:shop_code].presence
+    @pages = params[:pages].presence || "1"
+    @official_shops = OfficialShop.active.ordered
+    @searched = @keyword.present? || @selected_shop_code.present?
 
-    if @keyword.present?
-      @results = Rakuten::SearchService.search_products(keyword: @keyword)
+    if @searched
+      search_keyword = @keyword.presence || "プロテイン"
+      @results = Rakuten::SearchService.search_products(
+        keyword: search_keyword,
+        shop_code: @selected_shop_code,
+        pages: @pages
+      )
     else
       @results = []
     end
