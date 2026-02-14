@@ -31,8 +31,25 @@ module Rakuten
     private
 
     def find_item_by_url(items, reference_url)
-      base = reference_url.to_s.split("?").first
-      items.find { |it| it["itemUrl"].to_s.split("?").first == base }
+      target = canonical_item_url(reference_url)
+      return nil if target.blank?
+
+      items.find do |it|
+        canonical_item_url(it["itemUrl"]) == target
+      end
+    end
+
+    def canonical_item_url(raw_url)
+      uri = URI.parse(raw_url.to_s.strip)
+      return nil if uri.host.blank?
+
+      path = uri.path.to_s
+      path = "/#{path}" unless path.start_with?("/")
+      path = path.sub(%r{/\z}, "")
+      host = uri.host.to_s.downcase
+      "#{host}#{path}"
+    rescue URI::InvalidURIError
+      nil
     end
 
     def parse_reference_url(reference_url)

@@ -16,4 +16,4 @@ production:
   sync_rakuten_product_prices:
     class: RakutenPriceSyncJob
     queue: default
-    schedule: every 10 minutes
+    schedule: at 2am every day

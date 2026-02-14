@@ -64,5 +64,15 @@ RSpec.describe Rakuten::PriceFetcher, type: :service do
       expect(result[:error]).to include("URLが一致しません")
       expect(result[:reason]).to eq(:url_mismatch)
     end
+
+    it "schemeや末尾スラッシュ差分は一致扱いにする" do
+      allow(RakutenWebService::Ichiba::Item).to receive(:search).and_return(
+        [ { "itemPrice" => 3980, "itemUrl" => "http://item.rakuten.co.jp/myshop/abc123" } ]
+      )
+
+      result = described_class.new.fetch("https://item.rakuten.co.jp/myshop/abc123/")
+
+      expect(result).to eq({ ok: true, price: 3980 })
+    end
   end
 end
