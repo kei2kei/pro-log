@@ -54,12 +54,12 @@
         <div class="w-full">
           <%= f.range_field field, in: 1..5, step: 1, value: f.object.public_send(field) || 3,
             class: "rating-range w-full h-2 rounded-full bg-stone-200 appearance-none cursor-pointer" %>
-          <div class="mt-2 grid grid-cols-5 text-[10px] leading-tight text-stone-400 sm:text-xs">
-            <span class="text-left"><%= l1 %></span>
-            <span class="text-center"><%= l2 %></span>
-            <span class="text-center"><%= l3 %></span>
-            <span class="text-center"><%= l4 %></span>
-            <span class="text-right"><%= l5 %></span>
+          <div class="relative mt-2 min-h-8 text-[10px] leading-tight text-stone-400 sm:text-xs">
+            <span class="absolute left-0 text-left"><%= l1 %></span>
+            <span class="absolute left-1/4 -translate-x-1/2 text-center hidden sm:inline"><%= l2 %></span>
+            <span class="absolute left-1/2 -translate-x-1/2 text-center"><%= l3 %></span>
+            <span class="absolute left-3/4 -translate-x-1/2 text-center hidden sm:inline"><%= l4 %></span>
+            <span class="absolute right-0 text-right"><%= l5 %></span>
           </div>
         </div>
       </div>
