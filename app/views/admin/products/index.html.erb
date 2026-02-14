@@ -1,8 +1,16 @@
 <div class="flex items-center justify-between mb-6">
   <h1 class="text-2xl font-semibold">商品一覧（管理）</h1>
 
-  <%= link_to "新規登録", new_admin_product_path,
-    class: "rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand/90 transition" %>
+  <div class="flex items-center gap-2">
+    <%= link_to "楽天検索", search_admin_rakuten_products_path,
+      class: "rounded-lg border border-base px-4 py-2 text-sm font-semibold text-stone-700 hover:bg-stone-50 transition" %>
+
+    <%= link_to "一括登録", bulk_new_admin_products_path,
+      class: "rounded-lg border border-brand px-4 py-2 text-sm font-semibold text-brand hover:bg-brand/5 transition" %>
+
+    <%= link_to "新規登録", new_admin_product_path,
+      class: "rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand/90 transition" %>
+  </div>
 </div>
 
 <div class="rounded-2xl border border-base bg-white shadow-sm">
