@@ -1,6 +1,4 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!
-
   def index
     raw_query = params.dig(:q, :name_or_brand_or_flavor_or_tags_name_cont)
     q_params = params.fetch(:q, {}).to_unsafe_h
@@ -27,12 +25,12 @@ class ProductsController < ApplicationController
     end
 
     @products = scoped.order(created_at: :desc).page(params[:page])
-    @bookmarks_by_product_id = current_user.product_bookmarks.index_by(&:product_id)
+    @bookmarks_by_product_id = user_signed_in? ? current_user.product_bookmarks.index_by(&:product_id) : {}
   end
 
   def show
     @product = Product.find(params[:id])
     @reviews = @product.reviews.includes(user: { avatar_attachment: :blob }).order(created_at: :desc).page(params[:page]).per(3)
-    @bookmarks_by_product_id = current_user.product_bookmarks.index_by(&:product_id)
+    @bookmarks_by_product_id = user_signed_in? ? current_user.product_bookmarks.index_by(&:product_id) : {}
   end
 end
