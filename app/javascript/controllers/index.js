@@ -14,3 +14,6 @@ application.register("star-filter", StarFilterController)
 
 import RangeOrderController from "./range_order_controller"
 application.register("range-order", RangeOrderController)
+
+import BulkFormController from "./bulk_form_controller"
+application.register("bulk-form", BulkFormController)
