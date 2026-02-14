@@ -25,6 +25,62 @@ class Admin::ProductsController < ApplicationController
     @bulk_items = default_bulk_items
   end
 
+  def bulk_suggest
+    permitted_bulk = bulk_params
+    @bulk_common = permitted_bulk.slice(
+      "name",
+      "brand",
+      "protein_type",
+      "default_price",
+      "default_image_url",
+      "default_reference_url"
+    )
+    @bulk_items = default_bulk_items_from(permitted_bulk)
+
+    result = Admin::NutritionSuggestionService.new(
+      reference_url: @bulk_common["default_reference_url"]
+    ).call
+
+    unless result[:ok]
+      if request.format.json?
+        render json: { ok: false, error: result[:error] }, status: :unprocessable_entity
+      else
+        flash.now[:alert] = result[:error]
+        render :bulk_new, status: :unprocessable_entity
+      end
+      return
+    end
+
+    ai_rows = result[:rows]
+    ai_rows.each_with_index do |row, idx|
+      target = (@bulk_items[idx] || {}).symbolize_keys
+      target[:flavor] = row[:flavor]
+      target[:calorie] = row[:calorie]
+      target[:protein] = row[:protein]
+      target[:fat] = row[:fat]
+      target[:carbohydrate] = row[:carbohydrate]
+      target[:reference_url] = @bulk_common["default_reference_url"] if target[:reference_url].blank?
+      @bulk_items[idx] = target
+    end
+
+    while @bulk_items.size < [ ai_rows.size, 5 ].max
+      @bulk_items << { flavor: "", price: "", calorie: "", protein: "", fat: "", carbohydrate: "", image_url: "", reference_url: "" }
+    end
+
+    first_flavor = ai_rows.first&.dig(:flavor).to_s
+    message = "AI補完を実行しました。#{ai_rows.size}件のフレーバー情報を補完しました（先頭: #{first_flavor.presence || 'なし'}）。必要に応じて修正してから一括登録してください。"
+    if request.format.json?
+      render json: {
+        ok: true,
+        message: message,
+        rows: @bulk_items.map(&:to_h)
+      }
+    else
+      flash.now[:notice] = message
+      render :bulk_new
+    end
+  end
+
   def bulk_create
     permitted_bulk = bulk_params
     @bulk_common = permitted_bulk.slice(
@@ -192,6 +248,15 @@ end
       items << { flavor: "", price: "", calorie: "", protein: "", fat: "", carbohydrate: "", image_url: "", reference_url: "" }
     end
 
+    items
+  end
+
+  def default_bulk_items_from(permitted_bulk)
+    items = extract_bulk_items(permitted_bulk["items"])
+    target_count = [ items.size, permitted_bulk["row_count"].to_i, 5 ].max
+    while items.size < target_count
+      items << { flavor: "", price: "", calorie: "", protein: "", fat: "", carbohydrate: "", image_url: "", reference_url: "" }
+    end
     items
   end
 
