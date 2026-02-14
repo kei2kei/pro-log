@@ -28,8 +28,10 @@
         </div>
       </div>
     <% end %>
-    <div class="flex w-full justify-end md:w-auto md:pt-1">
-      <%= render "shared/like_buttons", review: review %>
-    </div>
+    <% if user_signed_in? %>
+      <div class="flex w-full justify-end md:w-auto md:pt-1">
+        <%= render "shared/like_buttons", review: review %>
+      </div>
+    <% end %>
   </div>
 </div>

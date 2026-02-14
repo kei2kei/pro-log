@@ -112,9 +112,11 @@
             <% end %>
           </div>
         </div>
-        <div class="mt-4 flex justify-end">
-          <%= render "shared/like_buttons", review: @review %>
-        </div>
+        <% if user_signed_in? %>
+          <div class="mt-4 flex justify-end">
+            <%= render "shared/like_buttons", review: @review %>
+          </div>
+        <% end %>
       </div>
 
       <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
