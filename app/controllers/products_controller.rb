@@ -32,5 +32,6 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @reviews = @product.reviews.includes(user: { avatar_attachment: :blob }).order(created_at: :desc).page(params[:page]).per(3)
     @bookmarks_by_product_id = user_signed_in? ? current_user.product_bookmarks.index_by(&:product_id) : {}
+    @reviewed_by_current_user = user_signed_in? && @product.reviews.exists?(user_id: current_user.id)
   end
 end
