@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_01_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_14_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,6 +40,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_01_120000) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "official_shops", force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.string "shop_code", null: false
+    t.string "shop_name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active"], name: "index_official_shops_on_active"
+    t.index ["shop_code"], name: "index_official_shops_on_shop_code", unique: true
   end
 
   create_table "product_bookmarks", force: :cascade do |t|

@@ -1,0 +1,102 @@
+<main class="min-h-screen bg-white text-main">
+  <section class="border-b border-base bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-8">
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand">Admin · Bulk Register</p>
+      <h1 class="mt-2 text-2xl font-semibold font-['Fraunces']">シリーズ一括登録</h1>
+      <p class="mt-2 text-xs text-stone-500">
+        共通項目を設定し、フレーバー行をまとめて登録します。
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-8">
+      <%= form_with url: bulk_create_admin_products_path, method: :post, scope: :bulk, local: true, class: "space-y-6" do %>
+        <%= hidden_field_tag "bulk[row_count]", @bulk_items.size %>
+
+        <div class="rounded-2xl border border-base bg-white p-6 shadow-sm">
+          <h2 class="text-sm font-semibold text-stone-700">共通項目</h2>
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-stone-600">商品名（シリーズ名）</label>
+              <%= text_field_tag "bulk[name]", @bulk_common["name"], class: "w-full rounded-lg border border-base px-3 py-2 text-sm" %>
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-stone-600">ブランド</label>
+              <%= text_field_tag "bulk[brand]", @bulk_common["brand"], class: "w-full rounded-lg border border-base px-3 py-2 text-sm" %>
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-stone-600">プロテイン種類</label>
+              <%= select_tag "bulk[protein_type]", options_for_select(Product.protein_types.keys, @bulk_common["protein_type"]), class: "w-full rounded-lg border border-base px-3 py-2 text-sm" %>
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-stone-600">デフォルト価格</label>
+              <%= number_field_tag "bulk[default_price]", @bulk_common["default_price"], class: "w-full rounded-lg border border-base px-3 py-2 text-sm" %>
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-stone-600">デフォルト画像URL</label>
+              <%= text_field_tag "bulk[default_image_url]", @bulk_common["default_image_url"], class: "w-full rounded-lg border border-base px-3 py-2 text-sm" %>
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-stone-600">デフォルト参照URL</label>
+              <%= text_field_tag "bulk[default_reference_url]", @bulk_common["default_reference_url"], class: "w-full rounded-lg border border-base px-3 py-2 text-sm" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-base bg-white p-6 shadow-sm">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 class="text-sm font-semibold text-stone-700">フレーバー行（空行は無視）</h2>
+              <p class="mt-1 text-xs text-stone-500">価格未入力時はデフォルト価格を使用します。</p>
+            </div>
+            <button type="submit"
+                    formmethod="get"
+                    formaction="<%= bulk_new_admin_products_path %>"
+                    name="bulk[row_count]"
+                    value="<%= @bulk_items.size + 5 %>"
+                    class="rounded-lg border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300">
+              行を5件追加
+            </button>
+          </div>
+
+          <div class="mt-4 overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead>
+                <tr class="border-b text-xs text-stone-500">
+                  <th class="px-2 py-2 text-left">フレーバー</th>
+                  <th class="px-2 py-2 text-left">価格</th>
+                  <th class="px-2 py-2 text-left">kcal</th>
+                  <th class="px-2 py-2 text-left">P</th>
+                  <th class="px-2 py-2 text-left">F</th>
+                  <th class="px-2 py-2 text-left">C</th>
+                  <th class="px-2 py-2 text-left">画像URL（任意）</th>
+                  <th class="px-2 py-2 text-left">参照URL（任意）</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @bulk_items.each_with_index do |row, idx| %>
+                  <tr class="border-b border-stone-100">
+                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][flavor]", row[:flavor], class: "w-40 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][price]", row[:price], class: "w-24 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][calorie]", row[:calorie], class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][protein]", row[:protein], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][fat]", row[:fat], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][carbohydrate]", row[:carbohydrate], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][image_url]", row[:image_url], class: "w-56 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][reference_url]", row[:reference_url], class: "w-56 rounded border border-base px-2 py-1" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3">
+          <%= link_to "楽天検索に戻る", search_admin_rakuten_products_path, class: "rounded-lg border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
+          <%= submit_tag "一括登録する", class: "rounded-lg bg-brand px-4 py-2 text-xs font-semibold text-white hover:bg-brand-dark" %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</main>

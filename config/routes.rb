@@ -45,6 +45,11 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :products do
+      collection do
+        get :bulk_new
+        post :bulk_create
+      end
+
       member do
         get :duplicate
       end
@@ -52,6 +57,7 @@ Rails.application.routes.draw do
     resources :rakuten_products do
       collection do
         get :search
+        post :add_official_shop
       end
     end
   end

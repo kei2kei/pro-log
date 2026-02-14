@@ -39,6 +39,26 @@
                   class: "w-full rounded-lg border border-base bg-white px-4 py-2.5 text-sm text-main placeholder:text-stone-400 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand/40" %>
           </div>
 
+          <div class="w-full md:w-64">
+            <label class="block text-xs font-semibold text-stone-600 mb-1">
+              公式ショップ（任意）
+            </label>
+            <%= f.select :shop_code,
+                  options_for_select(@official_shops.map { |shop| ["#{shop.shop_name} (#{shop.shop_code})", shop.shop_code] }, @selected_shop_code),
+                  { include_blank: "指定しない" },
+                  class: "w-full rounded-lg border border-base bg-white px-4 py-2.5 text-sm text-main focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand/40" %>
+          </div>
+
+          <div class="w-full md:w-40">
+            <label class="block text-xs font-semibold text-stone-600 mb-1">
+              取得ページ数
+            </label>
+            <%= f.select :pages,
+                  options_for_select([["1ページ", "1"], ["2ページ", "2"], ["3ページ", "3"]], @pages),
+                  {},
+                  class: "w-full rounded-lg border border-base bg-white px-4 py-2.5 text-sm text-main focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand/40" %>
+          </div>
+
           <div class="w-full md:w-40">
             <label class="block text-xs font-semibold text-transparent mb-1">
               検索
@@ -58,9 +78,13 @@
           検索結果
         </h2>
 
-        <% if params[:keyword].present? %>
+        <% if @searched %>
           <p class="text-xs text-stone-500">
-            キーワード：「<span class="font-semibold"><%= params[:keyword] %></span>」
+            <% if @keyword.present? %>
+              キーワード：「<span class="font-semibold"><%= @keyword %></span>」
+            <% else %>
+              キーワード：<span class="font-semibold">（未指定）</span>
+            <% end %>
             <% if @results.present? %>
               ／ <%= @results.size %> 件ヒット
             <% end %>
@@ -74,9 +98,9 @@
         </div>
       <% end %>
 
-      <% if params[:keyword].blank? %>
+      <% if !@searched %>
         <div class="mt-6 rounded-2xl border border-dashed border-base bg-stone-50 p-6 text-xs text-stone-500">
-          上のフォームにキーワードを入力して「検索する」を押すと、楽天の商品候補が表示されます。
+          キーワードまたは公式ショップを選択して「検索する」を押すと、楽天の商品候補が表示されます。
         </div>
       <% elsif @results.blank? %>
         <div class="mt-6 rounded-2xl border border-dashed border-base bg-stone-50 p-6 text-xs text-stone-500">
@@ -86,6 +110,7 @@
       <% else %>
         <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <% @results.each do |item| %>
+            <% registered_products = @registered_products_by_reference_url[item[:url]] || [] %>
             <div class="flex flex-col rounded-2xl border border-base bg-white p-4 text-sm shadow-sm">
               <div class="aspect-[4/3] mb-3 overflow-hidden rounded-xl bg-stone-100">
                 <% if item[:image_url].present? %>
@@ -113,7 +138,7 @@
 
               <% if item[:shop_name].present? %>
                 <p class="mt-1 text-[11px] text-stone-500">
-                  ショップ：<%= item[:shop_name] %>
+                  ショップ：<%= item[:shop_name] %>（<%= item[:shop_code].presence || "-" %>）
                 </p>
               <% end %>
 
@@ -122,6 +147,22 @@
                   ¥<%= item[:price].to_s(:delimited) rescue item[:price] %>
                 </p>
                 <div class="my-2 h-px w-full bg-stone-200"></div>
+              <% end %>
+
+              <% if registered_products.present? %>
+                <div class="mt-1 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2">
+                  <p class="text-xs font-semibold text-emerald-700">登録済み（<%= registered_products.size %>件）</p>
+                  <div class="mt-1 flex flex-wrap gap-2">
+                    <% registered_products.first(3).each do |product| %>
+                      <%= link_to "##{product.id} #{product.flavor.presence || 'フレーバー未設定'}",
+                            edit_admin_product_path(product),
+                            class: "text-[11px] font-semibold text-emerald-700 underline-offset-2 hover:underline" %>
+                    <% end %>
+                    <% if registered_products.size > 3 %>
+                      <span class="text-[11px] text-emerald-700">ほか <%= registered_products.size - 3 %> 件</span>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
 
 
@@ -134,18 +175,36 @@
                 </div>
               <% end %>
 
-              <div class="mt-4">
-                <div class="mt-4">
-                  <%= link_to new_admin_product_path(
-                        name:        item[:name],
-                        price:       item[:price],
-                        image_url: item[:image_url],
-                        reference_url:    item[:url]
-                      ),
-                      class: "w-full inline-flex items-center justify-center rounded-lg border border-brand px-4 py-2 text-xs font-semibold text-brand transition hover:bg-brand/5" do %>
-                    この商品を取り込む
-                  <% end %>
-                </div>
+              <div class="mt-4 grid gap-2">
+                <% if item[:shop_code].present? && item[:shop_name].present? %>
+                  <%= button_to "このショップを公式に追加",
+                        add_official_shop_admin_rakuten_products_path,
+                        method: :post,
+                        params: { official_shop: { shop_code: item[:shop_code], shop_name: item[:shop_name] } },
+                        class: "w-full rounded-lg border border-base px-4 py-2 text-xs font-semibold text-stone-600 transition hover:border-stone-300" %>
+                <% end %>
+
+                <%= link_to bulk_new_admin_products_path(
+                      name: item[:name],
+                      brand: item[:shop_name],
+                      price: item[:price],
+                      image_url: item[:image_url],
+                      reference_url: item[:url]
+                    ),
+                    class: "w-full inline-flex items-center justify-center rounded-lg bg-brand px-4 py-2 text-xs font-semibold text-white transition hover:bg-brand-dark" do %>
+                  シリーズ一括登録へ
+                <% end %>
+
+                <%= link_to new_admin_product_path(
+                      name: item[:name],
+                      brand: item[:shop_name],
+                      price: item[:price],
+                      image_url: item[:image_url],
+                      reference_url: item[:url]
+                    ),
+                    class: "w-full inline-flex items-center justify-center rounded-lg border border-brand px-4 py-2 text-xs font-semibold text-brand transition hover:bg-brand/5" do %>
+                  この商品を単品登録
+                <% end %>
               </div>
 
             </div>

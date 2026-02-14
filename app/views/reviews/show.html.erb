@@ -149,8 +149,11 @@
         <div class="flex items-center justify-between">
           <div>
             <p class="text-sm font-semibold text-stone-600"><%= t("reviews.show.reviewed_product_label") %></p>
+            <p class="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              <%= @review.product.protein_type %> / <%= @review.product.flavor %>
+            </p>
             <h2 class="mt-2 text-2xl font-semibold"><%= @review.product.name %></h2>
-            <p class="mt-1 text-sm text-stone-500"><%= @review.product.brand %> / <%= @review.product.protein_type %> / <%= @review.product.flavor %></p>
+            <p class="mt-1 text-sm text-stone-500"><%= @review.product.brand %></p>
           </div>
         </div>
 
