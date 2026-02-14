@@ -134,18 +134,28 @@
                 </div>
               <% end %>
 
-              <div class="mt-4">
-                <div class="mt-4">
-                  <%= link_to new_admin_product_path(
-                        name:        item[:name],
-                        price:       item[:price],
-                        image_url: item[:image_url],
-                        reference_url:    item[:url]
-                      ),
-                      class: "w-full inline-flex items-center justify-center rounded-lg border border-brand px-4 py-2 text-xs font-semibold text-brand transition hover:bg-brand/5" do %>
-                    この商品を取り込む
-                  <% end %>
-                </div>
+              <div class="mt-4 grid gap-2">
+                <%= link_to bulk_new_admin_products_path(
+                      name: item[:name],
+                      brand: item[:shop_name],
+                      price: item[:price],
+                      image_url: item[:image_url],
+                      reference_url: item[:url]
+                    ),
+                    class: "w-full inline-flex items-center justify-center rounded-lg bg-brand px-4 py-2 text-xs font-semibold text-white transition hover:bg-brand-dark" do %>
+                  シリーズ一括登録へ
+                <% end %>
+
+                <%= link_to new_admin_product_path(
+                      name: item[:name],
+                      brand: item[:shop_name],
+                      price: item[:price],
+                      image_url: item[:image_url],
+                      reference_url: item[:url]
+                    ),
+                    class: "w-full inline-flex items-center justify-center rounded-lg border border-brand px-4 py-2 text-xs font-semibold text-brand transition hover:bg-brand/5" do %>
+                  この商品を単品登録
+                <% end %>
               </div>
 
             </div>
