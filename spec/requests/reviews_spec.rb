@@ -45,6 +45,29 @@ RSpec.describe "Reviews", type: :request do
 
       expect(response).to have_http_status(:unprocessable_entity)
     end
+
+    it "未ログインでは作成できない" do
+      product = create(:product)
+      params = {
+        review: {
+          title: "未ログイン投稿",
+          comment: "投稿されないこと",
+          overall_score: 4,
+          sweetness: 3,
+          richness: 3,
+          aftertaste: 3,
+          flavor_score: 3,
+          solubility: 3,
+          foam: 3
+        }
+      }
+
+      expect {
+        post product_reviews_path(product), params: params
+      }.not_to change(Review, :count)
+
+      expect(response).to redirect_to(new_user_session_path)
+    end
   end
 
   describe "レビュー更新" do
@@ -69,6 +92,15 @@ RSpec.describe "Reviews", type: :request do
 
       expect(response).to redirect_to(review_path(review))
       expect(review.reload.title).not_to eq("更新後")
+    end
+
+    it "未ログインでは更新できない" do
+      review = create(:review, title: "更新前")
+
+      patch review_path(review), params: { review: { title: "未ログイン更新" } }
+
+      expect(response).to redirect_to(new_user_session_path)
+      expect(review.reload.title).to eq("更新前")
     end
   end
 
@@ -96,6 +128,16 @@ RSpec.describe "Reviews", type: :request do
       }.not_to change(Review, :count)
 
       expect(response).to redirect_to(review_path(review))
+    end
+
+    it "未ログインでは削除できない" do
+      review = create(:review)
+
+      expect {
+        delete review_path(review)
+      }.not_to change(Review, :count)
+
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 end
