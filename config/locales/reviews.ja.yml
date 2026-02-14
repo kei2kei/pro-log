@@ -80,7 +80,7 @@ ja:
         later: "あとで"
         cta: "Xでシェア"
         tweet: "%{brand}の%{product}を飲んだ感想を投稿しました。\n\n満足度：%{stars}%{blanks}（%{score}/5.0）\n\nPro-logで%{username}さんのプロテインレビューを見よう！\n\n#プロテインレビュー #%{brand} #プロテイン"
-        tweet_short: "%{brand}の%{product}を飲んだ感想を投稿しました。\n満足度：%{stars}%{blanks}（%{score}/5.0）\nPro-log(%{root_url})で%{username}さんのプロテインレビューを見る。\n#プロテインレビュー #%{brand} #プロテイン"
+        tweet_short: "%{brand}の%{product}を飲んだ感想を投稿しました。\n満足度：%{stars}%{blanks}（%{score}/5.0）\nPro-logで%{username}さんのプロテインレビューを見る。\n#プロテインレビュー #%{brand} #プロテイン"
       actions:
         edit: "編集"
         delete: "削除"

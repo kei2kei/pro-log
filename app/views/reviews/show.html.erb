@@ -1,10 +1,21 @@
 <% content_for :head do %>
+  <% review_title = @review.title %>
+  <% review_description = t("reviews.show.og_description", product: @review.product.name) %>
+  <% review_url_value = review_url(@review) %>
+  <% og_image_url = image_url("ogp.png") %>
+
   <meta property="og:type" content="article">
-  <meta property="og:title" content="<%= @review.title %>">
-  <meta property="og:description" content="<%= t("reviews.show.og_description", product: @review.product.name) %>">
-  <meta property="og:url" content="<%= request.original_url %>">
-  <meta property="og:image" content="<%= image_url("ogp.png") %>">
+  <meta property="og:title" content="<%= review_title %>">
+  <meta property="og:description" content="<%= review_description %>">
+  <meta property="og:url" content="<%= review_url_value %>">
+  <meta property="og:image" content="<%= og_image_url %>">
+  <meta property="og:image:secure_url" content="<%= og_image_url %>">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:site_name" content="Pro-log">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= review_title %>">
+  <meta name="twitter:description" content="<%= review_description %>">
+  <meta name="twitter:image" content="<%= og_image_url %>">
 <% end %>
 
 <main class="min-h-screen bg-white text-main">
@@ -28,7 +39,7 @@
             blanks: "☆" * (5 - @review.overall_score),
             score: score_text,
             username: @review.user.username)) %>
-          <% share_url = ERB::Util.url_encode(request.original_url) %>
+          <% share_url = ERB::Util.url_encode(review_url(@review)) %>
           <%= link_to "https://twitter.com/intent/tweet?text=#{share_text}&url=#{share_url}",
             target: "_blank",
             rel: "noopener",
@@ -93,9 +104,8 @@
                   stars: "★" * @review.overall_score,
                   blanks: "☆" * (5 - @review.overall_score),
                   score: score_text,
-                  username: @review.user.username,
-                  root_url: root_url)) %>
-                <% share_url = ERB::Util.url_encode(request.original_url) %>
+                  username: @review.user.username)) %>
+                <% share_url = ERB::Util.url_encode(review_url(@review)) %>
                 <%= link_to "https://twitter.com/intent/tweet?text=#{share_text}&url=#{share_url}",
                   target: "_blank",
                   rel: "noopener",
