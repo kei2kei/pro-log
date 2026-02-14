@@ -19,7 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def compared_product_ids
-    return [] unless user_signed_in?
     session[:compare_product_ids] ||= []
   end
 
