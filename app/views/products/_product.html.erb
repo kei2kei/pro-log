@@ -53,11 +53,13 @@
     </div>
   </div>
   <div class="pt-4 space-y-2">
-    <div class="w-full">
-      <%= render "shared/bookmark_button",
-        product: product,
-        bookmark: bookmarks_by_product_id[product.id] %>
-    </div>
+    <% if user_signed_in? %>
+      <div class="w-full">
+        <%= render "shared/bookmark_button",
+          product: product,
+          bookmark: bookmarks_by_product_id[product.id] %>
+      </div>
+    <% end %>
     <%= render "shared/compare_button", product: product %>
   </div>
 </div>
