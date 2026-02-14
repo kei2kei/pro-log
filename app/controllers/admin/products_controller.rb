@@ -26,25 +26,55 @@ class Admin::ProductsController < ApplicationController
   end
 
   def bulk_create
-    @bulk_common = bulk_common_params.to_h
-    @bulk_items = Array(params.dig(:bulk, :items)).map { |row| row.to_h.symbolize_keys }
+    permitted_bulk = bulk_params
+    @bulk_common = permitted_bulk.slice(
+      "name",
+      "brand",
+      "protein_type",
+      "default_price",
+      "default_image_url",
+      "default_reference_url"
+    )
+    @bulk_items = extract_bulk_items(permitted_bulk["items"])
 
-    rows = @bulk_items.select { |row| row.values.any?(&:present?) }
-    if rows.blank?
+    rows = []
+    row_errors = []
+
+    @bulk_items.each_with_index do |row, idx|
+      next if row.values.all?(&:blank?)
+
+      if row[:flavor].blank?
+        row_errors << "行#{idx + 1}: フレーバーは必須です。"
+        next
+      end
+
+      missing_fields = []
+      missing_fields << "カロリー" if row[:calorie].blank?
+      missing_fields << "タンパク質(P)" if row[:protein].blank?
+      missing_fields << "脂質(F)" if row[:fat].blank?
+      missing_fields << "炭水化物(C)" if row[:carbohydrate].blank?
+      if missing_fields.present?
+        row_errors << "行#{idx + 1}: #{missing_fields.join('、')}は必須です。"
+        next
+      end
+
+      rows << [ row, idx ]
+    end
+
+    if rows.blank? && row_errors.blank?
       flash.now[:alert] = "フレーバー行を1件以上入力してください。"
       render :bulk_new, status: :unprocessable_entity
       return
     end
 
     products = []
-    row_errors = []
 
-    rows.each_with_index do |row, idx|
+    rows.each do |row, idx|
       product = Product.new(
         name: @bulk_common["name"],
         brand: @bulk_common["brand"],
         protein_type: @bulk_common["protein_type"],
-        flavor: row[:flavor],
+        flavor: row[:flavor].to_s.strip,
         price: row[:price].presence || @bulk_common["default_price"],
         calorie: row[:calorie],
         protein: row[:protein],
@@ -56,6 +86,7 @@ class Admin::ProductsController < ApplicationController
 
       unless product.valid?
         row_errors << "行#{idx + 1}: #{product.errors.full_messages.join(', ')}"
+        next
       end
 
       products << product
@@ -124,19 +155,21 @@ end
     )
   end
 
-  def bulk_common_params
+  def bulk_params
     params.require(:bulk).permit(
       :name,
       :brand,
       :protein_type,
       :default_price,
       :default_image_url,
-      :default_reference_url
+      :default_reference_url,
+      :row_count,
+      items: [ :flavor, :price, :calorie, :protein, :fat, :carbohydrate, :image_url, :reference_url ]
     )
   end
 
   def default_bulk_common
-    bulk = params[:bulk].presence || {}
+    bulk = safe_bulk_new_params
 
     {
       "name" => (bulk[:name] || params[:name]).to_s,
@@ -149,8 +182,8 @@ end
   end
 
   def default_bulk_items
-    bulk = params[:bulk].presence || {}
-    items = Array(bulk[:items]).map { |row| row.to_h.symbolize_keys }
+    bulk = safe_bulk_new_params
+    items = extract_bulk_items(bulk[:items] || bulk["items"])
     base_count = items.size
     requested_count = bulk[:row_count].to_i
     target_count = [ requested_count, base_count, 5 ].max
@@ -160,6 +193,51 @@ end
     end
 
     items
+  end
+
+  def safe_bulk_new_params
+    raw = params[:bulk]
+    return {} unless raw.present?
+
+    if raw.is_a?(ActionController::Parameters)
+      raw.permit(
+        :name,
+        :brand,
+        :protein_type,
+        :default_price,
+        :default_image_url,
+        :default_reference_url,
+        :row_count,
+        items: [ :flavor, :price, :calorie, :protein, :fat, :carbohydrate, :image_url, :reference_url ]
+      )
+    else
+      {}
+    end
+  end
+
+  def extract_bulk_items(raw_items)
+    rows =
+      case raw_items
+      when ActionController::Parameters
+        raw_items.to_h.values
+      when Hash
+        raw_items.values
+      when Array
+        raw_items
+      else
+        []
+      end
+
+    rows.map do |row|
+      case row
+      when ActionController::Parameters
+        row.to_h.symbolize_keys
+      when Hash
+        row.symbolize_keys
+      else
+        {}
+      end
+    end
   end
 
   def require_admin!
