@@ -105,11 +105,13 @@
           </div>
         <% end %>
         <div class="mt-4 flex flex-col items-center gap-2">
-          <div class="w-full max-w-[220px]">
-            <%= render "shared/bookmark_button",
-              product: @product,
-              bookmark: @bookmarks_by_product_id[@product.id] %>
-          </div>
+          <% if user_signed_in? %>
+            <div class="w-full max-w-[220px]">
+              <%= render "shared/bookmark_button",
+                product: @product,
+                bookmark: @bookmarks_by_product_id[@product.id] %>
+            </div>
+          <% end %>
           <div class="w-full max-w-[220px]">
             <%= render "shared/compare_button", product: @product %>
           </div>
@@ -132,7 +134,9 @@
   <section class="mx-auto max-w-7xl px-6 py-12">
     <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h2 class="text-3xl font-semibold font-['Fraunces']"><%= t("products.show.reviews_title") %></h2>
-      <%= link_to t("products.show.review_cta"), new_product_review_path(@product), class: "btn-primary rounded-full px-5 py-2" %>
+      <% if user_signed_in? && !@reviewed_by_current_user %>
+        <%= link_to t("products.show.review_cta"), new_product_review_path(@product), class: "btn-primary rounded-full px-5 py-2" %>
+      <% end %>
     </div>
 
     <div class="mt-8 space-y-6">

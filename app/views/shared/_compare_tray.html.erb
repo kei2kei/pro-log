@@ -1,4 +1,3 @@
-<% return unless user_signed_in? %>
 <% ids = compared_product_ids %>
 <% return if ids.empty? %>
 <% products_by_id = Product.where(id: ids).index_by(&:id) %>

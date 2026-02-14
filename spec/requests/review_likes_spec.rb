@@ -23,6 +23,16 @@ RSpec.describe "ReviewLikes", type: :request do
         post likes_path, params: { review_id: review.id }, headers: { "HTTP_REFERER" => review_path(review) }
       }.not_to change(ReviewLike, :count)
     end
+
+    it "未ログインではいいねを作成できない" do
+      review = create(:review)
+
+      expect {
+        post likes_path, params: { review_id: review.id }
+      }.not_to change(ReviewLike, :count)
+
+      expect(response).to redirect_to(new_user_session_path)
+    end
   end
 
   describe "DELETE /likes/:id" do
@@ -37,6 +47,18 @@ RSpec.describe "ReviewLikes", type: :request do
       }.to change(ReviewLike, :count).by(-1)
 
       expect(response).to redirect_to(review_path(review))
+    end
+
+    it "未ログインではいいねを解除できない" do
+      user = create(:user)
+      review = create(:review)
+      like = create(:review_like, user: user, review: review)
+
+      expect {
+        delete like_path(like), headers: { "HTTP_REFERER" => review_path(review) }
+      }.not_to change(ReviewLike, :count)
+
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 end

@@ -1,6 +1,4 @@
 class ComparisonsController < ApplicationController
-  before_action :authenticate_user!
-
   def add
     @product = Product.find(params[:product_id])
     ids = compared_product_ids

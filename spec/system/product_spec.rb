@@ -2,10 +2,22 @@ require "rails_helper"
 
 RSpec.describe "Product#商品一覧と詳細", type: :system do
   context "ログイン前" do
-    it "商品一覧にアクセスできない" do
+    it "商品一覧にアクセスできる" do
       visit products_path
 
-      expect(page).to have_content(I18n.t("devise.views.sessions.new.title"))
+      expect(page).to have_content(I18n.t("products.index.title"))
+    end
+
+    it "商品詳細ではレビュー作成・ブックマーク・いいねボタンが表示されない" do
+      product = create(:product, name: "Guest Hidden Controls")
+      reviewer = create(:user)
+      create(:review, user: reviewer, product: product, title: "Guest review")
+
+      visit product_path(product)
+
+      expect(page).not_to have_link(I18n.t("products.show.review_cta"))
+      expect(page).not_to have_selector("button[aria-label='#{I18n.t('shared.bookmark.add')}']")
+      expect(page).not_to have_selector("button[aria-label='#{I18n.t('shared.like.add')}']")
     end
   end
 
@@ -51,6 +63,23 @@ RSpec.describe "Product#商品一覧と詳細", type: :system do
       expect(page).to have_current_path(product_path(product), ignore_query: true)
       expect(page).to have_content(I18n.t("products.show.title"))
       expect(page).to have_content(product.name)
+    end
+
+    it "未レビュー商品の詳細ではレビュー作成ボタンが表示される" do
+      product = create(:product, name: "NoReviewProduct")
+
+      visit product_path(product)
+
+      expect(page).to have_link(I18n.t("products.show.review_cta"))
+    end
+
+    it "レビュー済み商品の詳細ではレビュー作成ボタンが表示されない" do
+      product = create(:product, name: "ReviewedProduct")
+      create(:review, product: product, user: user)
+
+      visit product_path(product)
+
+      expect(page).not_to have_link(I18n.t("products.show.review_cta"))
     end
   end
 end

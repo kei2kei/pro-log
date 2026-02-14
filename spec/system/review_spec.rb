@@ -9,6 +9,16 @@ RSpec.describe "レビュー", type: :system do
 
       expect(page).to have_content(I18n.t("devise.views.sessions.new.title"))
     end
+
+    it "レビュー詳細は閲覧できる" do
+      reviewer = create(:user)
+      review = create(:review, user: reviewer, product: product, title: "公開レビュー", comment: "公開コメント")
+
+      visit review_path(review)
+
+      expect(page).to have_content("公開レビュー")
+      expect(page).to have_content("公開コメント")
+    end
   end
 
   context "ログイン後" do
