@@ -11,8 +11,8 @@
 
   <section class="bg-white">
     <div class="mx-auto max-w-7xl px-6 py-8">
-      <%= form_with url: bulk_create_admin_products_path, method: :post, scope: :bulk, local: true, class: "space-y-6" do %>
-        <%= hidden_field_tag "bulk[row_count]", @bulk_items.size %>
+      <%= form_with url: bulk_create_admin_products_path, method: :post, scope: :bulk, local: true, data: { controller: "bulk-form", "bulk-form-suggest-url-value": bulk_suggest_admin_products_path }, class: "space-y-6" do %>
+        <%= hidden_field_tag "bulk[row_count]", @bulk_items.size, data: { "bulk-form-target": "rowCount" } %>
 
         <div class="rounded-2xl border border-base bg-white p-6 shadow-sm">
           <h2 class="text-sm font-semibold text-stone-700">共通項目</h2>
@@ -50,11 +50,8 @@
               <h2 class="text-sm font-semibold text-stone-700">フレーバー行（空行は無視）</h2>
               <p class="mt-1 text-xs text-stone-500">価格未入力時はデフォルト価格を使用します。</p>
             </div>
-            <button type="submit"
-                    formmethod="get"
-                    formaction="<%= bulk_new_admin_products_path %>"
-                    name="bulk[row_count]"
-                    value="<%= @bulk_items.size + 5 %>"
+            <button type="button"
+                    data-action="bulk-form#addFive"
                     class="rounded-lg border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300">
               行を5件追加
             </button>
@@ -74,17 +71,18 @@
                   <th class="px-2 py-2 text-left">参照URL（任意）</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody data-bulk-form-target="rowsBody">
                 <% @bulk_items.each_with_index do |row, idx| %>
+                  <% row_data = row.to_h.with_indifferent_access %>
                   <tr class="border-b border-stone-100">
-                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][flavor]", row[:flavor], class: "w-40 rounded border border-base px-2 py-1" %></td>
-                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][price]", row[:price], class: "w-24 rounded border border-base px-2 py-1" %></td>
-                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][calorie]", row[:calorie], class: "w-20 rounded border border-base px-2 py-1" %></td>
-                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][protein]", row[:protein], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
-                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][fat]", row[:fat], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
-                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][carbohydrate]", row[:carbohydrate], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
-                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][image_url]", row[:image_url], class: "w-56 rounded border border-base px-2 py-1" %></td>
-                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][reference_url]", row[:reference_url], class: "w-56 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][flavor]", row_data[:flavor], class: "w-40 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][price]", row_data[:price], class: "w-24 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][calorie]", row_data[:calorie], class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][protein]", row_data[:protein], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][fat]", row_data[:fat], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= number_field_tag "bulk[items][#{idx}][carbohydrate]", row_data[:carbohydrate], step: 0.1, class: "w-20 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][image_url]", row_data[:image_url], class: "w-56 rounded border border-base px-2 py-1" %></td>
+                    <td class="px-2 py-2"><%= text_field_tag "bulk[items][#{idx}][reference_url]", row_data[:reference_url], class: "w-56 rounded border border-base px-2 py-1" %></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -93,7 +91,13 @@
         </div>
 
         <div class="flex items-center justify-end gap-3">
+          <p data-bulk-form-target="status" class="hidden rounded-lg px-3 py-2 text-xs font-semibold"></p>
           <%= link_to "楽天検索に戻る", search_admin_rakuten_products_path, class: "rounded-lg border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
+          <button type="button"
+                  data-action="bulk-form#submitSuggest"
+                  class="rounded-lg border border-brand px-4 py-2 text-xs font-semibold text-brand hover:bg-brand hover:text-white">
+            URLからAI補完
+          </button>
           <%= submit_tag "一括登録する", class: "rounded-lg bg-brand px-4 py-2 text-xs font-semibold text-white hover:bg-brand-dark" %>
         </div>
       <% end %>
