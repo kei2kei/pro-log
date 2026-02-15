@@ -63,17 +63,8 @@ COPY . .
 # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495
 RUN bundle exec bootsnap precompile -j 1 app/ lib/
 
-# Precompile assets in production mode.
-# production.rb loads mailer/default_url_options on boot, so provide dummy values for build-time.
-RUN SECRET_KEY_BASE_DUMMY=1 \
-    APP_HOST=example.com \
-    SMTP_ADDRESS=localhost \
-    SMTP_PORT=587 \
-    SMTP_USERNAME=dummy \
-    SMTP_PASSWORD=dummy \
-    SMTP_DOMAIN=example.com \
-    MAIL_FROM=no-reply@example.com \
-    ./bin/rails assets:precompile
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
 RUN rm -rf node_modules
