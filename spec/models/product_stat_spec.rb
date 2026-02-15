@@ -16,5 +16,12 @@ RSpec.describe ProductStat, type: :model do
       expect(stat.avg_overall_score.to_f).to be_within(0.01).of(4.0)
       expect(stat.avg_sweetness.to_f).to be_within(0.01).of(3.0)
     end
+
+    it "商品が存在しない場合は何もせず終了する" do
+      missing_product_id = Product.maximum(:id).to_i + 1000
+
+      expect { ProductStat.refresh_for(missing_product_id) }.not_to raise_error
+      expect(ProductStat.find_by(product_id: missing_product_id)).to be_nil
+    end
   end
 end

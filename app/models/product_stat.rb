@@ -3,6 +3,9 @@ class ProductStat < ApplicationRecord
 
   def self.refresh_for(product)
     product_id = product.is_a?(Product) ? product.id : product
+    return if product_id.blank?
+    return unless Product.exists?(id: product_id)
+
     reviews = Review.where(product_id: product_id)
     aggregates = reviews
       .select(
