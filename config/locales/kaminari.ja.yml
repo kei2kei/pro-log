@@ -7,7 +7,6 @@ ja:
       next: "次へ"
       truncate: "..."
 
-  # 既存キー互換（必要な箇所が残っていても壊れないよう維持）
   kaminari:
     first: "最初へ"
     last: "最後へ"
