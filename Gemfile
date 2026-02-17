@@ -74,7 +74,7 @@ group :test do
   gem "simplecov", require: false
 end
 
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 
 gem "aws-sdk-s3", "~> 1.209"
 
