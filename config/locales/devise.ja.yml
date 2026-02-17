@@ -78,6 +78,7 @@ ja:
           email_label: "メールアドレス"
           password_label: "パスワード"
           password_hint: "最低 %{count} 文字"
+          password_policy_hint: "半角英大文字・英小文字・数字をそれぞれ1文字以上含めてください。"
           password_confirmation_label: "パスワード確認"
           submit: "登録する"
           omniauth_title: "Googleアカウントで簡単登録"
@@ -96,6 +97,7 @@ ja:
           password_section_title: "パスワード変更"
           current_password_label: "現在のパスワード"
           password_label: "新しいパスワード"
+          password_policy_hint: "半角英大文字・英小文字・数字をそれぞれ1文字以上含めてください。"
           password_confirmation_label: "新しいパスワード（確認）"
           submit: "変更内容を保存する"
           back_to_profile: "プロフィールに戻る"
@@ -111,6 +113,7 @@ ja:
           subtitle: "新しいパスワードを入力してください。"
           password_label: "新しいパスワード"
           password_hint: "最低 %{count} 文字"
+          password_policy_hint: "半角英大文字・英小文字・数字をそれぞれ1文字以上含めてください。"
           password_confirmation_label: "新しいパスワード（確認）"
           submit: "パスワードを更新"
       confirmations:

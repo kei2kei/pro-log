@@ -51,6 +51,10 @@
       <div class="mb-6">
         <%= f.label :password, t("devise.views.registrations.edit.password_label"),
           class: "mb-2 block text-sm font-semibold text-stone-700" %>
+        <% if @minimum_password_length %>
+          <p class="mt-1 text-xs text-stone-400"><%= t("devise.views.registrations.new.password_hint", count: @minimum_password_length) %></p>
+        <% end %>
+        <p class="mb-2 text-xs text-stone-400"><%= t("devise.views.registrations.edit.password_policy_hint") %></p>
         <%= f.password_field :password,
           autocomplete: "new-password",
           class: "w-full rounded-lg border border-base px-4 py-3" %>
