@@ -5,6 +5,7 @@ ja:
       reference_link: "楽天商品ページへ"
       image_credit: "画像提供：楽天市場"
       not_rated: "未評価"
+      reviews_count: "レビュー %{count}件"
     recommendation_card:
       no_image: "No Image"
       overall_label: "総合満足度"
@@ -83,6 +84,7 @@ ja:
       nutrition_title: "栄養成分（1スクープあたり）"
       overall_label: "総合満足度"
       overall_pending: "評価準備中"
+      reviews_count: "レビュー %{count}件"
       no_image: "No Image"
       rakuten_link: "楽天商品ページへ"
       rakuten_credit: "画像／データ提供：楽天市場"

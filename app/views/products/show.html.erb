@@ -66,13 +66,16 @@
 
         <div class="flex items-center gap-4 rounded-2xl border border-base bg-white px-5 py-4 shadow-sm">
           <span class="text-sm font-semibold text-stone-600"><%= t("products.show.overall_label") %></span>
-          <% average_score = @product.overall_average_score %>
+          <% average_score = @product.product_stat&.avg_overall_score %>
           <% if average_score.present? %>
             <span class="text-lg font-semibold text-stone-900"><%= format("%.1f", average_score) %>/5.0</span>
             <span class="text-accent"><%= "★" * average_score.round %><%= "☆" * (5 - average_score.round) %></span>
           <% else %>
             <span class="text-lg font-semibold text-stone-900"><%= t("products.show.overall_pending") %></span>
           <% end %>
+          <span class="text-xs text-stone-500">
+            <%= t("products.show.reviews_count", count: @product.product_stat&.reviews_count.to_i) %>
+          </span>
         </div>
 
       </div>
@@ -105,13 +108,11 @@
           </div>
         <% end %>
         <div class="mt-4 flex flex-col items-center gap-2">
-          <% if user_signed_in? %>
-            <div class="w-full max-w-[220px]">
-              <%= render "shared/bookmark_button",
-                product: @product,
-                bookmark: @bookmarks_by_product_id[@product.id] %>
-            </div>
-          <% end %>
+          <div class="w-full max-w-[220px]">
+            <%= render "shared/bookmark_button",
+              product: @product,
+              bookmark: @bookmarks_by_product_id[@product.id] %>
+          </div>
           <div class="w-full max-w-[220px]">
             <%= render "shared/compare_button", product: @product %>
           </div>

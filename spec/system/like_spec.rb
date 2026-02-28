@@ -18,7 +18,7 @@ RSpec.describe "いいね", type: :system do
     it "レビューにいいねできる" do
       visit product_path(product)
       find("button[aria-label='#{I18n.t('shared.like.add')}']").click
-      expect(page).to have_button(I18n.t("shared.like.saved"), exact: false)
+      expect(page).to have_selector("button[aria-label='#{I18n.t('shared.like.saved')}']")
     end
 
     it "プロフィールのいいね一覧に反映される" do
@@ -35,7 +35,7 @@ RSpec.describe "いいね", type: :system do
       visit product_path(product)
       find("button[aria-label='#{I18n.t('shared.like.add')}']").click
       find("button[aria-label='#{I18n.t('shared.like.saved')}']").click
-      expect(page).to have_button(I18n.t("shared.like.add"))
+      expect(page).to have_selector("button[aria-label='#{I18n.t('shared.like.add')}']")
     end
 
     it "プロフィールのいいね一覧から消える" do
