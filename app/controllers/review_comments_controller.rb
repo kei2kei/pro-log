@@ -7,18 +7,30 @@ class ReviewCommentsController < ApplicationController
   def create
     @review_comment = @review.review_comments.build(review_comment_params.merge(user: current_user))
 
-    if @review_comment.save
-      create_comment_notifications!
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to review_path(@review), notice: "コメントを投稿しました。" }
-      end
-    else
+    if @review_comment.invalid?
       @review_comments = fetch_review_comments
       respond_to do |format|
         format.turbo_stream { render :create, status: :unprocessable_entity }
-        format.html { redirect_to review_path(@review), alert: "コメントの投稿に失敗しました。" }
+        format.html { redirect_to review_path(@review), alert: t("reviews.comments.alert.create_failed") }
       end
+      return
+    end
+
+    ReviewComment.transaction do
+      @review_comment.save!
+      create_comment_notifications!
+    end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to review_path(@review), notice: t("reviews.comments.notice.created") }
+    end
+  rescue ActiveRecord::ActiveRecordError
+    @review_comments = fetch_review_comments
+    @review_comment.errors.add(:base, t("reviews.comments.alert.create_failed"))
+    respond_to do |format|
+      format.turbo_stream { render :create, status: :unprocessable_entity }
+      format.html { redirect_to review_path(@review), alert: t("reviews.comments.alert.create_failed") }
     end
   end
 
@@ -26,14 +38,14 @@ class ReviewCommentsController < ApplicationController
     if @review_comment.destroy
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to review_path(@review), notice: "コメントを削除しました。" }
+        format.html { redirect_to review_path(@review), notice: t("reviews.comments.notice.destroyed") }
       end
     else
       @review_comments = fetch_review_comments
       @review_comment = @review.review_comments.build
       respond_to do |format|
         format.turbo_stream { render :destroy, status: :unprocessable_entity }
-        format.html { redirect_to review_path(@review), alert: "コメントの削除に失敗しました。" }
+        format.html { redirect_to review_path(@review), alert: t("reviews.comments.alert.destroy_failed") }
       end
     end
   end
@@ -53,10 +65,10 @@ class ReviewCommentsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        flash.now[:alert] = "このコメントは削除できません。"
+        flash.now[:alert] = t("reviews.comments.alert.forbidden")
         render turbo_stream: turbo_stream.replace("flash", partial: "shared/flash"), status: :forbidden
       end
-      format.html { redirect_to review_path(@review), alert: "このコメントは削除できません。" }
+      format.html { redirect_to review_path(@review), alert: t("reviews.comments.alert.forbidden") }
     end
   end
 

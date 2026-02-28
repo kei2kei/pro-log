@@ -15,12 +15,26 @@ class FollowsController < ApplicationController
       return
     end
 
-    follow = current_user.active_follows.find_or_create_by(followed: @user)
-    create_follow_notification!(follow) if follow.previously_new_record?
+    follow = current_user.active_follows.find_by(followed: @user)
+
+    if follow.nil?
+      Follow.transaction do
+        follow = current_user.active_follows.create!(followed: @user)
+        create_follow_notification!(follow)
+      end
+    end
 
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_back fallback_location: root_path, notice: t("shared.follow.followed") }
+      format.html { redirect_back fallback_location: root_path, notice: t("shared.follow.notice.followed") }
+    end
+  rescue ActiveRecord::ActiveRecordError
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:alert] = t("shared.follow.alert.follow_failed")
+        render turbo_stream: turbo_stream.replace("flash", partial: "shared/flash"), status: :unprocessable_entity
+      end
+      format.html { redirect_back fallback_location: root_path, alert: t("shared.follow.alert.follow_failed") }
     end
   end
 
@@ -31,7 +45,7 @@ class FollowsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_back fallback_location: root_path, notice: t("shared.follow.unfollowed") }
+      format.html { redirect_back fallback_location: root_path, notice: t("shared.follow.notice.unfollowed") }
     end
   end
 
