@@ -6,6 +6,7 @@ ja:
       login: "ログイン"
       logout: "ログアウト"
       signup: "会員登録"
+      notifications: "通知"
       open_menu: "メニューを開く"
       nav:
         about: "使い方"
@@ -35,6 +36,13 @@ ja:
       open: "比較する"
       clear: "すべてクリア"
       remove: "削除"
+    notifications:
+      kicker: "Notifications"
+      title: "通知"
+      view: "表示"
+      read_all: "すべて既読にする"
+      mark_as_read: "既読にする"
+      empty: "通知はまだありません。"
     axis_scores:
       axis:
         sweetness: "甘さ"
@@ -82,3 +90,7 @@ ja:
           weak: "泡立ちにくい"
     form_errors:
       title: "入力内容をご確認ください（%{count}件）"
+
+  time:
+    formats:
+      short: "%Y/%m/%d %H:%M"
