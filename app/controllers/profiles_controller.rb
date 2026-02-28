@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
         user: { avatar_attachment: :blob }
       ).order(created_at: :desc).page(params[:page]).per(3)
     else
-      @bookmarked_products = @user.bookmark_products.includes(:product_bookmarks).page(params[:page])
+      @bookmarked_products = @user.bookmark_products.includes(:product_bookmarks, :product_stat).page(params[:page])
       @bookmarks_by_product_id = @user.product_bookmarks.index_by(&:product_id)
     end
   end

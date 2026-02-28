@@ -24,12 +24,12 @@ class ProductsController < ApplicationController
       scoped = scoped.left_joins(:tags).where(combined)
     end
 
-    @products = scoped.includes(:product_bookmarks).order(created_at: :desc).page(params[:page])
+    @products = scoped.includes(:product_bookmarks, :product_stat).order(created_at: :desc).page(params[:page])
     @bookmarks_by_product_id = user_signed_in? ? current_user.product_bookmarks.index_by(&:product_id) : {}
   end
 
   def show
-    @product = Product.includes(:product_bookmarks).find(params[:id])
+    @product = Product.includes(:product_bookmarks, :product_stat).find(params[:id])
     @reviews = @product.reviews.includes(
       :review_likes,
       user: { avatar_attachment: :blob }
