@@ -1,23 +1,20 @@
 <%= turbo_frame_tag dom_id(user, :follow) do %>
   <% if user_signed_in? && current_user.id != user.id %>
     <% follow = current_user.active_follows.find_by(followed_id: user.id) %>
-    <div class="flex items-center gap-2">
-      <% if follow.present? %>
-        <%= button_to follow_path(follow), method: :delete,
-          class: "rounded-full border border-emerald-500 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-600 hover:border-emerald-600",
-          form: { data: { loading: "skip" } } do %>
-          <%= t("shared.follow.following") %>
-        <% end %>
-      <% else %>
-        <%= button_to follows_path(followed_id: user.id), method: :post,
-          class: "rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300",
-          form: { data: { loading: "skip" } } do %>
-          <%= t("shared.follow.follow") %>
-        <% end %>
+    <% if follow.present? %>
+      <%= button_to follow_path(follow), method: :delete,
+        class: "inline-flex items-center gap-2 rounded-full border border-emerald-500 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-600 hover:border-emerald-600",
+        form: { data: { loading: "skip" } } do %>
+        <%= t("shared.follow.following") %>
+        <span class="tabular-nums"><%= user.passive_follows.count %></span>
       <% end %>
-      <span class="text-xs font-semibold text-stone-500">
-        <%= t("shared.follow.follower_count", count: user.passive_follows.count) %>
-      </span>
-    </div>
+    <% else %>
+      <%= button_to follows_path(followed_id: user.id), method: :post,
+        class: "inline-flex items-center gap-2 rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300",
+        form: { data: { loading: "skip" } } do %>
+        <%= t("shared.follow.follow") %>
+        <span class="tabular-nums"><%= user.passive_follows.count %></span>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>
