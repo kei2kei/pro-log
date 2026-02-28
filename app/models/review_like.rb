@@ -1,6 +1,7 @@
 class ReviewLike < ApplicationRecord
   belongs_to :user
   belongs_to :review
+  has_many :notifications, as: :notifiable, dependent: :destroy
 
   validates :user_id, uniqueness: { scope: :review_id }
   validate :author_cannot_like_own_review
