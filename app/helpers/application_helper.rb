@@ -21,4 +21,12 @@ module ApplicationHelper
     return "" if avg_value.blank?
     axis_label(axis, avg_value.round)
   end
+
+  def highlight_mentions(text)
+    escaped = ERB::Util.html_escape(text.to_s)
+    highlighted = escaped.gsub(/(^|[[:space:]])@([^\s@]+)/u) do
+      %(#{$1}<span class="font-semibold text-brand">@#{$2}</span>)
+    end
+    highlighted.html_safe
+  end
 end
