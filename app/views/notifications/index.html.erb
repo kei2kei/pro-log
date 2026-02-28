@@ -1,0 +1,47 @@
+<main class="min-h-screen bg-white text-main">
+  <section class="border-b border-base bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-12">
+      <p class="text-xs uppercase tracking-[0.35em] text-brand"><%= t("shared.notifications.kicker") %></p>
+      <h1 class="mt-4 text-4xl font-semibold font-['Fraunces']"><%= t("shared.notifications.title") %></h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-6 py-10">
+    <div class="mb-6 flex items-center justify-end">
+      <%= button_to t("shared.notifications.read_all"),
+                    read_all_notifications_path,
+                    method: :patch,
+                    class: "rounded-full border border-base px-4 py-2 text-xs font-semibold text-stone-600 hover:border-stone-300",
+                    form: { data: { turbo: false } } %>
+    </div>
+
+    <% if @notifications.any? %>
+      <div class="space-y-3">
+        <% @notifications.each do |notification| %>
+          <article class="rounded-2xl border <%= notification.read_at.present? ? 'border-base bg-white' : 'border-brand/30 bg-emerald-50/30' %> p-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="text-sm font-semibold text-stone-800"><%= notification_message(notification) %></p>
+                <p class="mt-1 text-xs text-stone-500"><%= l(notification.created_at, format: :short) %></p>
+              </div>
+              <div class="flex items-center gap-2">
+                <%= link_to t("shared.notifications.view"), notification_link_path(notification), class: "rounded-full border border-base px-3 py-1 text-xs font-semibold text-stone-600 hover:border-stone-300" %>
+                <% if notification.read_at.nil? %>
+                  <%= button_to t("shared.notifications.mark_as_read"),
+                                read_notification_path(notification),
+                                method: :patch,
+                                class: "rounded-full border border-base px-3 py-1 text-xs font-semibold text-stone-600 hover:border-stone-300",
+                                form: { data: { turbo: false } } %>
+                <% end %>
+              </div>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="rounded-3xl border border-dashed border-base bg-stone-50 px-6 py-10 text-center text-sm text-stone-500">
+        <%= t("shared.notifications.empty") %>
+      </div>
+    <% end %>
+  </section>
+</main>

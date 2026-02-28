@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :review_likes, dependent: :destroy
   has_many :review_comments, dependent: :destroy
   has_many :like_reviews, through: :review_likes, source: :review
+  has_many :received_notifications, class_name: "Notification", foreign_key: :recipient_id, dependent: :destroy
+  has_many :sent_notifications, class_name: "Notification", foreign_key: :actor_id, dependent: :destroy
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :uid, presence: true, uniqueness: { scope: :provider }, if: -> { uid.present? }
