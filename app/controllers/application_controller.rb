@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_unread_notifications_count
   helper_method :compared_product_ids, :compare_full?
 
   unless Rails.env.development? || Rails.env.test?
@@ -27,6 +28,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_unread_notifications_count
+    return unless user_signed_in?
+
+    @unread_notifications_count = current_user.received_notifications.unread.count
+  end
 
   def render_404
     render file: Rails.root.join("public/404.html"), status: :not_found, layout: false
