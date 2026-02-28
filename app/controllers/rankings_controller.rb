@@ -12,6 +12,7 @@ class RankingsController < ApplicationController
       @top_bookmarked_products = Product
         .joins(:product_stat)
         .where("product_stats.reviews_count > 0")
+        .where("product_stats.bookmarks_count > 0")
         .order("product_stats.bookmarks_count DESC, products.name ASC")
         .limit(10)
     else
