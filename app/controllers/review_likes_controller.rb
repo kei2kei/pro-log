@@ -4,8 +4,10 @@ class ReviewLikesController < ApplicationController
   def create
     @review = Review.find(params[:review_id])
     like = current_user.review_likes.find_or_initialize_by(review: @review)
+    created = false
 
-    if like.persisted? || like.save
+    if like.persisted? || (created = like.save)
+      create_like_notification!(like) if created
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to review_path(@review), notice: "レビューにいいねしました。" }
@@ -58,5 +60,17 @@ class ReviewLikesController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  def create_like_notification!(like)
+    return if @review.user_id == current_user.id
+
+    Notification.create!(
+      recipient: @review.user,
+      actor: current_user,
+      notifiable: like
+    )
   end
 end
