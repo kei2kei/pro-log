@@ -8,6 +8,7 @@ class ReviewCommentsController < ApplicationController
     @review_comment = @review.review_comments.build(review_comment_params.merge(user: current_user))
 
     if @review_comment.save
+      create_comment_notifications!
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to review_path(@review), notice: "コメントを投稿しました。" }
@@ -65,5 +66,27 @@ class ReviewCommentsController < ApplicationController
 
   def fetch_review_comments
     @review.review_comments.includes(user: { avatar_attachment: :blob }).order(created_at: :desc)
+  end
+
+  def create_comment_notifications!
+    recipients = [ @review.user ]
+    recipients.concat(mentioned_users(@review_comment.body))
+    recipients.uniq!
+    recipients.reject! { |user| user.id == current_user.id }
+
+    recipients.each do |recipient|
+      Notification.create!(
+        recipient: recipient,
+        actor: current_user,
+        notifiable: @review_comment
+      )
+    end
+  end
+
+  def mentioned_users(body)
+    usernames = body.to_s.scan(/@([^\s@]+)/u).flatten.map(&:downcase).uniq
+    return User.none if usernames.empty?
+
+    User.where("LOWER(username) IN (?)", usernames)
   end
 end
