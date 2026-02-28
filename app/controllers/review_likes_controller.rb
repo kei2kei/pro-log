@@ -4,31 +4,34 @@ class ReviewLikesController < ApplicationController
   def create
     @review = Review.find(params[:review_id])
     like = current_user.review_likes.find_or_initialize_by(review: @review)
-    created = false
 
-    if like.persisted? || (created = like.save)
-      create_like_notification!(like) if created
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to review_path(@review), notice: "レビューにいいねしました。" }
+    unless like.persisted?
+      ReviewLike.transaction do
+        like.save!
+        create_like_notification!(like)
       end
-    else
-      respond_to do |format|
-        format.turbo_stream do
-          flash.now[:alert] = "レビューにいいねできませんでした。"
-          render turbo_stream: [
-            turbo_stream.replace(
-              view_context.dom_id(@review, :like_buttons),
-              partial: "shared/like_buttons",
-              locals: { review: @review }
-            ),
-            turbo_stream.replace("flash", partial: "shared/flash")
-          ], status: :unprocessable_entity
-        end
-        format.html do
-          redirect_back fallback_location: review_path(@review),
-                        alert: "レビューにいいねできませんでした。"
-        end
+    end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to review_path(@review), notice: t("reviews.likes.notice.created") }
+    end
+  rescue ActiveRecord::ActiveRecordError
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:alert] = t("reviews.likes.alert.create_failed")
+        render turbo_stream: [
+          turbo_stream.replace(
+            view_context.dom_id(@review, :like),
+            partial: "shared/like_buttons",
+            locals: { review: @review }
+          ),
+          turbo_stream.replace("flash", partial: "shared/flash")
+        ], status: :unprocessable_entity
+      end
+      format.html do
+        redirect_back fallback_location: review_path(@review),
+                      alert: t("reviews.likes.alert.create_failed")
       end
     end
   end
@@ -39,15 +42,15 @@ class ReviewLikesController < ApplicationController
     if like.destroy
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to review_path(@review), notice: "レビューのいいねを解除しました。" }
+        format.html { redirect_to review_path(@review), notice: t("reviews.likes.notice.destroyed") }
       end
     else
       respond_to do |format|
         format.turbo_stream do
-          flash.now[:alert] = "レビューのいいね解除に失敗しました。"
+          flash.now[:alert] = t("reviews.likes.alert.destroy_failed")
           render turbo_stream: [
             turbo_stream.replace(
-              view_context.dom_id(@review, :like_buttons),
+              view_context.dom_id(@review, :like),
               partial: "shared/like_buttons",
               locals: { review: @review }
             ),
@@ -56,7 +59,7 @@ class ReviewLikesController < ApplicationController
         end
         format.html do
           redirect_back fallback_location: review_path(@review),
-                        alert: "レビューのいいね解除に失敗しました。"
+                        alert: t("reviews.likes.alert.destroy_failed")
         end
       end
     end

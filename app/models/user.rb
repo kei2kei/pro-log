@@ -12,6 +12,10 @@ class User < ApplicationRecord
   has_many :review_likes, dependent: :destroy
   has_many :review_comments, dependent: :destroy
   has_many :like_reviews, through: :review_likes, source: :review
+  has_many :active_follows, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
+  has_many :passive_follows, class_name: "Follow", foreign_key: :followed_id, dependent: :destroy
+  has_many :following_users, through: :active_follows, source: :followed
+  has_many :follower_users, through: :passive_follows, source: :follower
   has_many :received_notifications, class_name: "Notification", foreign_key: :recipient_id, dependent: :destroy
   has_many :sent_notifications, class_name: "Notification", foreign_key: :actor_id, dependent: :destroy
 
@@ -43,6 +47,10 @@ class User < ApplicationRecord
 
   def like?(review)
     like_reviews.exists?(review.id)
+  end
+
+  def following?(other_user)
+    following_users.exists?(other_user.id)
   end
 
   def self.from_omniauth(auth)

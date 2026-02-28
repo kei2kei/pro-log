@@ -1,0 +1,5 @@
+<%= turbo_stream.replace dom_id(@user, :follow) do %>
+  <%= render "shared/follow_button", user: @user %>
+<% end %>
+
+<%= turbo_stream.replace "flash", partial: "shared/flash" %>

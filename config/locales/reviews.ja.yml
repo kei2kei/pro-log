@@ -1,5 +1,20 @@
 ja:
   reviews:
+    comments:
+      notice:
+        created: "コメントを投稿しました。"
+        destroyed: "コメントを削除しました。"
+      alert:
+        create_failed: "コメントの投稿に失敗しました。"
+        destroy_failed: "コメントの削除に失敗しました。"
+        forbidden: "このコメントは削除できません。"
+    likes:
+      notice:
+        created: "レビューにいいねしました。"
+        destroyed: "レビューのいいねを解除しました。"
+      alert:
+        create_failed: "レビューにいいねできませんでした。"
+        destroy_failed: "レビューのいいね解除に失敗しました。"
     new:
       title: "プロテインのレビュー作成"
     edit:

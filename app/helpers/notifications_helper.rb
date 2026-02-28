@@ -7,6 +7,8 @@ module NotificationsHelper
       "#{actor_name}さんがあなた宛にコメントしました"
     when ReviewLike
       "#{actor_name}さんがあなたのレビューにいいねしました"
+    when Follow
+      "#{actor_name}さんがあなたをフォローしました"
     else
       "#{actor_name}さんから通知があります"
     end
@@ -18,6 +20,8 @@ module NotificationsHelper
       review_path(notification.notifiable.review)
     when ReviewLike
       review_path(notification.notifiable.review)
+    when Follow
+      notifications_path
     else
       notifications_path
     end
