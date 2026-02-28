@@ -72,6 +72,15 @@ ja:
       other_reviews_empty: "このユーザーの他のレビューはありません。"
       other_overall_label: "総合満足度 %{score}.0/5.0"
       no_image: "No Image"
+      comments:
+        title: "コメント"
+        count: "%{count}件"
+        empty: "まだコメントはありません。"
+        form_label: "コメントを投稿"
+        placeholder: "レビューへの感想を入力してください"
+        submit: "コメントする"
+        delete: "削除"
+        delete_confirm: "このコメントを削除しますか？"
       share:
         kicker: "Share"
         title: "レビューをXで共有しませんか？"

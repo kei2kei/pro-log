@@ -78,12 +78,18 @@ ja:
           attributes:
             user:
               taken: "既にいいねされています"
+        review_comment:
+          attributes:
+            body:
+              blank: "コメントを入力してください"
+              too_long: "コメントは%{count}文字以内で入力してください"
     models:
       user: "ユーザー"
       product: "プロテイン"
       review: "レビュー"
       product_bookmark: "ブックマーク"
       review_like: "いいね"
+      review_comment: "レビューコメント"
       tag: "タグ"
       product_tagging: "商品タグ"
       review_tagging: "レビュータグ"
@@ -127,6 +133,10 @@ ja:
       review_like:
         user: "ユーザー"
         review: "レビュー"
+      review_comment:
+        user: "ユーザー"
+        review: "レビュー"
+        body: "コメント"
       tag:
         name: "タグ名"
       product_tagging:
