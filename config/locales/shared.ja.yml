@@ -26,6 +26,13 @@ ja:
     like:
       add: "いいね"
       saved: "いいね済み"
+    follow:
+      follow: "フォロー"
+      following: "フォロー中"
+      followed: "フォローしました。"
+      unfollowed: "フォローを解除しました。"
+      cannot_follow_self: "自分自身はフォローできません。"
+      follower_count: "フォロワー %{count}"
     compare:
       add: "比較に追加"
       selected: "比較中"
