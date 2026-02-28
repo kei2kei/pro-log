@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   end
   resources :bookmarks, only: [ :create, :destroy ], controller: "product_bookmarks"
   resources :likes, only: [ :create, :destroy ], controller: "review_likes"
+  resources :follows, only: [ :create, :destroy ]
   resources :notifications, only: [ :index ] do
     collection do
       patch :read_all
