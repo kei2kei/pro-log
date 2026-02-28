@@ -39,7 +39,9 @@ Rails.application.routes.draw do
   resources :products, only: [ :index, :show ] do
     resources :reviews, only: [ :new, :create ]
   end
-  resources :reviews, only: [ :show, :edit, :update, :destroy ]
+  resources :reviews, only: [ :show, :edit, :update, :destroy ] do
+    resources :review_comments, path: "comments", only: [ :create, :destroy ]
+  end
   resources :bookmarks, only: [ :create, :destroy ], controller: "product_bookmarks"
   resources :likes, only: [ :create, :destroy ], controller: "review_likes"
 

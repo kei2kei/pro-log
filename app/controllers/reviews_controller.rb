@@ -20,6 +20,8 @@ class ReviewsController < ApplicationController
   end
 
   def show
+    @review_comments = @review.review_comments.includes(user: { avatar_attachment: :blob }).order(created_at: :desc)
+    @review_comment = ReviewComment.new
     @other_reviews = @review.user.reviews.where.not(id: @review.id).includes(
       :product,
       :review_likes,
@@ -60,6 +62,7 @@ class ReviewsController < ApplicationController
   def set_review
     @review = Review.includes(
       :review_likes,
+      review_comments: { user: { avatar_attachment: :blob } },
       user: { avatar_attachment: :blob }
     ).find(params[:id])
   end

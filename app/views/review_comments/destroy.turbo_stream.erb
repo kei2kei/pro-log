@@ -1,0 +1,11 @@
+<% @review_comments ||= @review.review_comments.includes(user: { avatar_attachment: :blob }).order(created_at: :desc) %>
+<% @review_comment ||= ReviewComment.new %>
+
+<%= turbo_stream.replace dom_id(@review, :comments) do %>
+  <%= render "review_comments/section",
+    review: @review,
+    review_comments: @review_comments,
+    review_comment: @review_comment %>
+<% end %>
+
+<%= turbo_stream.replace "flash", partial: "shared/flash" %>
