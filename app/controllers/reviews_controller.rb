@@ -20,7 +20,11 @@ class ReviewsController < ApplicationController
   end
 
   def show
-    @other_reviews = @review.user.reviews.where.not(id: @review.id).includes(:product).limit(4)
+    @other_reviews = @review.user.reviews.where.not(id: @review.id).includes(
+      :product,
+      :review_likes,
+      user: { avatar_attachment: :blob }
+    ).limit(4)
   end
 
   def edit
@@ -55,6 +59,7 @@ class ReviewsController < ApplicationController
 
   def set_review
     @review = Review.includes(
+      :review_likes,
       user: { avatar_attachment: :blob }
     ).find(params[:id])
   end

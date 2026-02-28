@@ -43,23 +43,24 @@
       <%= number_to_currency(product.price, unit: "¥", precision: 0, format: "%u%n") %>
     </p>
     <div class="flex items-center gap-3 pt-2 text-sm text-stone-600">
-      <% if (avg_score = product.reviews.average(:overall_score)) %>
+      <% if (avg_score = product.product_stat&.avg_overall_score) %>
         <% rounded = avg_score.round %>
         <span class="text-amber-400"><%= "★" * rounded %><%= "☆" * (5 - rounded) %></span>
         <span class="text-sm font-semibold text-stone-700"><%= format("%.1f", avg_score) %>/5.0</span>
       <% else %>
         <span class="text-sm text-stone-400"><%= t("products.card.not_rated") %></span>
       <% end %>
+      <span class="text-xs text-stone-500">
+        <%= t("products.card.reviews_count", count: product.product_stat&.reviews_count.to_i) %>
+      </span>
     </div>
   </div>
   <div class="pt-4 space-y-2">
-    <% if user_signed_in? %>
-      <div class="w-full">
-        <%= render "shared/bookmark_button",
-          product: product,
-          bookmark: bookmarks_by_product_id[product.id] %>
-      </div>
-    <% end %>
+    <div class="w-full">
+      <%= render "shared/bookmark_button",
+        product: product,
+        bookmark: bookmarks_by_product_id[product.id] %>
+    </div>
     <%= render "shared/compare_button", product: product %>
   </div>
 </div>

@@ -15,7 +15,7 @@ RSpec.describe "ブックマーク", type: :system do
       visit product_path(product)
       find("button[aria-label='#{I18n.t('shared.bookmark.add')}']").click
 
-      expect(page).to have_button(I18n.t("shared.bookmark.saved"), exact: false)
+      expect(page).to have_selector("button[aria-label='#{I18n.t('shared.bookmark.remove')}']")
     end
 
     it "プロフィールのブックマーク一覧に反映される" do
@@ -33,7 +33,7 @@ RSpec.describe "ブックマーク", type: :system do
       find("button[aria-label='#{I18n.t('shared.bookmark.add')}']").click
 
       find("button[aria-label='#{I18n.t('shared.bookmark.remove')}']").click
-      expect(page).to have_button(I18n.t("shared.bookmark.add"))
+      expect(page).to have_selector("button[aria-label='#{I18n.t('shared.bookmark.add')}']")
     end
 
     it "プロフィールのブックマーク一覧から消える" do
