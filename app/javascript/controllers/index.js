@@ -17,3 +17,6 @@ application.register("range-order", RangeOrderController)
 
 import BulkFormController from "./bulk_form_controller"
 application.register("bulk-form", BulkFormController)
+
+import MentionReplyController from "./mention_reply_controller"
+application.register("mention-reply", MentionReplyController)

@@ -79,6 +79,7 @@ ja:
         form_label: "コメントを投稿"
         placeholder: "レビューへの感想を入力してください"
         submit: "コメントする"
+        reply: "返信"
         delete: "削除"
         delete_confirm: "このコメントを削除しますか？"
       share:
