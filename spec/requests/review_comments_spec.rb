@@ -18,6 +18,37 @@ RSpec.describe "ReviewComments", type: :request do
       expect(response).to redirect_to(review_path(review))
     end
 
+    it "レビュー投稿者にコメント通知を作成する" do
+      owner = create(:user)
+      user = create(:user)
+      review = create(:review, user: owner)
+      sign_in user, scope: :user
+
+      expect {
+        post review_review_comments_path(review), params: { review_comment: { body: "ナイスレビューです" } }
+      }.to change(Notification, :count).by(1)
+
+      notification = Notification.last
+      expect(notification.recipient_id).to eq(owner.id)
+      expect(notification.actor_id).to eq(user.id)
+      expect(notification.notifiable).to be_a(ReviewComment)
+    end
+
+    it "メンションされたユーザーにも通知する（重複なし）" do
+      owner = create(:user, username: "owner_user")
+      user = create(:user, username: "actor_user")
+      mentioned = create(:user, username: "mention_user")
+      review = create(:review, user: owner)
+      sign_in user, scope: :user
+
+      expect {
+        post review_review_comments_path(review), params: { review_comment: { body: "@mention_user 参考になりました @owner_user" } }
+      }.to change(Notification, :count).by(2)
+
+      recipients = Notification.order(:id).last(2).map(&:recipient_id)
+      expect(recipients).to match_array([ owner.id, mentioned.id ])
+    end
+
     it "turbo_stream でコメント作成できる" do
       user = create(:user)
       review = create(:review)
