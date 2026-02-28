@@ -122,12 +122,15 @@
             <% end %>
           </div>
         </div>
-        <% if user_signed_in? %>
-          <div class="mt-4 flex justify-end">
-            <%= render "shared/like_buttons", review: @review %>
-          </div>
-        <% end %>
+        <div class="mt-4 flex justify-end">
+          <%= render "shared/like_buttons", review: @review %>
+        </div>
       </div>
+
+      <%= render "review_comments/section",
+        review: @review,
+        review_comments: @review_comments,
+        review_comment: @review_comment %>
 
       <div class="rounded-3xl border border-base bg-white p-6 shadow-sm">
         <h2 class="text-2xl font-semibold font-['Fraunces']"><%= t("reviews.show.axis_title", username: @review.user.username) %></h2>
