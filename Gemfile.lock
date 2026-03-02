@@ -392,7 +392,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.1)
-    rakuten_web_service (1.15.0)
+    rakuten_web_service (1.16.0)
       base64 (~> 0.2)
       bigdecimal (~> 3.1)
       json (~> 2.3)
@@ -578,7 +578,7 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   rails (~> 8.1.1)
-  rakuten_web_service (~> 1.15)
+  rakuten_web_service (~> 1.16)
   ransack (~> 4.4)
   recaptcha
   rspec-rails
@@ -747,7 +747,7 @@ CHECKSUMS
   railties (8.1.2) sha256=1289ece76b4f7668fc46d07e55cc992b5b8751f2ad85548b7da351b8c59f8055
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
-  rakuten_web_service (1.15.0) sha256=50fdd95f78025c2cef62b5684f3add12b30a2b67327e03e712060c7e633b6d9f
+  rakuten_web_service (1.16.0) sha256=c30dca0d3a8a07153ee9fbb739200ec2fd72a8fa0a6504cbcb585d1350f9b9c3
   ransack (4.4.1) sha256=6aeaac36fc19088570e10da1044e6cfd88c740e20f871b84566fd30e32b7a63d
   rdoc (7.2.0) sha256=8650f76cd4009c3b54955eb5d7e3a075c60a57276766ebf36f9085e8c9f23192
   recaptcha (5.21.1) sha256=e003e9ceba9b993a9f0c6a828c192f2d46693cd2aa0b0beae94f936649507adb
