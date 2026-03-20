@@ -35,6 +35,66 @@ RSpec.describe "Reviews", type: :request do
       expect(response).to redirect_to(review_path(Review.last))
     end
 
+    it "フォロワーにレビュー投稿通知を作成する" do
+      user = create(:user)
+      follower1 = create(:user)
+      follower2 = create(:user)
+      other_user = create(:user)
+      product = create(:product)
+      create(:follow, follower: follower1, followed: user)
+      create(:follow, follower: follower2, followed: user)
+      sign_in user
+
+      params = {
+        review: {
+          title: "溶けやすくて美味しい",
+          comment: "毎朝の習慣にしています。",
+          overall_score: 4,
+          sweetness: 3,
+          richness: 4,
+          aftertaste: 3,
+          flavor_score: 4,
+          solubility: 4,
+          foam: 2
+        }
+      }
+
+      expect {
+        post product_reviews_path(product), params: params
+      }.to change(Notification, :count).by(2)
+
+      notifications = Notification.order(:id).last(2)
+      expect(notifications.map(&:recipient_id)).to match_array([ follower1.id, follower2.id ])
+      expect(notifications.map(&:actor_id).uniq).to eq([ user.id ])
+      expect(notifications.map(&:notifiable_type).uniq).to eq([ "Review" ])
+      expect(notifications.map(&:notifiable_id).uniq).to eq([ Review.last.id ])
+      expect(notifications.map(&:recipient_id)).not_to include(other_user.id)
+    end
+
+    it "フォロワーがいない場合は通知を作成しない" do
+      user = create(:user)
+      product = create(:product)
+      sign_in user
+
+      params = {
+        review: {
+          title: "溶けやすくて美味しい",
+          comment: "毎朝の習慣にしています。",
+          overall_score: 4,
+          sweetness: 3,
+          richness: 4,
+          aftertaste: 3,
+          flavor_score: 4,
+          solubility: 4,
+          foam: 2
+        }
+      }
+
+      expect {
+        post product_reviews_path(product), params: params
+      }.not_to change(Notification, :count)
+    end
+
     it "バリデーションエラー時は422を返す" do
       user = create(:user)
       product = create(:product)
