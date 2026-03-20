@@ -3,6 +3,8 @@ module NotificationsHelper
     actor_name = notification.actor.username
 
     case notification.notifiable
+    when Review
+      "#{actor_name}さんが新しいレビューを投稿しました"
     when ReviewComment
       "#{actor_name}さんがあなた宛にコメントしました"
     when ReviewLike
@@ -16,6 +18,8 @@ module NotificationsHelper
 
   def notification_link_path(notification)
     case notification.notifiable
+    when Review
+      review_path(notification.notifiable)
     when ReviewComment
       review_path(notification.notifiable.review)
     when ReviewLike
