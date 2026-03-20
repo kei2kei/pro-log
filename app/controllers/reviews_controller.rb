@@ -12,11 +12,20 @@ class ReviewsController < ApplicationController
     @review = @product.reviews.build(review_params)
     @review.user = current_user
 
-    if @review.save
-      redirect_to review_path(@review), notice: "レビューを投稿しました。", flash: { share_prompt: true }
-    else
+    if @review.invalid?
       render :new, status: :unprocessable_entity
+      return
     end
+
+    Review.transaction do
+      @review.save!
+      create_review_notifications!
+    end
+
+    redirect_to review_path(@review), notice: "レビューを投稿しました。", flash: { share_prompt: true }
+  rescue ActiveRecord::ActiveRecordError
+    @review.errors.add(:base, "レビューの投稿に失敗しました。")
+    render :new, status: :unprocessable_entity
   end
 
   def show
@@ -85,6 +94,25 @@ class ReviewsController < ApplicationController
       :flavor_score,
       :solubility,
       :foam
+    )
+  end
+
+  def create_review_notifications!
+    recipient_ids = current_user.passive_follows.distinct.pluck(:follower_id)
+    return if recipient_ids.empty?
+
+    now = Time.current
+    Notification.insert_all!(
+      recipient_ids.map do |recipient_id|
+        {
+          recipient_id: recipient_id,
+          actor_id: current_user.id,
+          notifiable_type: "Review",
+          notifiable_id: @review.id,
+          created_at: now,
+          updated_at: now
+        }
+      end
     )
   end
 end
