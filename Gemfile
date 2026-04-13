@@ -76,7 +76,7 @@ end
 
 gem "devise", "~> 5.0"
 
-gem "aws-sdk-s3", "~> 1.209"
+gem "aws-sdk-s3", "~> 1.219"
 
 gem "ransack", "~> 4.4"
 
